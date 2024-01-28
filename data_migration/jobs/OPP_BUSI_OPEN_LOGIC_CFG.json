@@ -1,0 +1,88 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[SERIAL_NO]",
+                            "[USER_TYPE]",
+                            "[ID_TYPE]",
+                            "[CITIZENSHIP]",
+                            "[INOUTSIDE_IDENTITY]",
+                            "[SUBJECT_IDENTITY]",
+                            "[OCCU_TYPE]",
+                            "[LEGAL_REP_TYPE]",
+                            "[SZORG_TYPE]",
+                            "[TRADE]",
+                            "[PRO_CLS]",
+                            "[ACCT_TYPE]",
+                            "[OPEN_TYPE]",
+                            "[LOGIC_STAT]",
+                            "[PROMPT_TIP]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.OPP_BUSI_OPEN_LOGIC_CFG"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"serial_no\"",
+                            "\"user_type\"",
+                            "\"id_type\"",
+                            "\"citizenship\"",
+                            "\"inoutside_identity\"",
+                            "\"subject_identity\"",
+                            "\"occu_type\"",
+                            "\"legal_rep_type\"",
+                            "\"szorg_type\"",
+                            "\"trade\"",
+                            "\"pro_cls\"",
+                            "\"acct_type\"",
+                            "\"open_type\"",
+                            "\"logic_stat\"",
+                            "\"prompt_tip\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.opp_busi_open_logic_cfg"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.opp_busi_open_logic_cfg"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

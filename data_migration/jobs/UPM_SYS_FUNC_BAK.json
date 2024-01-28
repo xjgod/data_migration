@@ -1,0 +1,82 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[BUS_CODE]",
+                            "[BUS_NAME]",
+                            "[BUS_TYPE]",
+                            "[ENABLE_SOAP]",
+                            "[ACCESS_CONTROL]",
+                            "[DATA_OP_TYPE]",
+                            "[REC_FLAG]",
+                            "[GENERAL_REVIEW_KEY]",
+                            "[LBM_CODE]",
+                            "[VALID_PERM]",
+                            "[ENABLE_REVIEW]",
+                            "[NO_LOG_FIELDS]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UPM_SYS_FUNC_BAK"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"bus_code\"",
+                            "\"bus_name\"",
+                            "\"bus_type\"",
+                            "\"enable_soap\"",
+                            "\"access_control\"",
+                            "\"data_op_type\"",
+                            "\"rec_flag\"",
+                            "\"general_review_key\"",
+                            "\"lbm_code\"",
+                            "\"valid_perm\"",
+                            "\"enable_review\"",
+                            "\"no_log_fields\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.upm_sys_func_bak"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.upm_sys_func_bak"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

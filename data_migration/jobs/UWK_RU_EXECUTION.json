@@ -1,0 +1,88 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[EXECUTION_ID]",
+                            "[REV]",
+                            "[BUSINESS_KEY]",
+                            "[PROC_INST_ID]",
+                            "[PROC_DEF_ID]",
+                            "[ACT_ID]",
+                            "[IS_ACTIVE]",
+                            "[IS_CONCURRENT]",
+                            "[IS_SCOPE]",
+                            "[IS_EVENT_SCOPE]",
+                            "[PARENT_ID]",
+                            "[SUPER_EXEC]",
+                            "[SUSPENSION_STATE]",
+                            "[CACHED_ENT_STATE]",
+                            "[CREATE_TIME]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UWK_RU_EXECUTION"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"execution_id\"",
+                            "\"rev\"",
+                            "\"business_key\"",
+                            "\"proc_inst_id\"",
+                            "\"proc_def_id\"",
+                            "\"act_id\"",
+                            "\"is_active\"",
+                            "\"is_concurrent\"",
+                            "\"is_scope\"",
+                            "\"is_event_scope\"",
+                            "\"parent_id\"",
+                            "\"super_exec\"",
+                            "\"suspension_state\"",
+                            "\"cached_ent_state\"",
+                            "\"create_time\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.uwk_ru_execution"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.uwk_ru_execution"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

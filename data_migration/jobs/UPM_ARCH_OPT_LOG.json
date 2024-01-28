@@ -1,0 +1,84 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[ARCH_SNO]",
+                            "[GROUP_ID]",
+                            "[OP_TYPE]",
+                            "[BGN_TIME]",
+                            "[END_TIME]",
+                            "[TOTAL_NUM]",
+                            "[SUCCESS_NUM]",
+                            "[EXEC_RESULT]",
+                            "[ARCH_SERVER]",
+                            "[OP_CODE]",
+                            "[EXEC_TYPE]",
+                            "[RELA_ARCH_SNO]",
+                            "[REMARK]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UPM_ARCH_OPT_LOG"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"arch_sno\"",
+                            "\"group_id\"",
+                            "\"op_type\"",
+                            "\"bgn_time\"",
+                            "\"end_time\"",
+                            "\"total_num\"",
+                            "\"success_num\"",
+                            "\"exec_result\"",
+                            "\"arch_server\"",
+                            "\"op_code\"",
+                            "\"exec_type\"",
+                            "\"rela_arch_sno\"",
+                            "\"remark\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.upm_arch_opt_log"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.upm_arch_opt_log"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

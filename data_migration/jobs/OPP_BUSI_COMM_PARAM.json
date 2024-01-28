@@ -1,0 +1,88 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[BUSI_CODE]",
+                            "[USER_TYPE]",
+                            "[PARAM_CODE]",
+                            "[PARAM_NAME]",
+                            "[PARAM_VALUE]",
+                            "[REMARK]",
+                            "[MANA_TYPE]",
+                            "[BUSI_TYPE]",
+                            "[DATA_TYPE]",
+                            "[VALID_CHAR]",
+                            "[MAX_VAL]",
+                            "[MIN_VAL]",
+                            "[VALID_LEN]",
+                            "[VALID_DEC]",
+                            "[LEGAL_ID]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.OPP_BUSI_COMM_PARAM"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"busi_code\"",
+                            "\"user_type\"",
+                            "\"param_code\"",
+                            "\"param_name\"",
+                            "\"param_value\"",
+                            "\"remark\"",
+                            "\"mana_type\"",
+                            "\"busi_type\"",
+                            "\"data_type\"",
+                            "\"valid_char\"",
+                            "\"max_val\"",
+                            "\"min_val\"",
+                            "\"valid_len\"",
+                            "\"valid_dec\"",
+                            "\"legal_id\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.opp_busi_comm_param"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.opp_busi_comm_param"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

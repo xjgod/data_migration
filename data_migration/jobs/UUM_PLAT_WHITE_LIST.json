@@ -1,0 +1,70 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[SNO]",
+                            "[OP_CODE]",
+                            "[PLAT_CODE]",
+                            "[IP_TYPE]",
+                            "[IP_ADDR]",
+                            "[UPDATE_TIME]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UUM_PLAT_WHITE_LIST"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"sno\"",
+                            "\"op_code\"",
+                            "\"plat_code\"",
+                            "\"ip_type\"",
+                            "\"ip_addr\"",
+                            "\"update_time\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.uum_plat_white_list"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.uum_plat_white_list"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

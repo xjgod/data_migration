@@ -1,0 +1,76 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[SYS_CODE]",
+                            "[SYS_NAME]",
+                            "[SYS_TYPE]",
+                            "[SYS_STAT]",
+                            "[SYS_FUNC]",
+                            "[IS_SETT]",
+                            "[SUBSYS_SN]",
+                            "[RUN_STAT]",
+                            "[CROSS_STAT]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UPM_SYSTEM"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"sys_code\"",
+                            "\"sys_name\"",
+                            "\"sys_type\"",
+                            "\"sys_stat\"",
+                            "\"sys_func\"",
+                            "\"is_sett\"",
+                            "\"subsys_sn\"",
+                            "\"run_stat\"",
+                            "\"cross_stat\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.upm_system"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.upm_system"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

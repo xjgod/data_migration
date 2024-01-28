@@ -1,0 +1,84 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[PROCDEF_ID]",
+                            "[REV]",
+                            "[PROCDEF_CATEGORY]",
+                            "[PROCDEF_NAME]",
+                            "[PROCDEF_KEY]",
+                            "[PROCDEF_VERSION]",
+                            "[DEPLOYMENT_ID]",
+                            "[RESOURCE_NAME]",
+                            "[DGRM_RESOURCE_NAME]",
+                            "[DESCRIPTION]",
+                            "[HAS_START_FORM_KEY]",
+                            "[SUSPENSION_STATE]",
+                            "[CREATE_TIME]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UWK_RE_PROCDEF"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"procdef_id\"",
+                            "\"rev\"",
+                            "\"procdef_category\"",
+                            "\"procdef_name\"",
+                            "\"procdef_key\"",
+                            "\"procdef_version\"",
+                            "\"deployment_id\"",
+                            "\"resource_name\"",
+                            "\"dgrm_resource_name\"",
+                            "\"description\"",
+                            "\"has_start_form_key\"",
+                            "\"suspension_state\"",
+                            "\"create_time\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.uwk_re_procdef"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.uwk_re_procdef"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

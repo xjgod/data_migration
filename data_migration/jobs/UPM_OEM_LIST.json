@@ -1,0 +1,74 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[OEM_FLAG]",
+                            "[PRODUCT_NAME]",
+                            "[BIZ_CONTENT]",
+                            "[MENU_NAME]",
+                            "[ADD_DATE]",
+                            "[LINK_NAME]",
+                            "[LINK_TYPE]",
+                            "[REMARK]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UPM_OEM_LIST"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"oem_flag\"",
+                            "\"product_name\"",
+                            "\"biz_content\"",
+                            "\"menu_name\"",
+                            "\"add_date\"",
+                            "\"link_name\"",
+                            "\"link_type\"",
+                            "\"remark\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.upm_oem_list"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.upm_oem_list"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

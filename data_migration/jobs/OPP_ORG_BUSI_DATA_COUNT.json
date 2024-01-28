@@ -1,0 +1,76 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[ORG_CODE]",
+                            "[ORG_NAME]",
+                            "[BUSI_CODE]",
+                            "[BUSI_NAME]",
+                            "[YZT_CHANNEL]",
+                            "[PENDING_NUM]",
+                            "[COMPLETE_NUM]",
+                            "[REVIEWING_NUM]",
+                            "[HISPEND_NUM]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.OPP_ORG_BUSI_DATA_COUNT"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"org_code\"",
+                            "\"org_name\"",
+                            "\"busi_code\"",
+                            "\"busi_name\"",
+                            "\"yzt_channel\"",
+                            "\"pending_num\"",
+                            "\"complete_num\"",
+                            "\"reviewing_num\"",
+                            "\"hispend_num\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.opp_org_busi_data_count"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.opp_org_busi_data_count"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

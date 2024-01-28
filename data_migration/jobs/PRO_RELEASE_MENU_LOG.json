@@ -1,0 +1,70 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[MENU_ID]",
+                            "[MENU_NAME]",
+                            "[RELEASE_VERSION]",
+                            "[RELEASE_TYPE]",
+                            "[REMARK]",
+                            "[CREATE_TIME]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.PRO_RELEASE_MENU_LOG"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"menu_id\"",
+                            "\"menu_name\"",
+                            "\"release_version\"",
+                            "\"release_type\"",
+                            "\"remark\"",
+                            "\"create_time\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.pro_release_menu_log"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.pro_release_menu_log"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

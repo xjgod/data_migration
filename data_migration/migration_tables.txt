@@ -1,0 +1,11 @@
+## 1、两种模式：1、*代表数据库所有表，2、指定表名
+## 2、如果指定表名，则每行一个表名，如有分片字段，在表名后加上分片字段，用:分隔，支持如：user:uid  user:默认只有表
+## OPP_BUSI_DATA_BAK 表中的字段:F_OP_SITE
+## OPP_PRE_SAVE_FIELDS 表中的字段:PI_FILED_ROUTE,PI_CHANNEL
+## OPP_STK_ACCTBIZ_LOG 表中的字段:SERIAL_NO
+## OPP_STK_ACCTBIZ_LOGEX 表中的字段:SERIAL_NO
+## UPM_ARCH_GROUP 表中的字段:ARCH_CYCLE
+## UPM_GENERAL_REVIEW_CFG表中的字段:CHECK_CONDITION
+## UPM_QRTZ_JOB_MSG 表中的字段:JOB_DESCRIPTION
+########################################################################################################################
+*

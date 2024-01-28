@@ -1,0 +1,64 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[BUSI_CODE]",
+                            "[CLAIM_LIMIT_TIME]",
+                            "[SCHEDULER_TIME_FIELD]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.OPP_BUSI_DEF_TRHD"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"busi_code\"",
+                            "\"claim_limit_time\"",
+                            "\"scheduler_time_field\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.opp_busi_def_trhd"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.opp_busi_def_trhd"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

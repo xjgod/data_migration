@@ -1,0 +1,70 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[SUBSYS]",
+                            "[SRC_FUNC_CODE]",
+                            "[SRC_FUNC_NAME]",
+                            "[TGT_FUNC_CODE]",
+                            "[TGT_FUNC_TYPE]",
+                            "[REMARK]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UPM_FUNC_CODE_TRANS"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"subsys\"",
+                            "\"src_func_code\"",
+                            "\"src_func_name\"",
+                            "\"tgt_func_code\"",
+                            "\"tgt_func_type\"",
+                            "\"remark\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.upm_func_code_trans"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.upm_func_code_trans"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

@@ -1,0 +1,179 @@
+2024-01-28 17:50:23.822 [main] INFO  MessageSource - JVM TimeZone: GMT+08:00, Locale: zh_CN
+2024-01-28 17:50:23.825 [main] INFO  MessageSource - use Locale: zh_CN timeZone: sun.util.calendar.ZoneInfo[id="GMT+08:00",offset=28800000,dstSavings=0,useDaylight=false,transitions=0,lastRule=null]
+2024-01-28 17:50:23.834 [main] INFO  VMInfo - VMInfo# operatingSystem class => sun.management.OperatingSystemImpl
+2024-01-28 17:50:23.852 [main] INFO  Engine - the machine info  => 
+
+	osInfo:	Oracle Corporation 1.8 25.192-b12
+	jvmInfo:	Windows 10 amd64 10.0
+	cpu num:	16
+
+	totalPhysicalMemory:	-0.00G
+	freePhysicalMemory:	-0.00G
+	maxFileDescriptorCount:	-1
+	currentOpenFileDescriptorCount:	-1
+
+	GC Names	[PS MarkSweep, PS Scavenge]
+
+	MEMORY_NAME                    | allocation_size                | init_size                      
+	PS Eden Space                  | 512.50MB                       | 512.50MB                       
+	Code Cache                     | 240.00MB                       | 2.44MB                         
+	Compressed Class Space         | 1,024.00MB                     | 0.00MB                         
+	PS Survivor Space              | 85.00MB                        | 85.00MB                        
+	PS Old Gen                     | 1,365.50MB                     | 1,365.50MB                     
+	Metaspace                      | -0.00MB                        | 0.00MB                         
+
+
+2024-01-28 17:50:23.868 [main] INFO  Engine - 
+{
+	"content":[
+		{
+			"reader":{
+				"name":"sqlserverreader",
+				"parameter":{
+					"column":[
+						"[BUSI_CODE]",
+						"[BUSI_NAME]",
+						"[PROCDEF_KEY]",
+						"[PRIO_LVL]",
+						"[BUSI_SCOPE]",
+						"[HIST_URL]",
+						"[LAND_PATTERN]",
+						"[BATCH_YN]",
+						"[ENABLE_ALLDAY]",
+						"[IMG_NODE]",
+						"[DEPENDENCY]",
+						"[BUSI_CLS]",
+						"[DEPEND_TYPE]",
+						"[IMG_NODE_CHANNELS]",
+						"[BUSI_QULF]",
+						"[REFRESH_CSDC_CACHE]",
+						"[CORR_ALLOW_REJECT]",
+						"[SUPPORT_NODE_REVIEW]",
+						"[INTELLIGENT_TYPE]",
+						"[IS_COMP_BUSI]",
+						"[IS_ALLOW_MULT]",
+						"[REVIEW_ALLOW_REJECT]",
+						"[ACCEPT_REMARK_FLAG]",
+						"[IMG_MUST_REVIEW_CHANNELS]",
+						"[SUBMIT_TO_SAME_HANDLER]"
+					],
+					"connection":[
+						{
+							"jdbcUrl":[
+								"jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+							],
+							"table":[
+								"YGT.dbo.OPP_BUSI_DEF_BAK"
+							]
+						}
+					],
+					"password":"*********",
+					"splitPk":"",
+					"username":"sa"
+				}
+			},
+			"writer":{
+				"name":"postgresqlwriter",
+				"parameter":{
+					"column":[
+						"\"busi_code\"",
+						"\"busi_name\"",
+						"\"procdef_key\"",
+						"\"prio_lvl\"",
+						"\"busi_scope\"",
+						"\"hist_url\"",
+						"\"land_pattern\"",
+						"\"batch_yn\"",
+						"\"enable_allday\"",
+						"\"img_node\"",
+						"\"dependency\"",
+						"\"busi_cls\"",
+						"\"depend_type\"",
+						"\"img_node_channels\"",
+						"\"busi_qulf\"",
+						"\"refresh_csdc_cache\"",
+						"\"corr_allow_reject\"",
+						"\"support_node_review\"",
+						"\"intelligent_type\"",
+						"\"is_comp_busi\"",
+						"\"is_allow_mult\"",
+						"\"review_allow_reject\"",
+						"\"accept_remark_flag\"",
+						"\"img_must_review_channels\"",
+						"\"submit_to_same_handler\""
+					],
+					"connection":[
+						{
+							"jdbcUrl":"jdbc:postgresql://10.201.65.24:30100/ygt",
+							"table":[
+								"ygt.ygt.opp_busi_def_bak"
+							]
+						}
+					],
+					"password":"*************",
+					"preSql":[
+						"TRUNCATE TABLE ygt.ygt.opp_busi_def_bak"
+					],
+					"username":"ygt"
+				}
+			}
+		}
+	],
+	"setting":{
+		"errorLimit":{
+			"record":0
+		},
+		"speed":{
+			"byte":-1,
+			"channel":10,
+			"record":-1
+		}
+	}
+}
+
+2024-01-28 17:50:23.879 [main] WARN  Engine - prioriy set to 0, because NumberFormatException, the value is: null
+2024-01-28 17:50:23.880 [main] INFO  PerfTrace - PerfTrace traceId=job_-1, isEnable=false, priority=0
+2024-01-28 17:50:23.881 [main] INFO  JobContainer - DataX jobContainer starts job.
+2024-01-28 17:50:23.896 [main] INFO  JobContainer - Set jobId = 0
+2024-01-28 17:50:31.812 [job-0] INFO  OriginalConfPretreatmentUtil - Available jdbcUrl:jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;.
+2024-01-28 17:50:32.040 [job-0] INFO  OriginalConfPretreatmentUtil - table:[YGT.dbo.OPP_BUSI_DEF_BAK] has columns:[BUSI_CODE,BUSI_NAME,PROCDEF_KEY,PRIO_LVL,BUSI_SCOPE,HIST_URL,LAND_PATTERN,BATCH_YN,ENABLE_ALLDAY,IMG_NODE,DEPENDENCY,BUSI_CLS,DEPEND_TYPE,IMG_NODE_CHANNELS,BUSI_QULF,REFRESH_CSDC_CACHE,CORR_ALLOW_REJECT,SUPPORT_NODE_REVIEW,INTELLIGENT_TYPE,IS_COMP_BUSI,IS_ALLOW_MULT,REVIEW_ALLOW_REJECT,ACCEPT_REMARK_FLAG,IMG_MUST_REVIEW_CHANNELS,SUBMIT_TO_SAME_HANDLER].
+2024-01-28 17:50:32.589 [job-0] INFO  OriginalConfPretreatmentUtil - table:[ygt.ygt.opp_busi_def_bak] all columns:[
+busi_code,busi_name,procdef_key,prio_lvl,busi_scope,hist_url,land_pattern,batch_yn,enable_allday,img_node,dependency,busi_cls,depend_type,img_node_channels,busi_qulf,refresh_csdc_cache,corr_allow_reject,support_node_review,intelligent_type,is_comp_busi,is_allow_mult,review_allow_reject,accept_remark_flag,img_must_review_channels,submit_to_same_handler
+].
+2024-01-28 17:50:33.136 [job-0] INFO  OriginalConfPretreatmentUtil - Write data [
+INSERT INTO %s ("busi_code","busi_name","procdef_key","prio_lvl","busi_scope","hist_url","land_pattern","batch_yn","enable_allday","img_node","dependency","busi_cls","depend_type","img_node_channels","busi_qulf","refresh_csdc_cache","corr_allow_reject","support_node_review","intelligent_type","is_comp_busi","is_allow_mult","review_allow_reject","accept_remark_flag","img_must_review_channels","submit_to_same_handler") VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+], which jdbcUrl like:[jdbc:postgresql://10.201.65.24:30100/ygt]
+2024-01-28 17:50:33.137 [job-0] INFO  JobContainer - jobContainer starts to do prepare ...
+2024-01-28 17:50:33.137 [job-0] INFO  JobContainer - DataX Reader.Job [sqlserverreader] do prepare work .
+2024-01-28 17:50:33.138 [job-0] INFO  JobContainer - DataX Writer.Job [postgresqlwriter] do prepare work .
+2024-01-28 17:50:33.486 [job-0] INFO  CommonRdbmsWriter$Job - Begin to execute preSqls:[TRUNCATE TABLE ygt.ygt.opp_busi_def_bak]. context info:jdbc:postgresql://10.201.65.24:30100/ygt.
+2024-01-28 17:50:33.534 [job-0] ERROR JobContainer - Exception when job run
+com.alibaba.datax.common.exception.DataXException: Code:[DBUtilErrorCode-06], Description:[执行数据库 Sql 失败, 请检查您的配置的 column/table/where/querySql或者向 DBA 寻求帮助.].  - 执行的SQL为: TRUNCATE TABLE ygt.ygt.opp_busi_def_bak 具体错误信息为：org.postgresql.util.PSQLException: [10.10.10.58:55973/10.201.65.24:30100] ERROR: cannot execute TRUNCATE TABLE in a read-only transaction
+	at com.alibaba.datax.common.exception.DataXException.asDataXException(DataXException.java:30) ~[datax-common-0.0.1-SNAPSHOT.jar:na]
+	at com.alibaba.datax.plugin.rdbms.util.RdbmsException.asQueryException(RdbmsException.java:97) ~[plugin-rdbms-util-0.0.1-SNAPSHOT.jar:na]
+	at com.alibaba.datax.plugin.rdbms.writer.util.WriterUtil.executeSqls(WriterUtil.java:105) ~[plugin-rdbms-util-0.0.1-SNAPSHOT.jar:na]
+	at com.alibaba.datax.plugin.rdbms.writer.CommonRdbmsWriter$Job.prepare(CommonRdbmsWriter.java:121) ~[plugin-rdbms-util-0.0.1-SNAPSHOT.jar:na]
+	at com.alibaba.datax.plugin.writer.postgresqlwriter.PostgresqlWriter$Job.prepare(PostgresqlWriter.java:38) ~[postgresqlwriter-0.0.1-SNAPSHOT.jar:na]
+	at com.alibaba.datax.core.job.JobContainer.prepareJobWriter(JobContainer.java:724) ~[datax-core-0.0.1-SNAPSHOT.jar:na]
+	at com.alibaba.datax.core.job.JobContainer.prepare(JobContainer.java:309) ~[datax-core-0.0.1-SNAPSHOT.jar:na]
+	at com.alibaba.datax.core.job.JobContainer.start(JobContainer.java:115) ~[datax-core-0.0.1-SNAPSHOT.jar:na]
+	at com.alibaba.datax.core.Engine.start(Engine.java:93) [datax-core-0.0.1-SNAPSHOT.jar:na]
+	at com.alibaba.datax.core.Engine.entry(Engine.java:175) [datax-core-0.0.1-SNAPSHOT.jar:na]
+	at com.alibaba.datax.core.Engine.main(Engine.java:208) [datax-core-0.0.1-SNAPSHOT.jar:na]
+2024-01-28 17:50:33.538 [job-0] INFO  StandAloneJobContainerCommunicator - Total 0 records, 0 bytes | Speed 0B/s, 0 records/s | Error 0 records, 0 bytes |  All Task WaitWriterTime 0.000s |  All Task WaitReaderTime 0.000s | Percentage 0.00%
+2024-01-28 17:50:33.539 [job-0] ERROR Engine - 
+
+经DataX智能分析,该任务最可能的错误原因是:
+com.alibaba.datax.common.exception.DataXException: Code:[DBUtilErrorCode-06], Description:[执行数据库 Sql 失败, 请检查您的配置的 column/table/where/querySql或者向 DBA 寻求帮助.].  - 执行的SQL为: TRUNCATE TABLE ygt.ygt.opp_busi_def_bak 具体错误信息为：org.postgresql.util.PSQLException: [10.10.10.58:55973/10.201.65.24:30100] ERROR: cannot execute TRUNCATE TABLE in a read-only transaction
+	at com.alibaba.datax.common.exception.DataXException.asDataXException(DataXException.java:30)
+	at com.alibaba.datax.plugin.rdbms.util.RdbmsException.asQueryException(RdbmsException.java:97)
+	at com.alibaba.datax.plugin.rdbms.writer.util.WriterUtil.executeSqls(WriterUtil.java:105)
+	at com.alibaba.datax.plugin.rdbms.writer.CommonRdbmsWriter$Job.prepare(CommonRdbmsWriter.java:121)
+	at com.alibaba.datax.plugin.writer.postgresqlwriter.PostgresqlWriter$Job.prepare(PostgresqlWriter.java:38)
+	at com.alibaba.datax.core.job.JobContainer.prepareJobWriter(JobContainer.java:724)
+	at com.alibaba.datax.core.job.JobContainer.prepare(JobContainer.java:309)
+	at com.alibaba.datax.core.job.JobContainer.start(JobContainer.java:115)
+	at com.alibaba.datax.core.Engine.start(Engine.java:93)
+	at com.alibaba.datax.core.Engine.entry(Engine.java:175)
+	at com.alibaba.datax.core.Engine.main(Engine.java:208)
+

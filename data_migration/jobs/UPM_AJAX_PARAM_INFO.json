@@ -1,0 +1,72 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[AJAX_CODE]",
+                            "[COL_NAME]",
+                            "[COL_TEXT]",
+                            "[COL_DATA_TYPE]",
+                            "[REQUIRED]",
+                            "[DATA_INFO]",
+                            "[REMARK]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UPM_AJAX_PARAM_INFO"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"ajax_code\"",
+                            "\"col_name\"",
+                            "\"col_text\"",
+                            "\"col_data_type\"",
+                            "\"required\"",
+                            "\"data_info\"",
+                            "\"remark\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.upm_ajax_param_info"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.upm_ajax_param_info"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

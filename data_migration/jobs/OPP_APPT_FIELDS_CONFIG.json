@@ -1,0 +1,74 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[FIELD_ID]",
+                            "[FIELD_TITLE]",
+                            "[FIELD_TYPE]",
+                            "[VALID_TYPE]",
+                            "[FIELD_DICT]",
+                            "[FIELD_MULTIPLE]",
+                            "[DEFAULT_VALUE]",
+                            "[REMARK]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.OPP_APPT_FIELDS_CONFIG"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"field_id\"",
+                            "\"field_title\"",
+                            "\"field_type\"",
+                            "\"valid_type\"",
+                            "\"field_dict\"",
+                            "\"field_multiple\"",
+                            "\"default_value\"",
+                            "\"remark\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.opp_appt_fields_config"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.opp_appt_fields_config"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

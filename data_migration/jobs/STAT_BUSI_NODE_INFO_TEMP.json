@@ -1,0 +1,90 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[B_SNO]",
+                            "[B_NODE_ORD]",
+                            "[NODE_KEY]",
+                            "[NODE_NAME]",
+                            "[HANDLER]",
+                            "[HANDLER_ORG]",
+                            "[START_TIME]",
+                            "[END_TIME]",
+                            "[NODE_TIME]",
+                            "[NODE_RESULT]",
+                            "[REMARK]",
+                            "[REJECT_LVL]",
+                            "[BUSI_CODE]",
+                            "[IS_DELETE]",
+                            "[REJECT_TO_NODE]",
+                            "[PREPARED_TIME]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.STAT_BUSI_NODE_INFO_TEMP"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"b_sno\"",
+                            "\"b_node_ord\"",
+                            "\"node_key\"",
+                            "\"node_name\"",
+                            "\"handler\"",
+                            "\"handler_org\"",
+                            "\"start_time\"",
+                            "\"end_time\"",
+                            "\"node_time\"",
+                            "\"node_result\"",
+                            "\"remark\"",
+                            "\"reject_lvl\"",
+                            "\"busi_code\"",
+                            "\"is_delete\"",
+                            "\"reject_to_node\"",
+                            "\"prepared_time\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.stat_busi_node_info_temp"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.stat_busi_node_info_temp"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

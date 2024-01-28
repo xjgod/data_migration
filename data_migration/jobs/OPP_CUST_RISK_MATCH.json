@@ -1,0 +1,84 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[BUSI_CODE]",
+                            "[BUSI_RATING_LVL]",
+                            "[BUSI_INVEST_LMT]",
+                            "[BUSI_INVEST_PRO]",
+                            "[BUSI_EXPECT_INCOME]",
+                            "[RATING_LVL]",
+                            "[INVEST_LMT]",
+                            "[INVEST_PRO]",
+                            "[EXPECT_INCOME]",
+                            "[CUST_LASTRISK_FLAG]",
+                            "[PROF_INVESTOR_TYPE]",
+                            "[CHK_MATCH_FLAG]",
+                            "[STRONG_MATCH]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.OPP_CUST_RISK_MATCH"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"busi_code\"",
+                            "\"busi_rating_lvl\"",
+                            "\"busi_invest_lmt\"",
+                            "\"busi_invest_pro\"",
+                            "\"busi_expect_income\"",
+                            "\"rating_lvl\"",
+                            "\"invest_lmt\"",
+                            "\"invest_pro\"",
+                            "\"expect_income\"",
+                            "\"cust_lastrisk_flag\"",
+                            "\"prof_investor_type\"",
+                            "\"chk_match_flag\"",
+                            "\"strong_match\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.opp_cust_risk_match"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.opp_cust_risk_match"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

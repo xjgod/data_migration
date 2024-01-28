@@ -1,0 +1,94 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[TASK_ID]",
+                            "[REV]",
+                            "[EXECUTION_ID]",
+                            "[PROC_INST_ID]",
+                            "[PROC_DEF_ID]",
+                            "[TNAME]",
+                            "[PARENT_TASK_ID]",
+                            "[DESCRIPTION]",
+                            "[TASK_DEF_KEY]",
+                            "[TOWNER]",
+                            "[TASSIGNEE]",
+                            "[DELEGATION]",
+                            "[TPRIORITY]",
+                            "[DUE_DATE]",
+                            "[SUSPENSION_STATE]",
+                            "[CREATE_TIME]",
+                            "[PRE_USER_TASK]",
+                            "[PRE_TASK_ASSIGNEE]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UWK_RU_TASK_BAK"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"task_id\"",
+                            "\"rev\"",
+                            "\"execution_id\"",
+                            "\"proc_inst_id\"",
+                            "\"proc_def_id\"",
+                            "\"tname\"",
+                            "\"parent_task_id\"",
+                            "\"description\"",
+                            "\"task_def_key\"",
+                            "\"towner\"",
+                            "\"tassignee\"",
+                            "\"delegation\"",
+                            "\"tpriority\"",
+                            "\"due_date\"",
+                            "\"suspension_state\"",
+                            "\"create_time\"",
+                            "\"pre_user_task\"",
+                            "\"pre_task_assignee\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.uwk_ru_task_bak"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.uwk_ru_task_bak"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

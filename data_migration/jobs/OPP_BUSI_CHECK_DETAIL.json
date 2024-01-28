@@ -1,0 +1,98 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[B_SNO]",
+                            "[BATCH_CODE]",
+                            "[ORG_CODE]",
+                            "[BUSI_CODE]",
+                            "[HANDLE_CODE]",
+                            "[CHECK_STATUS]",
+                            "[CHECK_CLAIM_TIME]",
+                            "[CHECK_USER_CODE]",
+                            "[CHECK_USER_NAME]",
+                            "[CHECK_NOT_PASS_MSG]",
+                            "[ERROR_STATUS]",
+                            "[ERROR_CLAIM_TIME]",
+                            "[ERROR_MSG]",
+                            "[ERROR_USER_CODE]",
+                            "[ERROR_USER_NAME]",
+                            "[ERROR_TYPE]",
+                            "[ERROR_OPINION]",
+                            "[PERSON_LIABLE]",
+                            "[ERROR_NODE_KEY]",
+                            "[ERROR_LVL]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.OPP_BUSI_CHECK_DETAIL"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"b_sno\"",
+                            "\"batch_code\"",
+                            "\"org_code\"",
+                            "\"busi_code\"",
+                            "\"handle_code\"",
+                            "\"check_status\"",
+                            "\"check_claim_time\"",
+                            "\"check_user_code\"",
+                            "\"check_user_name\"",
+                            "\"check_not_pass_msg\"",
+                            "\"error_status\"",
+                            "\"error_claim_time\"",
+                            "\"error_msg\"",
+                            "\"error_user_code\"",
+                            "\"error_user_name\"",
+                            "\"error_type\"",
+                            "\"error_opinion\"",
+                            "\"person_liable\"",
+                            "\"error_node_key\"",
+                            "\"error_lvl\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.opp_busi_check_detail"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.opp_busi_check_detail"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

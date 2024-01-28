@@ -1,0 +1,72 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[TASK_CODE]",
+                            "[TASK_NAME]",
+                            "[PRIO_LVL]",
+                            "[CLASS_NAME]",
+                            "[METHOD_NAME]",
+                            "[REMARK]",
+                            "[IS_PARALLEL]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UPM_AUTO_TASK"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"task_code\"",
+                            "\"task_name\"",
+                            "\"prio_lvl\"",
+                            "\"class_name\"",
+                            "\"method_name\"",
+                            "\"remark\"",
+                            "\"is_parallel\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.upm_auto_task"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.upm_auto_task"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

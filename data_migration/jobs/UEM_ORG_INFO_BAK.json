@@ -1,0 +1,110 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[ORG_CODE]",
+                            "[ORG_TYPE]",
+                            "[ORG_CLS]",
+                            "[ORG_NAME]",
+                            "[ORG_FULL_NAME]",
+                            "[ORG_STATUS]",
+                            "[PAR_ORG]",
+                            "[ORG_LVL]",
+                            "[ACCT_LEN]",
+                            "[ACCT_PREFIX]",
+                            "[AREA_NO]",
+                            "[ZIP_CODE]",
+                            "[AREA_ADDR]",
+                            "[ORG_TEL]",
+                            "[NIGHT_MARKET]",
+                            "[LEGAL_ID]",
+                            "[REMARK]",
+                            "[IS_COMMON]",
+                            "[EMAIL]",
+                            "[FAX]",
+                            "[LINKMAN]",
+                            "[FOREIGN_CPTL_FLAG]",
+                            "[BIZ_AREA]",
+                            "[DISTRICT]",
+                            "[CFM_FLAG]",
+                            "[IS_SEPARATE]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UEM_ORG_INFO_BAK"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"org_code\"",
+                            "\"org_type\"",
+                            "\"org_cls\"",
+                            "\"org_name\"",
+                            "\"org_full_name\"",
+                            "\"org_status\"",
+                            "\"par_org\"",
+                            "\"org_lvl\"",
+                            "\"acct_len\"",
+                            "\"acct_prefix\"",
+                            "\"area_no\"",
+                            "\"zip_code\"",
+                            "\"area_addr\"",
+                            "\"org_tel\"",
+                            "\"night_market\"",
+                            "\"legal_id\"",
+                            "\"remark\"",
+                            "\"is_common\"",
+                            "\"email\"",
+                            "\"fax\"",
+                            "\"linkman\"",
+                            "\"foreign_cptl_flag\"",
+                            "\"biz_area\"",
+                            "\"district\"",
+                            "\"cfm_flag\"",
+                            "\"is_separate\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.uem_org_info_bak"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.uem_org_info_bak"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

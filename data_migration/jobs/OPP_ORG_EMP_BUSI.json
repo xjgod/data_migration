@@ -1,0 +1,78 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[COMPLETE_DATE]",
+                            "[ORG_CODE]",
+                            "[USER_CODE]",
+                            "[BUSI_CODE]",
+                            "[EXAM_TYPE]",
+                            "[BUSI_NUM_TOTAL]",
+                            "[BUSI_SCORE_TOTAL]",
+                            "[REJECT_NUM]",
+                            "[BUSI_TIME_TOTAL]",
+                            "[ERROR_NUM]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.OPP_ORG_EMP_BUSI"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"complete_date\"",
+                            "\"org_code\"",
+                            "\"user_code\"",
+                            "\"busi_code\"",
+                            "\"exam_type\"",
+                            "\"busi_num_total\"",
+                            "\"busi_score_total\"",
+                            "\"reject_num\"",
+                            "\"busi_time_total\"",
+                            "\"error_num\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.opp_org_emp_busi"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.opp_org_emp_busi"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

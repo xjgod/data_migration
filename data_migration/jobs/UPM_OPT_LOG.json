@@ -1,0 +1,102 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[SERIAL_NO]",
+                            "[OCCUR_TIME]",
+                            "[OCCUR_DATE]",
+                            "[OP_CODE]",
+                            "[CHANNEL]",
+                            "[BUS_CODE]",
+                            "[BUS_NAME]",
+                            "[DATA_OP_TYPE]",
+                            "[OLD_DATA]",
+                            "[NEW_DATA]",
+                            "[DATA_OP_STATUS]",
+                            "[ERROR_MESSAGE]",
+                            "[ERROR_CODE]",
+                            "[SYS_CODE]",
+                            "[SYS_SERIAL_NO]",
+                            "[SYS_USER_CODE]",
+                            "[OP_SITE]",
+                            "[F_YZT_CHANNEL]",
+                            "[REMARK]",
+                            "[EXEC_TIMES]",
+                            "[MENU_ID]",
+                            "[MENU_NAME]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UPM_OPT_LOG"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"serial_no\"",
+                            "\"occur_time\"",
+                            "\"occur_date\"",
+                            "\"op_code\"",
+                            "\"channel\"",
+                            "\"bus_code\"",
+                            "\"bus_name\"",
+                            "\"data_op_type\"",
+                            "\"old_data\"",
+                            "\"new_data\"",
+                            "\"data_op_status\"",
+                            "\"error_message\"",
+                            "\"error_code\"",
+                            "\"sys_code\"",
+                            "\"sys_serial_no\"",
+                            "\"sys_user_code\"",
+                            "\"op_site\"",
+                            "\"f_yzt_channel\"",
+                            "\"remark\"",
+                            "\"exec_times\"",
+                            "\"menu_id\"",
+                            "\"menu_name\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.upm_opt_log"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.upm_opt_log"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

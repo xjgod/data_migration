@@ -1,0 +1,13 @@
+本目录包含五个文件夹
+datax               #datax迁移工具，已将相关驱动打包
+migration           #迁移脚本存放目录，需要将迁移脚本上传至此目录
+python_arm          #基于Kylin-V10-SP2\Kunpeng-920打包的python虚拟环境
+python_win          #基于Windows2012打包的python虚拟环境
+python_x64          #基于Kylin-V10-SP2\intel-x64打包的python虚拟环境
+
+
+将文件解压到指定目录：
+Windos对应目录：D:\Data_Migration
+Linux对应目录： /opt/Data_Migration
+
+对应python机目录中有对应的操作启动说明。

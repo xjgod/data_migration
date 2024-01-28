@@ -1,0 +1,74 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[SUBSYS]",
+                            "[MENU_ID]",
+                            "[MENU_NAME]",
+                            "[PAR_MENU]",
+                            "[MENU_LVL]",
+                            "[MENU_PUR]",
+                            "[MENU_LINK]",
+                            "[MENU_STA]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.SYNC_SUBSYS_MENU"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"subsys\"",
+                            "\"menu_id\"",
+                            "\"menu_name\"",
+                            "\"par_menu\"",
+                            "\"menu_lvl\"",
+                            "\"menu_pur\"",
+                            "\"menu_link\"",
+                            "\"menu_sta\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.sync_subsys_menu"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.sync_subsys_menu"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

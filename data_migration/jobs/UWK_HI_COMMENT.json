@@ -1,0 +1,78 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[HI_COMMENT_ID]",
+                            "[COMM_TYPE]",
+                            "[COMM_TIME]",
+                            "[USER_ID]",
+                            "[TASK_ID]",
+                            "[PROC_INST_ID]",
+                            "[ACTION]",
+                            "[COMM_MESSAGE]",
+                            "[FULL_MSG]",
+                            "[CREATE_TIME]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UWK_HI_COMMENT"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"hi_comment_id\"",
+                            "\"comm_type\"",
+                            "\"comm_time\"",
+                            "\"user_id\"",
+                            "\"task_id\"",
+                            "\"proc_inst_id\"",
+                            "\"action\"",
+                            "\"comm_message\"",
+                            "\"full_msg\"",
+                            "\"create_time\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.uwk_hi_comment"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.uwk_hi_comment"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

@@ -1,0 +1,76 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[BUSI_CODE]",
+                            "[BUSI_NAME]",
+                            "[PROCDEF_KEY]",
+                            "[RELEASE_ITEM]",
+                            "[RELEASE_ITEM_TYPE]",
+                            "[RELEASE_TYPE]",
+                            "[RELEASE_VERSION]",
+                            "[RELEASE_REMARK]",
+                            "[UPDATE_TIME]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.PRO_RELEASE_BUSI_DEF_LOG"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"busi_code\"",
+                            "\"busi_name\"",
+                            "\"procdef_key\"",
+                            "\"release_item\"",
+                            "\"release_item_type\"",
+                            "\"release_type\"",
+                            "\"release_version\"",
+                            "\"release_remark\"",
+                            "\"update_time\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.pro_release_busi_def_log"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.pro_release_busi_def_log"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

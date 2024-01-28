@@ -1,0 +1,84 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[HI_VARINST_ID]",
+                            "[PROC_INST_ID]",
+                            "[EXECUTION_ID]",
+                            "[TASK_ID]",
+                            "[HVNAME]",
+                            "[REV]",
+                            "[VAR_TYPE]",
+                            "[BYTEARRAY_ID]",
+                            "[DOUBLETYPE]",
+                            "[LONGTYPE]",
+                            "[TEXTTYPE]",
+                            "[TEXT2TYPE]",
+                            "[CREATE_TIME]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UWK_HI_VARINST_BAK"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"hi_varinst_id\"",
+                            "\"proc_inst_id\"",
+                            "\"execution_id\"",
+                            "\"task_id\"",
+                            "\"hvname\"",
+                            "\"rev\"",
+                            "\"var_type\"",
+                            "\"bytearray_id\"",
+                            "\"doubletype\"",
+                            "\"longtype\"",
+                            "\"texttype\"",
+                            "\"text2type\"",
+                            "\"create_time\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.uwk_hi_varinst_bak"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.uwk_hi_varinst_bak"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

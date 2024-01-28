@@ -1,0 +1,80 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[SNO]",
+                            "[SUBSYS]",
+                            "[SUBSYS_MENU_ID]",
+                            "[SUBSYS_MENU_NAME]",
+                            "[KCOP_MENU_ID]",
+                            "[KCOP_MENU_NAME]",
+                            "[SYNC_VERSION]",
+                            "[SYNC_TYPE]",
+                            "[SYNC_OLD]",
+                            "[SYNC_NEW]",
+                            "[CREATE_TIME]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UPM_MENU_SUBSYS_SYNC_LOG"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"sno\"",
+                            "\"subsys\"",
+                            "\"subsys_menu_id\"",
+                            "\"subsys_menu_name\"",
+                            "\"kcop_menu_id\"",
+                            "\"kcop_menu_name\"",
+                            "\"sync_version\"",
+                            "\"sync_type\"",
+                            "\"sync_old\"",
+                            "\"sync_new\"",
+                            "\"create_time\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.upm_menu_subsys_sync_log"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.upm_menu_subsys_sync_log"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

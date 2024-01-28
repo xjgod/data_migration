@@ -1,0 +1,96 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[LOG_NO]",
+                            "[ARCH_SNO]",
+                            "[GROUP_ID]",
+                            "[OP_TYPE]",
+                            "[DB_NAME]",
+                            "[TABLE_CODE]",
+                            "[ARCH_NUM]",
+                            "[BGN_TIME]",
+                            "[END_TIME]",
+                            "[ARCH_TYPE]",
+                            "[EXEC_RESULT]",
+                            "[ARCH_BGN_DATE]",
+                            "[ARCH_SQL]",
+                            "[FILE_PATH]",
+                            "[REMARK]",
+                            "[PRE_ARCH_NUM]",
+                            "[HIS_DELETE_NUM]",
+                            "[CUR_ARCH_NUM]",
+                            "[CUR_DELETE_NUM]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UPM_ARCH_TABLE_LOG"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"log_no\"",
+                            "\"arch_sno\"",
+                            "\"group_id\"",
+                            "\"op_type\"",
+                            "\"db_name\"",
+                            "\"table_code\"",
+                            "\"arch_num\"",
+                            "\"bgn_time\"",
+                            "\"end_time\"",
+                            "\"arch_type\"",
+                            "\"exec_result\"",
+                            "\"arch_bgn_date\"",
+                            "\"arch_sql\"",
+                            "\"file_path\"",
+                            "\"remark\"",
+                            "\"pre_arch_num\"",
+                            "\"his_delete_num\"",
+                            "\"cur_arch_num\"",
+                            "\"cur_delete_num\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.upm_arch_table_log"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.upm_arch_table_log"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

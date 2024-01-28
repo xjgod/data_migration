@@ -1,0 +1,76 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[EVENT_SUBSCR_ID]",
+                            "[REV]",
+                            "[EVENT_TYPE]",
+                            "[EVENT_NAME]",
+                            "[EXECUTION_ID]",
+                            "[PROC_INST_ID]",
+                            "[ACTIVITY_ID]",
+                            "[CONFIGURATION]",
+                            "[CREATE_TIME]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UWK_RU_EVENT_SUBSCR"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"event_subscr_id\"",
+                            "\"rev\"",
+                            "\"event_type\"",
+                            "\"event_name\"",
+                            "\"execution_id\"",
+                            "\"proc_inst_id\"",
+                            "\"activity_id\"",
+                            "\"configuration\"",
+                            "\"create_time\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.uwk_ru_event_subscr"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.uwk_ru_event_subscr"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

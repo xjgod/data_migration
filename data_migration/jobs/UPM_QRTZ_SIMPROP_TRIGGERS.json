@@ -1,0 +1,86 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[SCHED_NAME]",
+                            "[TRIGGER_NAME]",
+                            "[TRIGGER_GROUP]",
+                            "[STR_PROP_1]",
+                            "[STR_PROP_2]",
+                            "[STR_PROP_3]",
+                            "[INT_PROP_1]",
+                            "[INT_PROP_2]",
+                            "[LONG_PROP_1]",
+                            "[LONG_PROP_2]",
+                            "[DEC_PROP_1]",
+                            "[DEC_PROP_2]",
+                            "[BOOL_PROP_1]",
+                            "[BOOL_PROP_2]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UPM_QRTZ_SIMPROP_TRIGGERS"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"sched_name\"",
+                            "\"trigger_name\"",
+                            "\"trigger_group\"",
+                            "\"str_prop_1\"",
+                            "\"str_prop_2\"",
+                            "\"str_prop_3\"",
+                            "\"int_prop_1\"",
+                            "\"int_prop_2\"",
+                            "\"long_prop_1\"",
+                            "\"long_prop_2\"",
+                            "\"dec_prop_1\"",
+                            "\"dec_prop_2\"",
+                            "\"bool_prop_1\"",
+                            "\"bool_prop_2\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.upm_qrtz_simprop_triggers"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.upm_qrtz_simprop_triggers"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

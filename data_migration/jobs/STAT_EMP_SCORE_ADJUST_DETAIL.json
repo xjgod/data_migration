@@ -1,0 +1,78 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[SERIAL_NO]",
+                            "[B_SNO]",
+                            "[NODE_KEY]",
+                            "[NODE_NAME]",
+                            "[HANDLER]",
+                            "[OP_ORG]",
+                            "[ADJUST_TYPE]",
+                            "[ADJUST_SCORE]",
+                            "[ADJUST_REMARK]",
+                            "[UPDATE_TIME]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.STAT_EMP_SCORE_ADJUST_DETAIL"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"serial_no\"",
+                            "\"b_sno\"",
+                            "\"node_key\"",
+                            "\"node_name\"",
+                            "\"handler\"",
+                            "\"op_org\"",
+                            "\"adjust_type\"",
+                            "\"adjust_score\"",
+                            "\"adjust_remark\"",
+                            "\"update_time\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.stat_emp_score_adjust_detail"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.stat_emp_score_adjust_detail"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

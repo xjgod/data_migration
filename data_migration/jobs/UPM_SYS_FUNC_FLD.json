@@ -1,0 +1,72 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[BUS_CODE]",
+                            "[FUNC_CODE]",
+                            "[TAB_CODE]",
+                            "[TAB_NAME]",
+                            "[FLD_CODE]",
+                            "[FLD_NAME]",
+                            "[FLD_STA]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UPM_SYS_FUNC_FLD"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"bus_code\"",
+                            "\"func_code\"",
+                            "\"tab_code\"",
+                            "\"tab_name\"",
+                            "\"fld_code\"",
+                            "\"fld_name\"",
+                            "\"fld_sta\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.upm_sys_func_fld"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.upm_sys_func_fld"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

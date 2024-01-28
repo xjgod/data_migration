@@ -1,0 +1,66 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[GRAPH_ID]",
+                            "[CELL_ID]",
+                            "[ATTR_ID]",
+                            "[ATTR_VAL]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.GRAPH_CELL_ATTR"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"graph_id\"",
+                            "\"cell_id\"",
+                            "\"attr_id\"",
+                            "\"attr_val\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.graph_cell_attr"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.graph_cell_attr"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

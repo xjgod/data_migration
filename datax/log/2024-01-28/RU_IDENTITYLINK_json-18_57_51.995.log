@@ -1,0 +1,107 @@
+2024-01-28 18:57:52.360 [main] INFO  MessageSource - JVM TimeZone: GMT+08:00, Locale: zh_CN
+2024-01-28 18:57:52.364 [main] INFO  MessageSource - use Locale: zh_CN timeZone: sun.util.calendar.ZoneInfo[id="GMT+08:00",offset=28800000,dstSavings=0,useDaylight=false,transitions=0,lastRule=null]
+2024-01-28 18:57:52.381 [main] INFO  VMInfo - VMInfo# operatingSystem class => sun.management.OperatingSystemImpl
+2024-01-28 18:57:52.390 [main] INFO  Engine - the machine info  => 
+
+	osInfo:	Oracle Corporation 1.8 25.192-b12
+	jvmInfo:	Windows 10 amd64 10.0
+	cpu num:	16
+
+	totalPhysicalMemory:	-0.00G
+	freePhysicalMemory:	-0.00G
+	maxFileDescriptorCount:	-1
+	currentOpenFileDescriptorCount:	-1
+
+	GC Names	[PS MarkSweep, PS Scavenge]
+
+	MEMORY_NAME                    | allocation_size                | init_size                      
+	PS Eden Space                  | 512.50MB                       | 512.50MB                       
+	Code Cache                     | 240.00MB                       | 2.44MB                         
+	Compressed Class Space         | 1,024.00MB                     | 0.00MB                         
+	PS Survivor Space              | 85.00MB                        | 85.00MB                        
+	PS Old Gen                     | 1,365.50MB                     | 1,365.50MB                     
+	Metaspace                      | -0.00MB                        | 0.00MB                         
+
+
+2024-01-28 18:57:52.416 [main] INFO  Engine - 
+{
+	"content":[
+		{
+			"reader":{
+				"name":"sqlserverreader",
+				"parameter":{
+					"column":[
+						"[IDENTITY_ID]",
+						"[REV]",
+						"[GROUP_ID]",
+						"[ITYPE]",
+						"[USER_ID]",
+						"[PROC_DEF_ID]",
+						"[TASK_ID]",
+						"[PROC_INST_ID]",
+						"[CREATE_TIME]",
+						"[ASSIGNEE]"
+					],
+					"connection":[
+						{
+							"jdbcUrl":[
+								"jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+							],
+							"table":[
+								"YGT.dbo.UWK_RU_IDENTITYLINK"
+							]
+						}
+					],
+					"password":"*********",
+					"splitPk":"",
+					"username":"sa"
+				}
+			},
+			"writer":{
+				"name":"postgresqlwriter",
+				"parameter":{
+					"column":[
+						"\"identity_id\"",
+						"\"rev\"",
+						"\"group_id\"",
+						"\"itype\"",
+						"\"user_id\"",
+						"\"proc_def_id\"",
+						"\"task_id\"",
+						"\"proc_inst_id\"",
+						"\"create_time\"",
+						"\"assignee\""
+					],
+					"connection":[
+						{
+							"jdbcUrl":"jdbc:postgresql://10.201.65.24:30100/ygt",
+							"table":[
+								"ygt.ygt.uwk_ru_identitylink"
+							]
+						}
+					],
+					"password":"*************",
+					"preSql":[
+						"TRUNCATE TABLE ygt.ygt.uwk_ru_identitylink"
+					],
+					"username":"ygt"
+				}
+			}
+		}
+	],
+	"setting":{
+		"errorLimit":{
+			"record":0
+		},
+		"speed":{
+			"byte":-1,
+			"channel":10,
+			"record":-1
+		}
+	}
+}
+
+2024-01-28 18:57:52.444 [main] WARN  Engine - prioriy set to 0, because NumberFormatException, the value is: null
+2024-01-28 18:57:52.446 [main] INFO  PerfTrace - PerfTrace traceId=job_-1, isEnable=false, priority=0
+2024-01-28 18:57:52.446 [main] INFO  JobContainer - DataX jobContainer starts job.
+2024-01-28 18:57:52.450 [main] INFO  JobContainer - Set jobId = 0

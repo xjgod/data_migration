@@ -1,0 +1,72 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[CSDC_RTN_ERR_CODE]",
+                            "[CSDC_RETURN_MSG]",
+                            "[CUSTOM_ERR_MSG]",
+                            "[REPLACE1]",
+                            "[REPLACE2]",
+                            "[REPLACE3]",
+                            "[IN_USE]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.OPP_CSDC_CUSTOM_ERR_MSG"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"csdc_rtn_err_code\"",
+                            "\"csdc_return_msg\"",
+                            "\"custom_err_msg\"",
+                            "\"replace1\"",
+                            "\"replace2\"",
+                            "\"replace3\"",
+                            "\"in_use\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.opp_csdc_custom_err_msg"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.opp_csdc_custom_err_msg"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

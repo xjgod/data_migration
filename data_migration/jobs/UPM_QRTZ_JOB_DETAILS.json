@@ -1,0 +1,78 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[SCHED_NAME]",
+                            "[JOB_NAME]",
+                            "[JOB_GROUP]",
+                            "[DESCRIPTION]",
+                            "[JOB_CLASS_NAME]",
+                            "[IS_DURABLE]",
+                            "[IS_NONCONCURRENT]",
+                            "[IS_UPDATE_DATA]",
+                            "[REQUESTS_RECOVERY]",
+                            "[JOB_DATA]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UPM_QRTZ_JOB_DETAILS"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"sched_name\"",
+                            "\"job_name\"",
+                            "\"job_group\"",
+                            "\"description\"",
+                            "\"job_class_name\"",
+                            "\"is_durable\"",
+                            "\"is_nonconcurrent\"",
+                            "\"is_update_data\"",
+                            "\"requests_recovery\"",
+                            "\"job_data\""
+                        ],
+                        "preSql": [
+                            "DELETE FROM ygt.ygt.upm_qrtz_job_details"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.upm_qrtz_job_details"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

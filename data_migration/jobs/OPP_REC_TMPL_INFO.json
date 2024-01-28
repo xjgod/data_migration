@@ -1,0 +1,82 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[TMPL_ID]",
+                            "[TMPL_TYPE]",
+                            "[TMPL_NAME]",
+                            "[TMPL_DESC]",
+                            "[TMPL_FILE_PATH]",
+                            "[TMPL_USE_FLAG]",
+                            "[VOICE_TYPE]",
+                            "[TEXT_CONTENT]",
+                            "[VOICE_IMAGE_PATH]",
+                            "[IS_VOICE_RECOGNITION]",
+                            "[REPLY_COMPARE_VALUE]",
+                            "[SERIOUS_ERROR_VALUE]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.OPP_REC_TMPL_INFO"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"tmpl_id\"",
+                            "\"tmpl_type\"",
+                            "\"tmpl_name\"",
+                            "\"tmpl_desc\"",
+                            "\"tmpl_file_path\"",
+                            "\"tmpl_use_flag\"",
+                            "\"voice_type\"",
+                            "\"text_content\"",
+                            "\"voice_image_path\"",
+                            "\"is_voice_recognition\"",
+                            "\"reply_compare_value\"",
+                            "\"serious_error_value\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.opp_rec_tmpl_info"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.opp_rec_tmpl_info"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

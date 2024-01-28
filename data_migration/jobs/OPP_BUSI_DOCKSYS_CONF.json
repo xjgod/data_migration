@@ -1,0 +1,74 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[BUSI_CODE]",
+                            "[DOCK_TYPE]",
+                            "[DOCK_STAT]",
+                            "[CHECK_COND]",
+                            "[IMG_CLSS]",
+                            "[REMARK]",
+                            "[DOCK_NODE_KEY]",
+                            "[REJECT_TO_NODE]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.OPP_BUSI_DOCKSYS_CONF"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"busi_code\"",
+                            "\"dock_type\"",
+                            "\"dock_stat\"",
+                            "\"check_cond\"",
+                            "\"img_clss\"",
+                            "\"remark\"",
+                            "\"dock_node_key\"",
+                            "\"reject_to_node\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.opp_busi_docksys_conf"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.opp_busi_docksys_conf"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

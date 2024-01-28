@@ -1,0 +1,82 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[OP_CODE]",
+                            "[SURVEY_SN]",
+                            "[SURVEY_SCORE]",
+                            "[RATING_LVL]",
+                            "[RATING_DATE]",
+                            "[ORDINAL]",
+                            "[VERSION]",
+                            "[RATING_EXP_DATE]",
+                            "[NEXT_RATING_DATE]",
+                            "[SURVEY_COLS]",
+                            "[SURVEY_CELLS]",
+                            "[REMARK]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.OPP_EMP_SURVEY_RATING"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"op_code\"",
+                            "\"survey_sn\"",
+                            "\"survey_score\"",
+                            "\"rating_lvl\"",
+                            "\"rating_date\"",
+                            "\"ordinal\"",
+                            "\"version\"",
+                            "\"rating_exp_date\"",
+                            "\"next_rating_date\"",
+                            "\"survey_cols\"",
+                            "\"survey_cells\"",
+                            "\"remark\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.opp_emp_survey_rating"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.opp_emp_survey_rating"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

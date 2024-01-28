@@ -1,0 +1,80 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[SERIAL_ID]",
+                            "[SERIAL_TYPE]",
+                            "[MIN_VAL_INT64]",
+                            "[MAX_VAL_INT64]",
+                            "[LAST_VAL_INT64]",
+                            "[CYCLE_FLAG]",
+                            "[BIZ_DATE]",
+                            "[PHYSICAL_DATE]",
+                            "[ORG_CODE]",
+                            "[UPDATE_TIME]",
+                            "[REMARK]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.SERIAL"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"serial_id\"",
+                            "\"serial_type\"",
+                            "\"min_val_int64\"",
+                            "\"max_val_int64\"",
+                            "\"last_val_int64\"",
+                            "\"cycle_flag\"",
+                            "\"biz_date\"",
+                            "\"physical_date\"",
+                            "\"org_code\"",
+                            "\"update_time\"",
+                            "\"remark\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.serial"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.serial"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

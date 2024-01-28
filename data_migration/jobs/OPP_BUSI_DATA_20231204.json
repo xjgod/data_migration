@@ -1,0 +1,170 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[B_SNO]",
+                            "[BUSI_CODE]",
+                            "[OPER_TIME]",
+                            "[EXECUTION_ID]",
+                            "[CUST_CODE]",
+                            "[CUST_NAME]",
+                            "[CUST_FNAME]",
+                            "[CUSTOMER_LVL]",
+                            "[OP_ORG]",
+                            "[OP_CODE]",
+                            "[PROC_STATUS]",
+                            "[ACCEPT_PARAM]",
+                            "[REMARK]",
+                            "[DEAL_PARAM]",
+                            "[ERROR_CODE]",
+                            "[ERROR_MSG]",
+                            "[YZT_CHANNEL]",
+                            "[NODE_CODE]",
+                            "[ID_TYPE]",
+                            "[ID_CODE]",
+                            "[USER_TYPE]",
+                            "[CUACCT_CODE]",
+                            "[HANDLE_CODE]",
+                            "[IS_AGENT]",
+                            "[IS_DELETED]",
+                            "[SUBJECT_IDENTITY]",
+                            "[SZORG_TYPE]",
+                            "[LEGAL_REP_TYPE]",
+                            "[YZT_RISK_FACTOR]",
+                            "[MD5]",
+                            "[AGENT_USER_CODE]",
+                            "[EXT_COL1]",
+                            "[EXT_COL2]",
+                            "[EXT_COL3]",
+                            "[EXT_COL4]",
+                            "[EXT_COL5]",
+                            "[MERGE_SNO]",
+                            "[ALLOW_ACCEPT]",
+                            "[ORG_CODE]",
+                            "[PRE_OP_CODE]",
+                            "[SUPPLY_COLLECT_FLAG]",
+                            "[COMPLIANCE_STATUS]",
+                            "[COMPLIANCE_CODE]",
+                            "[GENERAL_REVIEW_KEY]",
+                            "[GENERAL_REVIEW_CODE]",
+                            "[IS_STAT]",
+                            "[DOCK_SNO]",
+                            "[OP_SITE]",
+                            "[KIDM_SNO]",
+                            "[INTELLIGENT_STATUS]",
+                            "[INTELLIGENT_SNO]",
+                            "[INTELLIGENT_RES]",
+                            "[CREATE_TIME]",
+                            "[WITNESS_CODE]",
+                            "[REVIEW_STATUS]",
+                            "[IS_NEW_OPEN]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.OPP_BUSI_DATA_20231204"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"b_sno\"",
+                            "\"busi_code\"",
+                            "\"oper_time\"",
+                            "\"execution_id\"",
+                            "\"cust_code\"",
+                            "\"cust_name\"",
+                            "\"cust_fname\"",
+                            "\"customer_lvl\"",
+                            "\"op_org\"",
+                            "\"op_code\"",
+                            "\"proc_status\"",
+                            "\"accept_param\"",
+                            "\"remark\"",
+                            "\"deal_param\"",
+                            "\"error_code\"",
+                            "\"error_msg\"",
+                            "\"yzt_channel\"",
+                            "\"node_code\"",
+                            "\"id_type\"",
+                            "\"id_code\"",
+                            "\"user_type\"",
+                            "\"cuacct_code\"",
+                            "\"handle_code\"",
+                            "\"is_agent\"",
+                            "\"is_deleted\"",
+                            "\"subject_identity\"",
+                            "\"szorg_type\"",
+                            "\"legal_rep_type\"",
+                            "\"yzt_risk_factor\"",
+                            "\"md5\"",
+                            "\"agent_user_code\"",
+                            "\"ext_col1\"",
+                            "\"ext_col2\"",
+                            "\"ext_col3\"",
+                            "\"ext_col4\"",
+                            "\"ext_col5\"",
+                            "\"merge_sno\"",
+                            "\"allow_accept\"",
+                            "\"org_code\"",
+                            "\"pre_op_code\"",
+                            "\"supply_collect_flag\"",
+                            "\"compliance_status\"",
+                            "\"compliance_code\"",
+                            "\"general_review_key\"",
+                            "\"general_review_code\"",
+                            "\"is_stat\"",
+                            "\"dock_sno\"",
+                            "\"op_site\"",
+                            "\"kidm_sno\"",
+                            "\"intelligent_status\"",
+                            "\"intelligent_sno\"",
+                            "\"intelligent_res\"",
+                            "\"create_time\"",
+                            "\"witness_code\"",
+                            "\"review_status\"",
+                            "\"is_new_open\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.opp_busi_data_20231204"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.opp_busi_data_20231204"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

@@ -1,0 +1,116 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[USER_CODE]",
+                            "[USER_NAME]",
+                            "[ID_TYPE]",
+                            "[ID_CODE]",
+                            "[ID_EXP_DATE]",
+                            "[ID_ISS_AGCY]",
+                            "[ID_ADDR]",
+                            "[BIRTHDAY]",
+                            "[SEX]",
+                            "[NATIONALITY]",
+                            "[NATIVE_PLACE]",
+                            "[CITIZENSHIP]",
+                            "[EDUCATION]",
+                            "[MOBILE_TEL]",
+                            "[TEL]",
+                            "[EMAIL]",
+                            "[ADDRESS]",
+                            "[ZIP_CODE]",
+                            "[REMARK]",
+                            "[USER_ICON]",
+                            "[CERT_NO]",
+                            "[CERT_GET_DATE]",
+                            "[CERT_EFFECTIVE_DATE]",
+                            "[CRMID]",
+                            "[LOGIN_CODE]",
+                            "[BUSI_QULF]",
+                            "[KOTC_OP_CODE]",
+                            "[KSOT_OP_CODE]",
+                            "[EHRID]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UEM_EMP"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"user_code\"",
+                            "\"user_name\"",
+                            "\"id_type\"",
+                            "\"id_code\"",
+                            "\"id_exp_date\"",
+                            "\"id_iss_agcy\"",
+                            "\"id_addr\"",
+                            "\"birthday\"",
+                            "\"sex\"",
+                            "\"nationality\"",
+                            "\"native_place\"",
+                            "\"citizenship\"",
+                            "\"education\"",
+                            "\"mobile_tel\"",
+                            "\"tel\"",
+                            "\"email\"",
+                            "\"address\"",
+                            "\"zip_code\"",
+                            "\"remark\"",
+                            "\"user_icon\"",
+                            "\"cert_no\"",
+                            "\"cert_get_date\"",
+                            "\"cert_effective_date\"",
+                            "\"crmid\"",
+                            "\"login_code\"",
+                            "\"busi_qulf\"",
+                            "\"kotc_op_code\"",
+                            "\"ksot_op_code\"",
+                            "\"ehrid\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.uem_emp"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.uem_emp"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

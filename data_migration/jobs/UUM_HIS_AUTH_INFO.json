@@ -1,0 +1,72 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[ID]",
+                            "[USER_CODE]",
+                            "[USER_ROLE]",
+                            "[USE_SCOPE]",
+                            "[AUTH_TYPE]",
+                            "[AUTH_DATA]",
+                            "[SET_DATE]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UUM_HIS_AUTH_INFO"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"id\"",
+                            "\"user_code\"",
+                            "\"user_role\"",
+                            "\"use_scope\"",
+                            "\"auth_type\"",
+                            "\"auth_data\"",
+                            "\"set_date\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.uum_his_auth_info"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.uum_his_auth_info"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

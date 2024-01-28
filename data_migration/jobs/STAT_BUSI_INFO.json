@@ -1,0 +1,112 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[B_SNO]",
+                            "[BUSI_CODE]",
+                            "[PROC_STATUS]",
+                            "[YZT_CHANNEL]",
+                            "[START_TIME]",
+                            "[END_TIME]",
+                            "[BUSI_TIME]",
+                            "[BUSI_EFFECT_TIME]",
+                            "[CUST_CODE]",
+                            "[CUST_ORG_CODE]",
+                            "[ACCEPT_OP_CODE]",
+                            "[ACCEPT_ORG_CODE]",
+                            "[IS_CHECK]",
+                            "[CHECK_TIME]",
+                            "[IS_ERROR]",
+                            "[ERROR_MSG]",
+                            "[ERROR_PERSON]",
+                            "[ERROR_TIME]",
+                            "[UPDATE_TIME]",
+                            "[REJECT_NUM]",
+                            "[REVIEW_NUM]",
+                            "[CORRECT_NUM]",
+                            "[ACCEPT_TIME]",
+                            "[CUST_NAME]",
+                            "[CUST_TYPE]",
+                            "[REVIEW_TIME]",
+                            "[WAIT_CLAIM_TIME]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.STAT_BUSI_INFO"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"b_sno\"",
+                            "\"busi_code\"",
+                            "\"proc_status\"",
+                            "\"yzt_channel\"",
+                            "\"start_time\"",
+                            "\"end_time\"",
+                            "\"busi_time\"",
+                            "\"busi_effect_time\"",
+                            "\"cust_code\"",
+                            "\"cust_org_code\"",
+                            "\"accept_op_code\"",
+                            "\"accept_org_code\"",
+                            "\"is_check\"",
+                            "\"check_time\"",
+                            "\"is_error\"",
+                            "\"error_msg\"",
+                            "\"error_person\"",
+                            "\"error_time\"",
+                            "\"update_time\"",
+                            "\"reject_num\"",
+                            "\"review_num\"",
+                            "\"correct_num\"",
+                            "\"accept_time\"",
+                            "\"cust_name\"",
+                            "\"cust_type\"",
+                            "\"review_time\"",
+                            "\"wait_claim_time\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.stat_busi_info"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.stat_busi_info"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

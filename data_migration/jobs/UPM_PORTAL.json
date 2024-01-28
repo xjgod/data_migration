@@ -1,0 +1,74 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[MENU_ID]",
+                            "[MENU_NAME]",
+                            "[MENU_LINK]",
+                            "[MENU_TYPE]",
+                            "[TAB_NAME]",
+                            "[MENU_HOME]",
+                            "[RENDER_TYPE]",
+                            "[RENDER_ORD]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UPM_PORTAL"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"menu_id\"",
+                            "\"menu_name\"",
+                            "\"menu_link\"",
+                            "\"menu_type\"",
+                            "\"tab_name\"",
+                            "\"menu_home\"",
+                            "\"render_type\"",
+                            "\"render_ord\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.upm_portal"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.upm_portal"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

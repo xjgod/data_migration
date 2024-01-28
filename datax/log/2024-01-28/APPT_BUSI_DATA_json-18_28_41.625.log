@@ -1,0 +1,143 @@
+2024-01-28 18:28:41.894 [main] INFO  MessageSource - JVM TimeZone: GMT+08:00, Locale: zh_CN
+2024-01-28 18:28:41.898 [main] INFO  MessageSource - use Locale: zh_CN timeZone: sun.util.calendar.ZoneInfo[id="GMT+08:00",offset=28800000,dstSavings=0,useDaylight=false,transitions=0,lastRule=null]
+2024-01-28 18:28:41.909 [main] INFO  VMInfo - VMInfo# operatingSystem class => sun.management.OperatingSystemImpl
+2024-01-28 18:28:41.915 [main] INFO  Engine - the machine info  => 
+
+	osInfo:	Oracle Corporation 1.8 25.192-b12
+	jvmInfo:	Windows 10 amd64 10.0
+	cpu num:	16
+
+	totalPhysicalMemory:	-0.00G
+	freePhysicalMemory:	-0.00G
+	maxFileDescriptorCount:	-1
+	currentOpenFileDescriptorCount:	-1
+
+	GC Names	[PS MarkSweep, PS Scavenge]
+
+	MEMORY_NAME                    | allocation_size                | init_size                      
+	PS Eden Space                  | 512.50MB                       | 512.50MB                       
+	Code Cache                     | 240.00MB                       | 2.44MB                         
+	Compressed Class Space         | 1,024.00MB                     | 0.00MB                         
+	PS Survivor Space              | 85.00MB                        | 85.00MB                        
+	PS Old Gen                     | 1,365.50MB                     | 1,365.50MB                     
+	Metaspace                      | -0.00MB                        | 0.00MB                         
+
+
+2024-01-28 18:28:41.949 [main] INFO  Engine - 
+{
+	"content":[
+		{
+			"reader":{
+				"name":"sqlserverreader",
+				"parameter":{
+					"column":[
+						"[SERIAL_NO]",
+						"[APPT_CHNL]",
+						"[APPT_TYPE]",
+						"[APPT_STATUS]",
+						"[WEB_PHASE]",
+						"[BUSI_CODE]",
+						"[SERVICE_CODE]",
+						"[USER_TYPE]",
+						"[ORG_CODE]",
+						"[CUST_CODE]",
+						"[CUACCT_CODE]",
+						"[ID_TYPE]",
+						"[ID_CODE]",
+						"[CUST_NAME]",
+						"[CUST_FNAME]",
+						"[MOBILE_TEL]",
+						"[ACCEPT_PARAM]",
+						"[EXP_DATE]",
+						"[OP_ORG]",
+						"[OP_CODE]",
+						"[OP_SITE]",
+						"[CREATE_DATE]",
+						"[CREATE_TIME]",
+						"[LAST_UPD_TIME]",
+						"[REMARK]",
+						"[ACS_GROUP_ID]",
+						"[KCOP_SNO]",
+						"[KIDM_SNO]"
+					],
+					"connection":[
+						{
+							"jdbcUrl":[
+								"jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+							],
+							"table":[
+								"YGT.dbo.APPT_BUSI_DATA"
+							]
+						}
+					],
+					"password":"*********",
+					"splitPk":"",
+					"username":"sa"
+				}
+			},
+			"writer":{
+				"name":"postgresqlwriter",
+				"parameter":{
+					"column":[
+						"\"serial_no\"",
+						"\"appt_chnl\"",
+						"\"appt_type\"",
+						"\"appt_status\"",
+						"\"web_phase\"",
+						"\"busi_code\"",
+						"\"service_code\"",
+						"\"user_type\"",
+						"\"org_code\"",
+						"\"cust_code\"",
+						"\"cuacct_code\"",
+						"\"id_type\"",
+						"\"id_code\"",
+						"\"cust_name\"",
+						"\"cust_fname\"",
+						"\"mobile_tel\"",
+						"\"accept_param\"",
+						"\"exp_date\"",
+						"\"op_org\"",
+						"\"op_code\"",
+						"\"op_site\"",
+						"\"create_date\"",
+						"\"create_time\"",
+						"\"last_upd_time\"",
+						"\"remark\"",
+						"\"acs_group_id\"",
+						"\"kcop_sno\"",
+						"\"kidm_sno\""
+					],
+					"connection":[
+						{
+							"jdbcUrl":"jdbc:postgresql://10.201.65.24:30100/ygt",
+							"table":[
+								"ygt.ygt.appt_busi_data"
+							]
+						}
+					],
+					"password":"*************",
+					"preSql":[
+						"TRUNCATE TABLE ygt.ygt.appt_busi_data"
+					],
+					"username":"ygt"
+				}
+			}
+		}
+	],
+	"setting":{
+		"errorLimit":{
+			"record":0
+		},
+		"speed":{
+			"byte":-1,
+			"channel":10,
+			"record":-1
+		}
+	}
+}
+
+2024-01-28 18:28:41.967 [main] WARN  Engine - prioriy set to 0, because NumberFormatException, the value is: null
+2024-01-28 18:28:41.968 [main] INFO  PerfTrace - PerfTrace traceId=job_-1, isEnable=false, priority=0
+2024-01-28 18:28:41.969 [main] INFO  JobContainer - DataX jobContainer starts job.
+2024-01-28 18:28:41.971 [main] INFO  JobContainer - Set jobId = 0

@@ -1,0 +1,72 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[EXT_SYS_CODE]",
+                            "[EXT_SYS_NAME]",
+                            "[EXT_SYS_TYPE]",
+                            "[EXT_SYS_STATUS]",
+                            "[BASE_URL]",
+                            "[CACHE_EXPIRES]",
+                            "[CONFIG]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UPM_EXT_SYS"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"ext_sys_code\"",
+                            "\"ext_sys_name\"",
+                            "\"ext_sys_type\"",
+                            "\"ext_sys_status\"",
+                            "\"base_url\"",
+                            "\"cache_expires\"",
+                            "\"config\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.upm_ext_sys"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.upm_ext_sys"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

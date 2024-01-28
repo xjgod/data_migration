@@ -1,0 +1,78 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[BUSI_CODE]",
+                            "[REVIEW_NODE]",
+                            "[IMG_CLS]",
+                            "[IMG_ORD]",
+                            "[IS_EXPAND]",
+                            "[FRAME_NAME]",
+                            "[IS_COMPARE]",
+                            "[COMPARE_IMG]",
+                            "[REVIEW_TASK]",
+                            "[REVIEW_TYPE]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.OPP_BUSI_REVIEW_NODE_IMG_CLS"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"busi_code\"",
+                            "\"review_node\"",
+                            "\"img_cls\"",
+                            "\"img_ord\"",
+                            "\"is_expand\"",
+                            "\"frame_name\"",
+                            "\"is_compare\"",
+                            "\"compare_img\"",
+                            "\"review_task\"",
+                            "\"review_type\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.opp_busi_review_node_img_cls"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.opp_busi_review_node_img_cls"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

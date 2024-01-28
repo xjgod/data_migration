@@ -1,0 +1,114 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[MENU_ID]",
+                            "[MENU_NAME]",
+                            "[PAR_MENU]",
+                            "[MENU_LVL]",
+                            "[MENU_PUR]",
+                            "[MENU_LINK]",
+                            "[MENU_STA]",
+                            "[MENU_ICO]",
+                            "[MENU_BPM_FORM]",
+                            "[MENU_DLL]",
+                            "[MENU_DLL_ENTRY]",
+                            "[BUSI_CODE]",
+                            "[RELA_SYS]",
+                            "[MUTEX_SYS]",
+                            "[INTER_AGENCY_FLAG]",
+                            "[NODE_MODE]",
+                            "[MENU_SPELL]",
+                            "[IS_NAV]",
+                            "[EFT_FLAG]",
+                            "[MENU_TYPE]",
+                            "[BASE_PATH]",
+                            "[AUTHORITY]",
+                            "[QSJGDM]",
+                            "[SUBSYS]",
+                            "[SUBSYS_MENU_ID]",
+                            "[CREATE_VERSION]",
+                            "[UPDATE_VERSION]",
+                            "[UPDATE_TIME]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UPM_MENU_FS_SYNC"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"menu_id\"",
+                            "\"menu_name\"",
+                            "\"par_menu\"",
+                            "\"menu_lvl\"",
+                            "\"menu_pur\"",
+                            "\"menu_link\"",
+                            "\"menu_sta\"",
+                            "\"menu_ico\"",
+                            "\"menu_bpm_form\"",
+                            "\"menu_dll\"",
+                            "\"menu_dll_entry\"",
+                            "\"busi_code\"",
+                            "\"rela_sys\"",
+                            "\"mutex_sys\"",
+                            "\"inter_agency_flag\"",
+                            "\"node_mode\"",
+                            "\"menu_spell\"",
+                            "\"is_nav\"",
+                            "\"eft_flag\"",
+                            "\"menu_type\"",
+                            "\"base_path\"",
+                            "\"authority\"",
+                            "\"qsjgdm\"",
+                            "\"subsys\"",
+                            "\"subsys_menu_id\"",
+                            "\"create_version\"",
+                            "\"update_version\"",
+                            "\"update_time\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.upm_menu_fs_sync"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.upm_menu_fs_sync"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

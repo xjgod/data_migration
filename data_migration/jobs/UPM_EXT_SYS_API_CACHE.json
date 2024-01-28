@@ -1,0 +1,76 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[INNER_API_CODE]",
+                            "[EXT_API_CODE]",
+                            "[CACHE_KEY]",
+                            "[PARAM]",
+                            "[RESULT_CODE]",
+                            "[RESULT_MESSAGE]",
+                            "[RESULT_DATA]",
+                            "[CREATE_TIME]",
+                            "[EXPIRES_TIME]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UPM_EXT_SYS_API_CACHE"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"inner_api_code\"",
+                            "\"ext_api_code\"",
+                            "\"cache_key\"",
+                            "\"param\"",
+                            "\"result_code\"",
+                            "\"result_message\"",
+                            "\"result_data\"",
+                            "\"create_time\"",
+                            "\"expires_time\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.upm_ext_sys_api_cache"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.upm_ext_sys_api_cache"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

@@ -1,0 +1,88 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[BUSI_CODE]",
+                            "[ACS_SEQU]",
+                            "[ACS_TYPE]",
+                            "[CON_ID]",
+                            "[CHK_COND]",
+                            "[RESTRICT_TYPE]",
+                            "[MENU_ID]",
+                            "[MENU_PARA]",
+                            "[HANDLE_TIP]",
+                            "[UPD_TIMESTAMP]",
+                            "[BUSI_SCOPE]",
+                            "[YZT_CHANNEL]",
+                            "[RUN_TIME]",
+                            "[ACS_STATUS]",
+                            "[CON_PARAM]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.OPP_BUSI_ACS_CFG"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"busi_code\"",
+                            "\"acs_sequ\"",
+                            "\"acs_type\"",
+                            "\"con_id\"",
+                            "\"chk_cond\"",
+                            "\"restrict_type\"",
+                            "\"menu_id\"",
+                            "\"menu_para\"",
+                            "\"handle_tip\"",
+                            "\"upd_timestamp\"",
+                            "\"busi_scope\"",
+                            "\"yzt_channel\"",
+                            "\"run_time\"",
+                            "\"acs_status\"",
+                            "\"con_param\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.opp_busi_acs_cfg"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.opp_busi_acs_cfg"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

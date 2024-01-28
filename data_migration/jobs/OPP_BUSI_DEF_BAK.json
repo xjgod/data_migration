@@ -1,0 +1,108 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[BUSI_CODE]",
+                            "[BUSI_NAME]",
+                            "[PROCDEF_KEY]",
+                            "[PRIO_LVL]",
+                            "[BUSI_SCOPE]",
+                            "[HIST_URL]",
+                            "[LAND_PATTERN]",
+                            "[BATCH_YN]",
+                            "[ENABLE_ALLDAY]",
+                            "[IMG_NODE]",
+                            "[DEPENDENCY]",
+                            "[BUSI_CLS]",
+                            "[DEPEND_TYPE]",
+                            "[IMG_NODE_CHANNELS]",
+                            "[BUSI_QULF]",
+                            "[REFRESH_CSDC_CACHE]",
+                            "[CORR_ALLOW_REJECT]",
+                            "[SUPPORT_NODE_REVIEW]",
+                            "[INTELLIGENT_TYPE]",
+                            "[IS_COMP_BUSI]",
+                            "[IS_ALLOW_MULT]",
+                            "[REVIEW_ALLOW_REJECT]",
+                            "[ACCEPT_REMARK_FLAG]",
+                            "[IMG_MUST_REVIEW_CHANNELS]",
+                            "[SUBMIT_TO_SAME_HANDLER]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.OPP_BUSI_DEF_BAK"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"busi_code\"",
+                            "\"busi_name\"",
+                            "\"procdef_key\"",
+                            "\"prio_lvl\"",
+                            "\"busi_scope\"",
+                            "\"hist_url\"",
+                            "\"land_pattern\"",
+                            "\"batch_yn\"",
+                            "\"enable_allday\"",
+                            "\"img_node\"",
+                            "\"dependency\"",
+                            "\"busi_cls\"",
+                            "\"depend_type\"",
+                            "\"img_node_channels\"",
+                            "\"busi_qulf\"",
+                            "\"refresh_csdc_cache\"",
+                            "\"corr_allow_reject\"",
+                            "\"support_node_review\"",
+                            "\"intelligent_type\"",
+                            "\"is_comp_busi\"",
+                            "\"is_allow_mult\"",
+                            "\"review_allow_reject\"",
+                            "\"accept_remark_flag\"",
+                            "\"img_must_review_channels\"",
+                            "\"submit_to_same_handler\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.opp_busi_def_bak"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.opp_busi_def_bak"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

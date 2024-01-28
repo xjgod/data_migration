@@ -1,0 +1,411 @@
+2024-01-28 18:59:24.909 [main] INFO  MessageSource - JVM TimeZone: GMT+08:00, Locale: zh_CN
+2024-01-28 18:59:24.911 [main] INFO  MessageSource - use Locale: zh_CN timeZone: sun.util.calendar.ZoneInfo[id="GMT+08:00",offset=28800000,dstSavings=0,useDaylight=false,transitions=0,lastRule=null]
+2024-01-28 18:59:24.921 [main] INFO  VMInfo - VMInfo# operatingSystem class => sun.management.OperatingSystemImpl
+2024-01-28 18:59:24.926 [main] INFO  Engine - the machine info  => 
+
+	osInfo:	Oracle Corporation 1.8 25.192-b12
+	jvmInfo:	Windows 10 amd64 10.0
+	cpu num:	16
+
+	totalPhysicalMemory:	-0.00G
+	freePhysicalMemory:	-0.00G
+	maxFileDescriptorCount:	-1
+	currentOpenFileDescriptorCount:	-1
+
+	GC Names	[PS MarkSweep, PS Scavenge]
+
+	MEMORY_NAME                    | allocation_size                | init_size                      
+	PS Eden Space                  | 512.50MB                       | 512.50MB                       
+	Code Cache                     | 240.00MB                       | 2.44MB                         
+	Compressed Class Space         | 1,024.00MB                     | 0.00MB                         
+	PS Survivor Space              | 85.00MB                        | 85.00MB                        
+	PS Old Gen                     | 1,365.50MB                     | 1,365.50MB                     
+	Metaspace                      | -0.00MB                        | 0.00MB                         
+
+
+2024-01-28 18:59:24.955 [main] INFO  Engine - 
+{
+	"content":[
+		{
+			"reader":{
+				"name":"sqlserverreader",
+				"parameter":{
+					"column":[
+						"[SERIAL_NO]",
+						"[IN_PARAMS]",
+						"[OCCUR_DATE]",
+						"[OCCUR_TIME]",
+						"[INT_ORG]",
+						"[OPEN_DATE]",
+						"[BIZ_DATE]",
+						"[STK_BIZ_CLS]",
+						"[ACCT_OPENTYPE]",
+						"[YMT_CODE]",
+						"[YMT_STATUS]",
+						"[CUST_CODE]",
+						"[USER_TYPE]",
+						"[TRDACCT]",
+						"[TRDACCT_EX]",
+						"[CUST_FNAME]",
+						"[ID_TYPE]",
+						"[ID_CODE]",
+						"[ID_EXP_DATE]",
+						"[ID_ADDR]",
+						"[ID_TYPE2]",
+						"[ID_CODE2]",
+						"[ID_EXP_DATE2]",
+						"[ID_ADDR2]",
+						"[ACCT_TYPE]",
+						"[ACCT_STATUS]",
+						"[STKPBU]",
+						"[FIRMID]",
+						"[ACCTBIZ_AGTCODE]",
+						"[ACCTBIZ_AGTNAME]",
+						"[ACCTBIZ_ORGCODE]",
+						"[ACCTBIZ_ORGNAME]",
+						"[ACCTBIZ_CODE]",
+						"[ACCTBIZ_EXCODE]",
+						"[ACCTBIZ_CLS]",
+						"[ACCTBIZ_STATUS]",
+						"[ORIGINAL_SN]",
+						"[EXTERNAL_SN]",
+						"[BATCH_SN]",
+						"[CHK_APP_SN]",
+						"[CHK_STATUS]",
+						"[PRINT_FLAG]",
+						"[PRINT_DATE]",
+						"[FRT_BIZ_SN]",
+						"[OP_USER]",
+						"[OP_NAME]",
+						"[OP_ROLE]",
+						"[OP_ORG]",
+						"[CREDE_SCAN]",
+						"[FEE_AMT_EX]",
+						"[FEE_AMT]",
+						"[CLOSE_DATE]",
+						"[FIRST_TRD_DATE]",
+						"[YMT_CODE_SHT]",
+						"[RTN_ERR_CODE]",
+						"[RETURN_MSG]",
+						"[BIRTHDAY]",
+						"[SEX]",
+						"[EDUCATION]",
+						"[OCCU_TYPE]",
+						"[NATIONALITY]",
+						"[CITIZENSHIP]",
+						"[ORGANIZATION_CLS]",
+						"[CAPITAL_ATTR]",
+						"[NATIONAL_ATTR]",
+						"[ORG_SIMPLE_NAME]",
+						"[ORG_ENGLISH_NAME]",
+						"[ORG_SITE]",
+						"[LEGAL_REP]",
+						"[LEGAL_REP_ID_TYPE]",
+						"[LEGAL_REP_ID_CODE]",
+						"[LINKMAN]",
+						"[LINKMAN_ID_TYPE]",
+						"[LINKMAN_ID_CODE]",
+						"[MOBILE_TEL]",
+						"[TEL]",
+						"[FAX]",
+						"[ADDRESS]",
+						"[ZIP_CODE]",
+						"[EMAIL]",
+						"[NOTE_SERVICE]",
+						"[NET_SERVICE]",
+						"[NET_SERVICEPASS]",
+						"[PRDT_NAME]",
+						"[PRDT_VALIDE_DATE]",
+						"[PRDT_CLS]",
+						"[PMAG_NAME]",
+						"[PMAG_ID_TYPE]",
+						"[PMAG_ID_CODE]",
+						"[FDTS_NAME]",
+						"[FDTS_ID_TYPE]",
+						"[FDTS_ID_CODE]",
+						"[ETS_TRADE_FLAG]",
+						"[ETS_ORG_NAME]",
+						"[RELATION_FLAG]",
+						"[RELATION_ORG]",
+						"[RELATION_SEND_FLAG]",
+						"[UNQUALI_FLAG]",
+						"[UNQUALI_TRD_LIMT]",
+						"[UNQUALI_RES_CLS]",
+						"[CLOS_INT_NAME]",
+						"[DEBT_BEAR_WAY]",
+						"[PROPER_CLS]",
+						"[SIGN_CLS]",
+						"[SIGN_DATE]",
+						"[REMOVE_LMT_CLS]",
+						"[INT_ACCT_CODE]",
+						"[FIR_ORG_NAME]",
+						"[DECLARE_DATE]",
+						"[NEW_ID_TYPE]",
+						"[NEW_ID_CODE]",
+						"[NEW_ID_TYPE2]",
+						"[NEW_ID_CODE2]",
+						"[NEW_CUST_FNAME]",
+						"[AGT_NET_NAME]",
+						"[AGT_ORG_NAME]",
+						"[MDF_DATE]",
+						"[MDF_TIME]",
+						"[ATTACHMENT_NAME]",
+						"[ATTACHMENT_LEN]",
+						"[UNQUALI_ORGNAME]",
+						"[OPPUGN_FLAG]",
+						"[BUS_SCOPE]",
+						"[BUS_STATUS]",
+						"[REG_CAPITAL]",
+						"[CHECK_FLAG]",
+						"[REGORG_NAME]",
+						"[ADMIN_DIVISIONS]",
+						"[OPERATING_BEGIN]",
+						"[OPERATING_END]",
+						"[ECONOMIC_CLS]",
+						"[LAST_DATE]",
+						"[BUSS_ADDR]",
+						"[ECONOMIC_INDUSTRY]",
+						"[LEADER_DEPARTMENT]",
+						"[STAFF_NUMS]",
+						"[ORGANIZATION_TYPE]",
+						"[ZD_REMARK1]",
+						"[ZD_REMARK3]",
+						"[ZD_REMARK2]",
+						"[ZD_OP_CHANNEL]"
+					],
+					"connection":[
+						{
+							"jdbcUrl":[
+								"jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+							],
+							"table":[
+								"YGT.dbo.OPP_CSDC_SYNC_LOG"
+							]
+						}
+					],
+					"password":"*********",
+					"splitPk":"",
+					"username":"sa"
+				}
+			},
+			"writer":{
+				"name":"postgresqlwriter",
+				"parameter":{
+					"column":[
+						"\"serial_no\"",
+						"\"in_params\"",
+						"\"occur_date\"",
+						"\"occur_time\"",
+						"\"int_org\"",
+						"\"open_date\"",
+						"\"biz_date\"",
+						"\"stk_biz_cls\"",
+						"\"acct_opentype\"",
+						"\"ymt_code\"",
+						"\"ymt_status\"",
+						"\"cust_code\"",
+						"\"user_type\"",
+						"\"trdacct\"",
+						"\"trdacct_ex\"",
+						"\"cust_fname\"",
+						"\"id_type\"",
+						"\"id_code\"",
+						"\"id_exp_date\"",
+						"\"id_addr\"",
+						"\"id_type2\"",
+						"\"id_code2\"",
+						"\"id_exp_date2\"",
+						"\"id_addr2\"",
+						"\"acct_type\"",
+						"\"acct_status\"",
+						"\"stkpbu\"",
+						"\"firmid\"",
+						"\"acctbiz_agtcode\"",
+						"\"acctbiz_agtname\"",
+						"\"acctbiz_orgcode\"",
+						"\"acctbiz_orgname\"",
+						"\"acctbiz_code\"",
+						"\"acctbiz_excode\"",
+						"\"acctbiz_cls\"",
+						"\"acctbiz_status\"",
+						"\"original_sn\"",
+						"\"external_sn\"",
+						"\"batch_sn\"",
+						"\"chk_app_sn\"",
+						"\"chk_status\"",
+						"\"print_flag\"",
+						"\"print_date\"",
+						"\"frt_biz_sn\"",
+						"\"op_user\"",
+						"\"op_name\"",
+						"\"op_role\"",
+						"\"op_org\"",
+						"\"crede_scan\"",
+						"\"fee_amt_ex\"",
+						"\"fee_amt\"",
+						"\"close_date\"",
+						"\"first_trd_date\"",
+						"\"ymt_code_sht\"",
+						"\"rtn_err_code\"",
+						"\"return_msg\"",
+						"\"birthday\"",
+						"\"sex\"",
+						"\"education\"",
+						"\"occu_type\"",
+						"\"nationality\"",
+						"\"citizenship\"",
+						"\"organization_cls\"",
+						"\"capital_attr\"",
+						"\"national_attr\"",
+						"\"org_simple_name\"",
+						"\"org_english_name\"",
+						"\"org_site\"",
+						"\"legal_rep\"",
+						"\"legal_rep_id_type\"",
+						"\"legal_rep_id_code\"",
+						"\"linkman\"",
+						"\"linkman_id_type\"",
+						"\"linkman_id_code\"",
+						"\"mobile_tel\"",
+						"\"tel\"",
+						"\"fax\"",
+						"\"address\"",
+						"\"zip_code\"",
+						"\"email\"",
+						"\"note_service\"",
+						"\"net_service\"",
+						"\"net_servicepass\"",
+						"\"prdt_name\"",
+						"\"prdt_valide_date\"",
+						"\"prdt_cls\"",
+						"\"pmag_name\"",
+						"\"pmag_id_type\"",
+						"\"pmag_id_code\"",
+						"\"fdts_name\"",
+						"\"fdts_id_type\"",
+						"\"fdts_id_code\"",
+						"\"ets_trade_flag\"",
+						"\"ets_org_name\"",
+						"\"relation_flag\"",
+						"\"relation_org\"",
+						"\"relation_send_flag\"",
+						"\"unquali_flag\"",
+						"\"unquali_trd_limt\"",
+						"\"unquali_res_cls\"",
+						"\"clos_int_name\"",
+						"\"debt_bear_way\"",
+						"\"proper_cls\"",
+						"\"sign_cls\"",
+						"\"sign_date\"",
+						"\"remove_lmt_cls\"",
+						"\"int_acct_code\"",
+						"\"fir_org_name\"",
+						"\"declare_date\"",
+						"\"new_id_type\"",
+						"\"new_id_code\"",
+						"\"new_id_type2\"",
+						"\"new_id_code2\"",
+						"\"new_cust_fname\"",
+						"\"agt_net_name\"",
+						"\"agt_org_name\"",
+						"\"mdf_date\"",
+						"\"mdf_time\"",
+						"\"attachment_name\"",
+						"\"attachment_len\"",
+						"\"unquali_orgname\"",
+						"\"oppugn_flag\"",
+						"\"bus_scope\"",
+						"\"bus_status\"",
+						"\"reg_capital\"",
+						"\"check_flag\"",
+						"\"regorg_name\"",
+						"\"admin_divisions\"",
+						"\"operating_begin\"",
+						"\"operating_end\"",
+						"\"economic_cls\"",
+						"\"last_date\"",
+						"\"buss_addr\"",
+						"\"economic_industry\"",
+						"\"leader_department\"",
+						"\"staff_nums\"",
+						"\"organization_type\"",
+						"\"zd_remark1\"",
+						"\"zd_remark3\"",
+						"\"zd_remark2\"",
+						"\"zd_op_channel\""
+					],
+					"connection":[
+						{
+							"jdbcUrl":"jdbc:postgresql://10.201.65.24:30100/ygt",
+							"table":[
+								"ygt.ygt.opp_csdc_sync_log"
+							]
+						}
+					],
+					"password":"*************",
+					"preSql":[
+						"TRUNCATE TABLE ygt.ygt.opp_csdc_sync_log"
+					],
+					"username":"ygt"
+				}
+			}
+		}
+	],
+	"setting":{
+		"errorLimit":{
+			"record":0
+		},
+		"speed":{
+			"byte":-1,
+			"channel":10,
+			"record":-1
+		}
+	}
+}
+
+2024-01-28 18:59:24.972 [main] WARN  Engine - prioriy set to 0, because NumberFormatException, the value is: null
+2024-01-28 18:59:24.973 [main] INFO  PerfTrace - PerfTrace traceId=job_-1, isEnable=false, priority=0
+2024-01-28 18:59:24.973 [main] INFO  JobContainer - DataX jobContainer starts job.
+2024-01-28 18:59:24.976 [main] INFO  JobContainer - Set jobId = 0
+2024-01-28 18:59:32.668 [job-0] INFO  OriginalConfPretreatmentUtil - Available jdbcUrl:jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;.
+2024-01-28 18:59:32.917 [job-0] INFO  OriginalConfPretreatmentUtil - table:[YGT.dbo.OPP_CSDC_SYNC_LOG] has columns:[SERIAL_NO,IN_PARAMS,OCCUR_DATE,OCCUR_TIME,INT_ORG,OPEN_DATE,BIZ_DATE,STK_BIZ_CLS,ACCT_OPENTYPE,YMT_CODE,YMT_STATUS,CUST_CODE,USER_TYPE,TRDACCT,TRDACCT_EX,CUST_FNAME,ID_TYPE,ID_CODE,ID_EXP_DATE,ID_ADDR,ID_TYPE2,ID_CODE2,ID_EXP_DATE2,ID_ADDR2,ACCT_TYPE,ACCT_STATUS,STKPBU,FIRMID,ACCTBIZ_AGTCODE,ACCTBIZ_AGTNAME,ACCTBIZ_ORGCODE,ACCTBIZ_ORGNAME,ACCTBIZ_CODE,ACCTBIZ_EXCODE,ACCTBIZ_CLS,ACCTBIZ_STATUS,ORIGINAL_SN,EXTERNAL_SN,BATCH_SN,CHK_APP_SN,CHK_STATUS,PRINT_FLAG,PRINT_DATE,FRT_BIZ_SN,OP_USER,OP_NAME,OP_ROLE,OP_ORG,CREDE_SCAN,FEE_AMT_EX,FEE_AMT,CLOSE_DATE,FIRST_TRD_DATE,YMT_CODE_SHT,RTN_ERR_CODE,RETURN_MSG,BIRTHDAY,SEX,EDUCATION,OCCU_TYPE,NATIONALITY,CITIZENSHIP,ORGANIZATION_CLS,CAPITAL_ATTR,NATIONAL_ATTR,ORG_SIMPLE_NAME,ORG_ENGLISH_NAME,ORG_SITE,LEGAL_REP,LEGAL_REP_ID_TYPE,LEGAL_REP_ID_CODE,LINKMAN,LINKMAN_ID_TYPE,LINKMAN_ID_CODE,MOBILE_TEL,TEL,FAX,ADDRESS,ZIP_CODE,EMAIL,NOTE_SERVICE,NET_SERVICE,NET_SERVICEPASS,PRDT_NAME,PRDT_VALIDE_DATE,PRDT_CLS,PMAG_NAME,PMAG_ID_TYPE,PMAG_ID_CODE,FDTS_NAME,FDTS_ID_TYPE,FDTS_ID_CODE,ETS_TRADE_FLAG,ETS_ORG_NAME,RELATION_FLAG,RELATION_ORG,RELATION_SEND_FLAG,UNQUALI_FLAG,UNQUALI_TRD_LIMT,UNQUALI_RES_CLS,CLOS_INT_NAME,DEBT_BEAR_WAY,PROPER_CLS,SIGN_CLS,SIGN_DATE,REMOVE_LMT_CLS,INT_ACCT_CODE,FIR_ORG_NAME,DECLARE_DATE,NEW_ID_TYPE,NEW_ID_CODE,NEW_ID_TYPE2,NEW_ID_CODE2,NEW_CUST_FNAME,AGT_NET_NAME,AGT_ORG_NAME,MDF_DATE,MDF_TIME,ATTACHMENT_NAME,ATTACHMENT_LEN,UNQUALI_ORGNAME,OPPUGN_FLAG,BUS_SCOPE,BUS_STATUS,REG_CAPITAL,CHECK_FLAG,REGORG_NAME,ADMIN_DIVISIONS,OPERATING_BEGIN,OPERATING_END,ECONOMIC_CLS,LAST_DATE,BUSS_ADDR,ECONOMIC_INDUSTRY,LEADER_DEPARTMENT,STAFF_NUMS,ORGANIZATION_TYPE,ZD_REMARK1,ZD_REMARK3,ZD_REMARK2,ZD_OP_CHANNEL].
+2024-01-28 18:59:33.491 [job-0] INFO  OriginalConfPretreatmentUtil - table:[ygt.ygt.opp_csdc_sync_log] all columns:[
+serial_no,in_params,occur_date,occur_time,int_org,open_date,biz_date,stk_biz_cls,acct_opentype,ymt_code,ymt_status,cust_code,user_type,trdacct,trdacct_ex,cust_fname,id_type,id_code,id_exp_date,id_addr,id_type2,id_code2,id_exp_date2,id_addr2,acct_type,acct_status,stkpbu,firmid,acctbiz_agtcode,acctbiz_agtname,acctbiz_orgcode,acctbiz_orgname,acctbiz_code,acctbiz_excode,acctbiz_cls,acctbiz_status,original_sn,external_sn,batch_sn,chk_app_sn,chk_status,print_flag,print_date,frt_biz_sn,op_user,op_name,op_role,op_org,crede_scan,fee_amt_ex,fee_amt,close_date,first_trd_date,ymt_code_sht,rtn_err_code,return_msg,birthday,sex,education,occu_type,nationality,citizenship,organization_cls,capital_attr,national_attr,org_simple_name,org_english_name,org_site,legal_rep,legal_rep_id_type,legal_rep_id_code,linkman,linkman_id_type,linkman_id_code,mobile_tel,tel,fax,address,zip_code,email,note_service,net_service,net_servicepass,prdt_name,prdt_valide_date,prdt_cls,pmag_name,pmag_id_type,pmag_id_code,fdts_name,fdts_id_type,fdts_id_code,ets_trade_flag,ets_org_name,relation_flag,relation_org,relation_send_flag,unquali_flag,unquali_trd_limt,unquali_res_cls,clos_int_name,debt_bear_way,proper_cls,sign_cls,sign_date,remove_lmt_cls,int_acct_code,fir_org_name,declare_date,new_id_type,new_id_code,new_id_type2,new_id_code2,new_cust_fname,agt_net_name,agt_org_name,mdf_date,mdf_time,attachment_name,attachment_len,unquali_orgname,oppugn_flag,bus_scope,bus_status,reg_capital,check_flag,regorg_name,admin_divisions,operating_begin,operating_end,economic_cls,last_date,buss_addr,economic_industry,leader_department,staff_nums,organization_type,zd_remark1,zd_remark3,zd_remark2,zd_op_channel
+].
+2024-01-28 18:59:34.009 [job-0] INFO  OriginalConfPretreatmentUtil - Write data [
+INSERT INTO %s ("serial_no","in_params","occur_date","occur_time","int_org","open_date","biz_date","stk_biz_cls","acct_opentype","ymt_code","ymt_status","cust_code","user_type","trdacct","trdacct_ex","cust_fname","id_type","id_code","id_exp_date","id_addr","id_type2","id_code2","id_exp_date2","id_addr2","acct_type","acct_status","stkpbu","firmid","acctbiz_agtcode","acctbiz_agtname","acctbiz_orgcode","acctbiz_orgname","acctbiz_code","acctbiz_excode","acctbiz_cls","acctbiz_status","original_sn","external_sn","batch_sn","chk_app_sn","chk_status","print_flag","print_date","frt_biz_sn","op_user","op_name","op_role","op_org","crede_scan","fee_amt_ex","fee_amt","close_date","first_trd_date","ymt_code_sht","rtn_err_code","return_msg","birthday","sex","education","occu_type","nationality","citizenship","organization_cls","capital_attr","national_attr","org_simple_name","org_english_name","org_site","legal_rep","legal_rep_id_type","legal_rep_id_code","linkman","linkman_id_type","linkman_id_code","mobile_tel","tel","fax","address","zip_code","email","note_service","net_service","net_servicepass","prdt_name","prdt_valide_date","prdt_cls","pmag_name","pmag_id_type","pmag_id_code","fdts_name","fdts_id_type","fdts_id_code","ets_trade_flag","ets_org_name","relation_flag","relation_org","relation_send_flag","unquali_flag","unquali_trd_limt","unquali_res_cls","clos_int_name","debt_bear_way","proper_cls","sign_cls","sign_date","remove_lmt_cls","int_acct_code","fir_org_name","declare_date","new_id_type","new_id_code","new_id_type2","new_id_code2","new_cust_fname","agt_net_name","agt_org_name","mdf_date","mdf_time","attachment_name","attachment_len","unquali_orgname","oppugn_flag","bus_scope","bus_status","reg_capital","check_flag","regorg_name","admin_divisions","operating_begin","operating_end","economic_cls","last_date","buss_addr","economic_industry","leader_department","staff_nums","organization_type","zd_remark1","zd_remark3","zd_remark2","zd_op_channel") VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+], which jdbcUrl like:[jdbc:postgresql://10.201.65.24:30100/ygt]
+2024-01-28 18:59:34.009 [job-0] INFO  JobContainer - jobContainer starts to do prepare ...
+2024-01-28 18:59:34.010 [job-0] INFO  JobContainer - DataX Reader.Job [sqlserverreader] do prepare work .
+2024-01-28 18:59:34.010 [job-0] INFO  JobContainer - DataX Writer.Job [postgresqlwriter] do prepare work .
+2024-01-28 18:59:34.467 [job-0] INFO  CommonRdbmsWriter$Job - Begin to execute preSqls:[TRUNCATE TABLE ygt.ygt.opp_csdc_sync_log]. context info:jdbc:postgresql://10.201.65.24:30100/ygt.
+2024-01-28 18:59:34.522 [job-0] ERROR JobContainer - Exception when job run
+com.alibaba.datax.common.exception.DataXException: Code:[DBUtilErrorCode-06], Description:[执行数据库 Sql 失败, 请检查您的配置的 column/table/where/querySql或者向 DBA 寻求帮助.].  - 执行的SQL为: TRUNCATE TABLE ygt.ygt.opp_csdc_sync_log 具体错误信息为：org.postgresql.util.PSQLException: [10.10.10.58:61072/10.201.65.24:30100] ERROR: cannot execute TRUNCATE TABLE in a read-only transaction
+	at com.alibaba.datax.common.exception.DataXException.asDataXException(DataXException.java:30) ~[datax-common-0.0.1-SNAPSHOT.jar:na]
+	at com.alibaba.datax.plugin.rdbms.util.RdbmsException.asQueryException(RdbmsException.java:97) ~[plugin-rdbms-util-0.0.1-SNAPSHOT.jar:na]
+	at com.alibaba.datax.plugin.rdbms.writer.util.WriterUtil.executeSqls(WriterUtil.java:105) ~[plugin-rdbms-util-0.0.1-SNAPSHOT.jar:na]
+	at com.alibaba.datax.plugin.rdbms.writer.CommonRdbmsWriter$Job.prepare(CommonRdbmsWriter.java:121) ~[plugin-rdbms-util-0.0.1-SNAPSHOT.jar:na]
+	at com.alibaba.datax.plugin.writer.postgresqlwriter.PostgresqlWriter$Job.prepare(PostgresqlWriter.java:38) ~[postgresqlwriter-0.0.1-SNAPSHOT.jar:na]
+	at com.alibaba.datax.core.job.JobContainer.prepareJobWriter(JobContainer.java:724) ~[datax-core-0.0.1-SNAPSHOT.jar:na]
+	at com.alibaba.datax.core.job.JobContainer.prepare(JobContainer.java:309) ~[datax-core-0.0.1-SNAPSHOT.jar:na]
+	at com.alibaba.datax.core.job.JobContainer.start(JobContainer.java:115) ~[datax-core-0.0.1-SNAPSHOT.jar:na]
+	at com.alibaba.datax.core.Engine.start(Engine.java:93) [datax-core-0.0.1-SNAPSHOT.jar:na]
+	at com.alibaba.datax.core.Engine.entry(Engine.java:175) [datax-core-0.0.1-SNAPSHOT.jar:na]
+	at com.alibaba.datax.core.Engine.main(Engine.java:208) [datax-core-0.0.1-SNAPSHOT.jar:na]
+2024-01-28 18:59:34.526 [job-0] INFO  StandAloneJobContainerCommunicator - Total 0 records, 0 bytes | Speed 0B/s, 0 records/s | Error 0 records, 0 bytes |  All Task WaitWriterTime 0.000s |  All Task WaitReaderTime 0.000s | Percentage 0.00%
+2024-01-28 18:59:34.527 [job-0] ERROR Engine - 
+
+经DataX智能分析,该任务最可能的错误原因是:
+com.alibaba.datax.common.exception.DataXException: Code:[DBUtilErrorCode-06], Description:[执行数据库 Sql 失败, 请检查您的配置的 column/table/where/querySql或者向 DBA 寻求帮助.].  - 执行的SQL为: TRUNCATE TABLE ygt.ygt.opp_csdc_sync_log 具体错误信息为：org.postgresql.util.PSQLException: [10.10.10.58:61072/10.201.65.24:30100] ERROR: cannot execute TRUNCATE TABLE in a read-only transaction
+	at com.alibaba.datax.common.exception.DataXException.asDataXException(DataXException.java:30)
+	at com.alibaba.datax.plugin.rdbms.util.RdbmsException.asQueryException(RdbmsException.java:97)
+	at com.alibaba.datax.plugin.rdbms.writer.util.WriterUtil.executeSqls(WriterUtil.java:105)
+	at com.alibaba.datax.plugin.rdbms.writer.CommonRdbmsWriter$Job.prepare(CommonRdbmsWriter.java:121)
+	at com.alibaba.datax.plugin.writer.postgresqlwriter.PostgresqlWriter$Job.prepare(PostgresqlWriter.java:38)
+	at com.alibaba.datax.core.job.JobContainer.prepareJobWriter(JobContainer.java:724)
+	at com.alibaba.datax.core.job.JobContainer.prepare(JobContainer.java:309)
+	at com.alibaba.datax.core.job.JobContainer.start(JobContainer.java:115)
+	at com.alibaba.datax.core.Engine.start(Engine.java:93)
+	at com.alibaba.datax.core.Engine.entry(Engine.java:175)
+	at com.alibaba.datax.core.Engine.main(Engine.java:208)
+

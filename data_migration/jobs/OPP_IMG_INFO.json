@@ -1,0 +1,114 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[IMG_SN]",
+                            "[IMG_NAME]",
+                            "[IMG_PATH]",
+                            "[IMG_PAGE_CNT]",
+                            "[CUST_CODE]",
+                            "[CUST_NAME]",
+                            "[ID_TYPE]",
+                            "[ID_CODE]",
+                            "[IMG_CLS]",
+                            "[IMG_FMT]",
+                            "[IMG_SIZE]",
+                            "[IMG_WIDTH]",
+                            "[IMG_HEIGHT]",
+                            "[IMG_STATUS]",
+                            "[BITMAP_TYPE]",
+                            "[BITMAP_BITS]",
+                            "[BITMAP_XDPI]",
+                            "[BITMAP_YDPI]",
+                            "[OP_USER_CODE]",
+                            "[OP_USER_NAME]",
+                            "[OP_DATE]",
+                            "[OP_TIME]",
+                            "[IMG_UPLOAD]",
+                            "[ACC_IMG_ID]",
+                            "[PAGE_NUM]",
+                            "[IS_DEFINED_CLS]",
+                            "[IMG_REMARK]",
+                            "[IMG_SEE]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.OPP_IMG_INFO"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"img_sn\"",
+                            "\"img_name\"",
+                            "\"img_path\"",
+                            "\"img_page_cnt\"",
+                            "\"cust_code\"",
+                            "\"cust_name\"",
+                            "\"id_type\"",
+                            "\"id_code\"",
+                            "\"img_cls\"",
+                            "\"img_fmt\"",
+                            "\"img_size\"",
+                            "\"img_width\"",
+                            "\"img_height\"",
+                            "\"img_status\"",
+                            "\"bitmap_type\"",
+                            "\"bitmap_bits\"",
+                            "\"bitmap_xdpi\"",
+                            "\"bitmap_ydpi\"",
+                            "\"op_user_code\"",
+                            "\"op_user_name\"",
+                            "\"op_date\"",
+                            "\"op_time\"",
+                            "\"img_upload\"",
+                            "\"acc_img_id\"",
+                            "\"page_num\"",
+                            "\"is_defined_cls\"",
+                            "\"img_remark\"",
+                            "\"img_see\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.opp_img_info"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.opp_img_info"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

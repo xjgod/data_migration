@@ -1,0 +1,84 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[OP_CODE]",
+                            "[B_SNO]",
+                            "[NODE_KEY]",
+                            "[BUSI_CODE]",
+                            "[EFFECT_TIME]",
+                            "[INITIAL_SCORE]",
+                            "[PERFORM_SCORE]",
+                            "[UPDATE_TIME]",
+                            "[ADJUST_TYPE]",
+                            "[ADJUST_SCORE]",
+                            "[ADJUST_REMARK]",
+                            "[HANDLE_NUM]",
+                            "[BREJECT_NUM]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.STAT_EMP_BUSI_SCORE"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"op_code\"",
+                            "\"b_sno\"",
+                            "\"node_key\"",
+                            "\"busi_code\"",
+                            "\"effect_time\"",
+                            "\"initial_score\"",
+                            "\"perform_score\"",
+                            "\"update_time\"",
+                            "\"adjust_type\"",
+                            "\"adjust_score\"",
+                            "\"adjust_remark\"",
+                            "\"handle_num\"",
+                            "\"breject_num\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.stat_emp_busi_score"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.stat_emp_busi_score"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

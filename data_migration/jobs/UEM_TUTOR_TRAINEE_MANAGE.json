@@ -1,0 +1,64 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[TUTOR_CODE]",
+                            "[TRAINEE_CODE]",
+                            "[TRAINEE_STATUS]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UEM_TUTOR_TRAINEE_MANAGE"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"tutor_code\"",
+                            "\"trainee_code\"",
+                            "\"trainee_status\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.uem_tutor_trainee_manage"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.uem_tutor_trainee_manage"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

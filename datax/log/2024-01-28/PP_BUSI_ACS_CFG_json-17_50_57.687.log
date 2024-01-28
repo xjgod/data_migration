@@ -1,0 +1,117 @@
+2024-01-28 17:50:57.916 [main] INFO  MessageSource - JVM TimeZone: GMT+08:00, Locale: zh_CN
+2024-01-28 17:50:57.918 [main] INFO  MessageSource - use Locale: zh_CN timeZone: sun.util.calendar.ZoneInfo[id="GMT+08:00",offset=28800000,dstSavings=0,useDaylight=false,transitions=0,lastRule=null]
+2024-01-28 17:50:57.928 [main] INFO  VMInfo - VMInfo# operatingSystem class => sun.management.OperatingSystemImpl
+2024-01-28 17:50:57.934 [main] INFO  Engine - the machine info  => 
+
+	osInfo:	Oracle Corporation 1.8 25.192-b12
+	jvmInfo:	Windows 10 amd64 10.0
+	cpu num:	16
+
+	totalPhysicalMemory:	-0.00G
+	freePhysicalMemory:	-0.00G
+	maxFileDescriptorCount:	-1
+	currentOpenFileDescriptorCount:	-1
+
+	GC Names	[PS MarkSweep, PS Scavenge]
+
+	MEMORY_NAME                    | allocation_size                | init_size                      
+	PS Eden Space                  | 512.50MB                       | 512.50MB                       
+	Code Cache                     | 240.00MB                       | 2.44MB                         
+	Compressed Class Space         | 1,024.00MB                     | 0.00MB                         
+	PS Survivor Space              | 85.00MB                        | 85.00MB                        
+	PS Old Gen                     | 1,365.50MB                     | 1,365.50MB                     
+	Metaspace                      | -0.00MB                        | 0.00MB                         
+
+
+2024-01-28 17:50:57.954 [main] INFO  Engine - 
+{
+	"content":[
+		{
+			"reader":{
+				"name":"sqlserverreader",
+				"parameter":{
+					"column":[
+						"[BUSI_CODE]",
+						"[ACS_SEQU]",
+						"[ACS_TYPE]",
+						"[CON_ID]",
+						"[CHK_COND]",
+						"[RESTRICT_TYPE]",
+						"[MENU_ID]",
+						"[MENU_PARA]",
+						"[HANDLE_TIP]",
+						"[UPD_TIMESTAMP]",
+						"[BUSI_SCOPE]",
+						"[YZT_CHANNEL]",
+						"[RUN_TIME]",
+						"[ACS_STATUS]",
+						"[CON_PARAM]"
+					],
+					"connection":[
+						{
+							"jdbcUrl":[
+								"jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+							],
+							"table":[
+								"YGT.dbo.OPP_BUSI_ACS_CFG"
+							]
+						}
+					],
+					"password":"*********",
+					"splitPk":"",
+					"username":"sa"
+				}
+			},
+			"writer":{
+				"name":"postgresqlwriter",
+				"parameter":{
+					"column":[
+						"\"busi_code\"",
+						"\"acs_sequ\"",
+						"\"acs_type\"",
+						"\"con_id\"",
+						"\"chk_cond\"",
+						"\"restrict_type\"",
+						"\"menu_id\"",
+						"\"menu_para\"",
+						"\"handle_tip\"",
+						"\"upd_timestamp\"",
+						"\"busi_scope\"",
+						"\"yzt_channel\"",
+						"\"run_time\"",
+						"\"acs_status\"",
+						"\"con_param\""
+					],
+					"connection":[
+						{
+							"jdbcUrl":"jdbc:postgresql://10.201.65.24:30100/ygt",
+							"table":[
+								"ygt.ygt.opp_busi_acs_cfg"
+							]
+						}
+					],
+					"password":"*************",
+					"preSql":[
+						"TRUNCATE TABLE ygt.ygt.opp_busi_acs_cfg"
+					],
+					"username":"ygt"
+				}
+			}
+		}
+	],
+	"setting":{
+		"errorLimit":{
+			"record":0
+		},
+		"speed":{
+			"byte":-1,
+			"channel":10,
+			"record":-1
+		}
+	}
+}
+
+2024-01-28 17:50:57.973 [main] WARN  Engine - prioriy set to 0, because NumberFormatException, the value is: null
+2024-01-28 17:50:57.974 [main] INFO  PerfTrace - PerfTrace traceId=job_-1, isEnable=false, priority=0
+2024-01-28 17:50:57.974 [main] INFO  JobContainer - DataX jobContainer starts job.
+2024-01-28 17:50:57.976 [main] INFO  JobContainer - Set jobId = 0

@@ -1,0 +1,86 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[LEGAL_ID]",
+                            "[USER_ROLE]",
+                            "[USE_SCOPE]",
+                            "[AUTH_TYPE]",
+                            "[VALID_CHAR]",
+                            "[VALID_DAYS]",
+                            "[MIN_LEN]",
+                            "[MAX_LEN]",
+                            "[MAX_FAIL_NUM]",
+                            "[LOCK_SECOND]",
+                            "[CHECK_WEAK]",
+                            "[CHECK_HIST]",
+                            "[STORE_HIST_NUM]",
+                            "[CHK_CHR_KIND]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UPM_AUTH_POLICY"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"legal_id\"",
+                            "\"user_role\"",
+                            "\"use_scope\"",
+                            "\"auth_type\"",
+                            "\"valid_char\"",
+                            "\"valid_days\"",
+                            "\"min_len\"",
+                            "\"max_len\"",
+                            "\"max_fail_num\"",
+                            "\"lock_second\"",
+                            "\"check_weak\"",
+                            "\"check_hist\"",
+                            "\"store_hist_num\"",
+                            "\"chk_chr_kind\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.upm_auth_policy"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.upm_auth_policy"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

@@ -1,0 +1,108 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[B_SNO]",
+                            "[BATCH_CODE]",
+                            "[CUST_ORG_CODE]",
+                            "[BUSI_CODE]",
+                            "[ACCEPT_ORG_CODE]",
+                            "[CHECK_STATUS]",
+                            "[CHECK_START_TIME]",
+                            "[CHECK_HANDLER]",
+                            "[CHECK_REMARK]",
+                            "[CHECK_RESULT]",
+                            "[CHECK_LVL]",
+                            "[RESPON_NODE_KEY]",
+                            "[CORRECT_HANDLER]",
+                            "[CORRECT_RESULT]",
+                            "[RELATE_B_SNO]",
+                            "[CORRECT_REMARK]",
+                            "[UPDATE_TIME]",
+                            "[CORRECT_LVL]",
+                            "[IS_STAT]",
+                            "[USER_TYPE]",
+                            "[CHECK_ORG_CLS]",
+                            "[CHECK_POST]",
+                            "[CHECK_TIMES]",
+                            "[LAST_CHECK_STAT]",
+                            "[IS_CLOSED]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.OPP_BUSI_SPOTCHECK_DETAIL_BAK"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"b_sno\"",
+                            "\"batch_code\"",
+                            "\"cust_org_code\"",
+                            "\"busi_code\"",
+                            "\"accept_org_code\"",
+                            "\"check_status\"",
+                            "\"check_start_time\"",
+                            "\"check_handler\"",
+                            "\"check_remark\"",
+                            "\"check_result\"",
+                            "\"check_lvl\"",
+                            "\"respon_node_key\"",
+                            "\"correct_handler\"",
+                            "\"correct_result\"",
+                            "\"relate_b_sno\"",
+                            "\"correct_remark\"",
+                            "\"update_time\"",
+                            "\"correct_lvl\"",
+                            "\"is_stat\"",
+                            "\"user_type\"",
+                            "\"check_org_cls\"",
+                            "\"check_post\"",
+                            "\"check_times\"",
+                            "\"last_check_stat\"",
+                            "\"is_closed\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.opp_busi_spotcheck_detail_bak"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.opp_busi_spotcheck_detail_bak"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

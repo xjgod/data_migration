@@ -1,0 +1,90 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[MSG_SNO]",
+                            "[MSG_TITLE]",
+                            "[MSG_CONTENT]",
+                            "[MSG_FILE]",
+                            "[EDITOR]",
+                            "[TARGET_POST]",
+                            "[SCOPE_TYPE]",
+                            "[SCOPE_VAL]",
+                            "[PUBLISH_TIME]",
+                            "[MSG_STATUS]",
+                            "[REVIEWER]",
+                            "[REVIEW_TIME]",
+                            "[REMARK]",
+                            "[UPDATE_TIME]",
+                            "[MSG_TYPE]",
+                            "[MSG_DATA]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.OPP_MSG_INFO"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"msg_sno\"",
+                            "\"msg_title\"",
+                            "\"msg_content\"",
+                            "\"msg_file\"",
+                            "\"editor\"",
+                            "\"target_post\"",
+                            "\"scope_type\"",
+                            "\"scope_val\"",
+                            "\"publish_time\"",
+                            "\"msg_status\"",
+                            "\"reviewer\"",
+                            "\"review_time\"",
+                            "\"remark\"",
+                            "\"update_time\"",
+                            "\"msg_type\"",
+                            "\"msg_data\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.opp_msg_info"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.opp_msg_info"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

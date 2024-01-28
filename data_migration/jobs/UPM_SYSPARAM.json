@@ -1,0 +1,98 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[PAR_CODE]",
+                            "[PAR_NAME]",
+                            "[PAR_VAL]",
+                            "[MANA_TYPE]",
+                            "[BUS_TYPE]",
+                            "[PAR_LVL]",
+                            "[MAINTAIN_FLAG]",
+                            "[DATA_TYPE]",
+                            "[VALID_LEN]",
+                            "[VALID_DEC]",
+                            "[MAX_VAL]",
+                            "[MIN_VAL]",
+                            "[DFT_VAL]",
+                            "[VALID_CHAR]",
+                            "[CTRL_ID]",
+                            "[CTRL_DATA]",
+                            "[REMARK]",
+                            "[SYS_CODE]",
+                            "[NODE_ID]",
+                            "[LEGAL_ID]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UPM_SYSPARAM"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"par_code\"",
+                            "\"par_name\"",
+                            "\"par_val\"",
+                            "\"mana_type\"",
+                            "\"bus_type\"",
+                            "\"par_lvl\"",
+                            "\"maintain_flag\"",
+                            "\"data_type\"",
+                            "\"valid_len\"",
+                            "\"valid_dec\"",
+                            "\"max_val\"",
+                            "\"min_val\"",
+                            "\"dft_val\"",
+                            "\"valid_char\"",
+                            "\"ctrl_id\"",
+                            "\"ctrl_data\"",
+                            "\"remark\"",
+                            "\"sys_code\"",
+                            "\"node_id\"",
+                            "\"legal_id\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.upm_sysparam"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.upm_sysparam"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

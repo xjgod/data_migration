@@ -1,0 +1,82 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[CON_NAME]",
+                            "[CON_BEX]",
+                            "[BEX_PARAM]",
+                            "[CON_VALUE]",
+                            "[CON_STAT]",
+                            "[VALID_WAY]",
+                            "[HANDLE_TIP]",
+                            "[REMARK]",
+                            "[CON_ID]",
+                            "[CON_EX]",
+                            "[SERVICE_CODE]",
+                            "[API_CODE]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.OPP_BUSI_ACS_COND"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"con_name\"",
+                            "\"con_bex\"",
+                            "\"bex_param\"",
+                            "\"con_value\"",
+                            "\"con_stat\"",
+                            "\"valid_way\"",
+                            "\"handle_tip\"",
+                            "\"remark\"",
+                            "\"con_id\"",
+                            "\"con_ex\"",
+                            "\"service_code\"",
+                            "\"api_code\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.opp_busi_acs_cond"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.opp_busi_acs_cond"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

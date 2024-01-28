@@ -1,0 +1,92 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[CUACCT_CODE]",
+                            "[EXT_COL1]",
+                            "[EXT_COL2]",
+                            "[EXT_COL3]",
+                            "[EXT_COL4]",
+                            "[EXT_COL5]",
+                            "[EXT_COL6]",
+                            "[EXT_COL7]",
+                            "[EXT_COL8]",
+                            "[EXT_COL9]",
+                            "[EXT_COL10]",
+                            "[EXT_COL11]",
+                            "[EXT_COL12]",
+                            "[EXT_COL13]",
+                            "[EXT_COL14]",
+                            "[EXT_COL15]",
+                            "[UPDATE_TIME]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.PI_CUACCT_INFO"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"cuacct_code\"",
+                            "\"ext_col1\"",
+                            "\"ext_col2\"",
+                            "\"ext_col3\"",
+                            "\"ext_col4\"",
+                            "\"ext_col5\"",
+                            "\"ext_col6\"",
+                            "\"ext_col7\"",
+                            "\"ext_col8\"",
+                            "\"ext_col9\"",
+                            "\"ext_col10\"",
+                            "\"ext_col11\"",
+                            "\"ext_col12\"",
+                            "\"ext_col13\"",
+                            "\"ext_col14\"",
+                            "\"ext_col15\"",
+                            "\"update_time\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.pi_cuacct_info"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.pi_cuacct_info"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

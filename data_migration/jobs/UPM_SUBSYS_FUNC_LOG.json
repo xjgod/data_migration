@@ -1,0 +1,92 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[LOG_ID]",
+                            "[SUBSYS]",
+                            "[FUNC_CODE]",
+                            "[REQUEST_COMMPARAM]",
+                            "[REQUEST_PARAM]",
+                            "[RESULT_PARAM]",
+                            "[RESULT_RECORD]",
+                            "[SERVICE]",
+                            "[B_SNO]",
+                            "[CUST_CODE]",
+                            "[CUACCT_CODE]",
+                            "[OP_MENU]",
+                            "[OP_CODE]",
+                            "[OP_TIME]",
+                            "[OP_CHANNEL]",
+                            "[OP_SITE]",
+                            "[YZT_CHANNEL]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UPM_SUBSYS_FUNC_LOG"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"log_id\"",
+                            "\"subsys\"",
+                            "\"func_code\"",
+                            "\"request_commparam\"",
+                            "\"request_param\"",
+                            "\"result_param\"",
+                            "\"result_record\"",
+                            "\"service\"",
+                            "\"b_sno\"",
+                            "\"cust_code\"",
+                            "\"cuacct_code\"",
+                            "\"op_menu\"",
+                            "\"op_code\"",
+                            "\"op_time\"",
+                            "\"op_channel\"",
+                            "\"op_site\"",
+                            "\"yzt_channel\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.upm_subsys_func_log"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.upm_subsys_func_log"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

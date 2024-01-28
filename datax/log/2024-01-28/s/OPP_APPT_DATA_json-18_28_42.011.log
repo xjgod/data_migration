@@ -1,0 +1,133 @@
+2024-01-28 18:28:42.277 [main] INFO  MessageSource - JVM TimeZone: GMT+08:00, Locale: zh_CN
+2024-01-28 18:28:42.280 [main] INFO  MessageSource - use Locale: zh_CN timeZone: sun.util.calendar.ZoneInfo[id="GMT+08:00",offset=28800000,dstSavings=0,useDaylight=false,transitions=0,lastRule=null]
+2024-01-28 18:28:42.291 [main] INFO  VMInfo - VMInfo# operatingSystem class => sun.management.OperatingSystemImpl
+2024-01-28 18:28:42.296 [main] INFO  Engine - the machine info  => 
+
+	osInfo:	Oracle Corporation 1.8 25.192-b12
+	jvmInfo:	Windows 10 amd64 10.0
+	cpu num:	16
+
+	totalPhysicalMemory:	-0.00G
+	freePhysicalMemory:	-0.00G
+	maxFileDescriptorCount:	-1
+	currentOpenFileDescriptorCount:	-1
+
+	GC Names	[PS MarkSweep, PS Scavenge]
+
+	MEMORY_NAME                    | allocation_size                | init_size                      
+	PS Eden Space                  | 512.50MB                       | 512.50MB                       
+	Code Cache                     | 240.00MB                       | 2.44MB                         
+	Compressed Class Space         | 1,024.00MB                     | 0.00MB                         
+	PS Survivor Space              | 85.00MB                        | 85.00MB                        
+	PS Old Gen                     | 1,365.50MB                     | 1,365.50MB                     
+	Metaspace                      | -0.00MB                        | 0.00MB                         
+
+
+2024-01-28 18:28:42.319 [main] INFO  Engine - 
+{
+	"content":[
+		{
+			"reader":{
+				"name":"sqlserverreader",
+				"parameter":{
+					"column":[
+						"[APPT_SN]",
+						"[CUST_NAME]",
+						"[CUST_FNAME]",
+						"[ID_TYPE]",
+						"[ID_CODE]",
+						"[IS_REVIEW]",
+						"[B_SNO]",
+						"[CUST_CODE]",
+						"[CUACCT_CODE]",
+						"[CUST_ORG_CODE]",
+						"[APPT_ORG_CODE]",
+						"[APPT_BUSI_CODE]",
+						"[APPT_DATE]",
+						"[APPT_WAY]",
+						"[APPT_STATUS]",
+						"[APPT_MOBILE]",
+						"[IS_DELETE]",
+						"[APPT_REMARK]",
+						"[APPT_VALIDE_CODE]",
+						"[OPEN_VALIDE_CODE_DATE]",
+						"[OP_CODE]",
+						"[CREAT_APPT_TIME]",
+						"[IS_PUBLIC_FUND_CUST]"
+					],
+					"connection":[
+						{
+							"jdbcUrl":[
+								"jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+							],
+							"table":[
+								"YGT.dbo.OPP_APPT_DATA"
+							]
+						}
+					],
+					"password":"*********",
+					"splitPk":"",
+					"username":"sa"
+				}
+			},
+			"writer":{
+				"name":"postgresqlwriter",
+				"parameter":{
+					"column":[
+						"\"appt_sn\"",
+						"\"cust_name\"",
+						"\"cust_fname\"",
+						"\"id_type\"",
+						"\"id_code\"",
+						"\"is_review\"",
+						"\"b_sno\"",
+						"\"cust_code\"",
+						"\"cuacct_code\"",
+						"\"cust_org_code\"",
+						"\"appt_org_code\"",
+						"\"appt_busi_code\"",
+						"\"appt_date\"",
+						"\"appt_way\"",
+						"\"appt_status\"",
+						"\"appt_mobile\"",
+						"\"is_delete\"",
+						"\"appt_remark\"",
+						"\"appt_valide_code\"",
+						"\"open_valide_code_date\"",
+						"\"op_code\"",
+						"\"creat_appt_time\"",
+						"\"is_public_fund_cust\""
+					],
+					"connection":[
+						{
+							"jdbcUrl":"jdbc:postgresql://10.201.65.24:30100/ygt",
+							"table":[
+								"ygt.ygt.opp_appt_data"
+							]
+						}
+					],
+					"password":"*************",
+					"preSql":[
+						"TRUNCATE TABLE ygt.ygt.opp_appt_data"
+					],
+					"username":"ygt"
+				}
+			}
+		}
+	],
+	"setting":{
+		"errorLimit":{
+			"record":0
+		},
+		"speed":{
+			"byte":-1,
+			"channel":10,
+			"record":-1
+		}
+	}
+}
+
+2024-01-28 18:28:42.341 [main] WARN  Engine - prioriy set to 0, because NumberFormatException, the value is: null
+2024-01-28 18:28:42.343 [main] INFO  PerfTrace - PerfTrace traceId=job_-1, isEnable=false, priority=0
+2024-01-28 18:28:42.343 [main] INFO  JobContainer - DataX jobContainer starts job.
+2024-01-28 18:28:42.345 [main] INFO  JobContainer - Set jobId = 0

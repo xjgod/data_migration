@@ -1,0 +1,92 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[CARD_SNO]",
+                            "[CARD_ACCEPT_SNO]",
+                            "[B_SNO]",
+                            "[CARD_ID]",
+                            "[BUSI_CODE]",
+                            "[CUST_CODE]",
+                            "[CUST_NAME]",
+                            "[CUST_FNAME]",
+                            "[ID_TYPE]",
+                            "[ID_CODE]",
+                            "[PROC_STATUS]",
+                            "[ACCEPT_PARAM]",
+                            "[USER_TYPE]",
+                            "[ERR_CODE]",
+                            "[ERR_MSG]",
+                            "[CREATE_TIME]",
+                            "[UPDATE_TIME]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.OPP_BUSI_CARD_DATA"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"card_sno\"",
+                            "\"card_accept_sno\"",
+                            "\"b_sno\"",
+                            "\"card_id\"",
+                            "\"busi_code\"",
+                            "\"cust_code\"",
+                            "\"cust_name\"",
+                            "\"cust_fname\"",
+                            "\"id_type\"",
+                            "\"id_code\"",
+                            "\"proc_status\"",
+                            "\"accept_param\"",
+                            "\"user_type\"",
+                            "\"err_code\"",
+                            "\"err_msg\"",
+                            "\"create_time\"",
+                            "\"update_time\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.opp_busi_card_data"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.opp_busi_card_data"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

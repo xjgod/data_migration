@@ -1,0 +1,98 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[HI_TASKINST_ID]",
+                            "[PROC_DEF_ID]",
+                            "[TASK_DEF_KEY]",
+                            "[PROC_INST_ID]",
+                            "[EXECUTION_ID]",
+                            "[PARENT_TASK_ID]",
+                            "[HTNAME]",
+                            "[DESCRIPTION]",
+                            "[OWNER]",
+                            "[ASSIGNEE]",
+                            "[START_TIME]",
+                            "[CLAIM_TIME]",
+                            "[END_TIME]",
+                            "[DURATION]",
+                            "[DELETE_REASON]",
+                            "[PRIORITY]",
+                            "[DUE_DATE]",
+                            "[FORM_KEY]",
+                            "[CREATE_TIME]",
+                            "[PRE_USER_TASK]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UWK_HI_TASKINST"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"hi_taskinst_id\"",
+                            "\"proc_def_id\"",
+                            "\"task_def_key\"",
+                            "\"proc_inst_id\"",
+                            "\"execution_id\"",
+                            "\"parent_task_id\"",
+                            "\"htname\"",
+                            "\"description\"",
+                            "\"owner\"",
+                            "\"assignee\"",
+                            "\"start_time\"",
+                            "\"claim_time\"",
+                            "\"end_time\"",
+                            "\"duration\"",
+                            "\"delete_reason\"",
+                            "\"priority\"",
+                            "\"due_date\"",
+                            "\"form_key\"",
+                            "\"create_time\"",
+                            "\"pre_user_task\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.uwk_hi_taskinst"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.uwk_hi_taskinst"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

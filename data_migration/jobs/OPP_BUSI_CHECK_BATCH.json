@@ -1,0 +1,76 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[BATCH_CODE]",
+                            "[BATCH_NAME]",
+                            "[OPEN_TIME]",
+                            "[USER_CODE]",
+                            "[USER_NAME]",
+                            "[CLOSE_FLAG]",
+                            "[CLOSE_TIME]",
+                            "[CLOSE_USER_CODE]",
+                            "[CLOSE_USER_NAME]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.OPP_BUSI_CHECK_BATCH"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"batch_code\"",
+                            "\"batch_name\"",
+                            "\"open_time\"",
+                            "\"user_code\"",
+                            "\"user_name\"",
+                            "\"close_flag\"",
+                            "\"close_time\"",
+                            "\"close_user_code\"",
+                            "\"close_user_name\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.opp_busi_check_batch"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.opp_busi_check_batch"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

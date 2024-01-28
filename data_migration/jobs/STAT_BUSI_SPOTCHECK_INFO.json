@@ -1,0 +1,88 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[B_SNO]",
+                            "[BATCH_CODE]",
+                            "[CUST_ORG_CODE]",
+                            "[BUSI_CODE]",
+                            "[ACCEPT_ORG_CODE]",
+                            "[CHECK_START_TIME]",
+                            "[CHECK_END_TIME]",
+                            "[CHECK_RESULT]",
+                            "[CHECK_LVL]",
+                            "[RESPON_NODE_KEY]",
+                            "[CHECK_REMARK]",
+                            "[CORRECT_HANDLER]",
+                            "[RELATE_B_SNO]",
+                            "[UPDATE_TIME]",
+                            "[CHECK_HANDLER]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.STAT_BUSI_SPOTCHECK_INFO"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"b_sno\"",
+                            "\"batch_code\"",
+                            "\"cust_org_code\"",
+                            "\"busi_code\"",
+                            "\"accept_org_code\"",
+                            "\"check_start_time\"",
+                            "\"check_end_time\"",
+                            "\"check_result\"",
+                            "\"check_lvl\"",
+                            "\"respon_node_key\"",
+                            "\"check_remark\"",
+                            "\"correct_handler\"",
+                            "\"relate_b_sno\"",
+                            "\"update_time\"",
+                            "\"check_handler\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.stat_busi_spotcheck_info"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.stat_busi_spotcheck_info"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

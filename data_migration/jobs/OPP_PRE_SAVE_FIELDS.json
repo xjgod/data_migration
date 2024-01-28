@@ -1,0 +1,84 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[BUSI_CODE]",
+                            "[USER_TYPE]",
+                            "[GROUP_ID]",
+                            "[MODULE_ID]",
+                            "[FIELD_ID]",
+                            "[FIELD_TITLE]",
+                            "[FIELD_REQUIRED]",
+                            "[FIELD_CONTROL]",
+                            "[FIELD_DICT_FILTER]",
+                            "[DEFAULT_VALUE]",
+                            "[FIELD_SEQ]",
+                            "[PLACE_HOLDER]",
+                            "[BUSI_PLAT]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.OPP_PRE_SAVE_FIELDS"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"busi_code\"",
+                            "\"user_type\"",
+                            "\"group_id\"",
+                            "\"module_id\"",
+                            "\"field_id\"",
+                            "\"field_title\"",
+                            "\"field_required\"",
+                            "\"field_control\"",
+                            "\"field_dict_filter\"",
+                            "\"default_value\"",
+                            "\"field_seq\"",
+                            "\"place_holder\"",
+                            "\"busi_plat\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.opp_pre_save_fields"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.opp_pre_save_fields"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

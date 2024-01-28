@@ -1,0 +1,84 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[CUST_CODE]",
+                            "[CUST_NAME]",
+                            "[CUACCT_CODE]",
+                            "[USER_NAME]",
+                            "[USER_CODE]",
+                            "[INT_ORG]",
+                            "[OPEN_DATE]",
+                            "[ID_CODE]",
+                            "[ID_TYPE]",
+                            "[ORG_FULL_NAME]",
+                            "[MOBILE_TEL]",
+                            "[USER_TYPE]",
+                            "[FISL_CUACCT_CODE]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.CIF_CUST_IDENTIF"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"cust_code\"",
+                            "\"cust_name\"",
+                            "\"cuacct_code\"",
+                            "\"user_name\"",
+                            "\"user_code\"",
+                            "\"int_org\"",
+                            "\"open_date\"",
+                            "\"id_code\"",
+                            "\"id_type\"",
+                            "\"org_full_name\"",
+                            "\"mobile_tel\"",
+                            "\"user_type\"",
+                            "\"fisl_cuacct_code\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.cif_cust_identif"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.cif_cust_identif"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

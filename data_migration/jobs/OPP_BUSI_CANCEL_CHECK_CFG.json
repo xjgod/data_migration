@@ -1,0 +1,82 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[SUBSYS]",
+                            "[ERROR_CODE]",
+                            "[ERROR_MSG]",
+                            "[ERROR_MSG_CUSTOM]",
+                            "[CHECK_TYPE]",
+                            "[CANCEL_CHECK_CLS]",
+                            "[IS_ENABLED]",
+                            "[PRE_CHECK_CODE]",
+                            "[UPDATE_TIME]",
+                            "[MENU_ID]",
+                            "[BUSI_CODE]",
+                            "[REMARK]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.OPP_BUSI_CANCEL_CHECK_CFG"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"subsys\"",
+                            "\"error_code\"",
+                            "\"error_msg\"",
+                            "\"error_msg_custom\"",
+                            "\"check_type\"",
+                            "\"cancel_check_cls\"",
+                            "\"is_enabled\"",
+                            "\"pre_check_code\"",
+                            "\"update_time\"",
+                            "\"menu_id\"",
+                            "\"busi_code\"",
+                            "\"remark\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.opp_busi_cancel_check_cfg"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.opp_busi_cancel_check_cfg"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

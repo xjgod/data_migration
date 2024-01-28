@@ -1,0 +1,13 @@
+1、首先激活虚拟环境
+以管理员身份进入CMD，进入python_win输入 activate即可激活虚拟机
+chmod +x /opt/Data_Migration/python_x64/bin/*
+cd /opt/Data_Migration/python_x64/
+source activate
+2、进入迁移目录migration
+cd /opt/Data_Migration/migration
+3、修改数据库连接属性等修改
+修改config.py
+4、运行脚本
+python3 migration_data.py
+5、退出虚拟环境
+deactivate

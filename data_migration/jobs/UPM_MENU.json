@@ -1,0 +1,102 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[MENU_ID]",
+                            "[MENU_NAME]",
+                            "[PAR_MENU]",
+                            "[MENU_LVL]",
+                            "[MENU_PUR]",
+                            "[MENU_LINK]",
+                            "[MENU_STA]",
+                            "[MENU_ICO]",
+                            "[MENU_PLAT]",
+                            "[MENU_BPM_FORM]",
+                            "[MENU_DLL]",
+                            "[MENU_DLL_ENTRY]",
+                            "[BUSI_CODE]",
+                            "[NODE_MODE]",
+                            "[IS_NAV]",
+                            "[INTER_AGENCY_FLAG]",
+                            "[EFT_FLAG]",
+                            "[MENU_SPELL]",
+                            "[RELA_SYS]",
+                            "[MENU_TYPE]",
+                            "[BASE_PATH]",
+                            "[AUTHORITY]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UPM_MENU"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"menu_id\"",
+                            "\"menu_name\"",
+                            "\"par_menu\"",
+                            "\"menu_lvl\"",
+                            "\"menu_pur\"",
+                            "\"menu_link\"",
+                            "\"menu_sta\"",
+                            "\"menu_ico\"",
+                            "\"menu_plat\"",
+                            "\"menu_bpm_form\"",
+                            "\"menu_dll\"",
+                            "\"menu_dll_entry\"",
+                            "\"busi_code\"",
+                            "\"node_mode\"",
+                            "\"is_nav\"",
+                            "\"inter_agency_flag\"",
+                            "\"eft_flag\"",
+                            "\"menu_spell\"",
+                            "\"rela_sys\"",
+                            "\"menu_type\"",
+                            "\"base_path\"",
+                            "\"authority\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.upm_menu"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.upm_menu"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

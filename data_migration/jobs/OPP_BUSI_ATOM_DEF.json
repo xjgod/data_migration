@@ -1,0 +1,80 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[ATOM_KEY]",
+                            "[ATOM_NAME]",
+                            "[ATOM_TYPE]",
+                            "[ATOM_SUB_TYPE]",
+                            "[ATOM_RELY]",
+                            "[STATUS]",
+                            "[ACCEPT_JS]",
+                            "[REVIEW_TYPE]",
+                            "[REVIEW_VIEW]",
+                            "[ATTR_VIEW]",
+                            "[REMARK]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.OPP_BUSI_ATOM_DEF"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"atom_key\"",
+                            "\"atom_name\"",
+                            "\"atom_type\"",
+                            "\"atom_sub_type\"",
+                            "\"atom_rely\"",
+                            "\"status\"",
+                            "\"accept_js\"",
+                            "\"review_type\"",
+                            "\"review_view\"",
+                            "\"attr_view\"",
+                            "\"remark\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.opp_busi_atom_def"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.opp_busi_atom_def"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

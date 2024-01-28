@@ -1,0 +1,114 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[SERIAL_NO]",
+                            "[OCCUR_TIME]",
+                            "[OCCUR_DATE]",
+                            "[OP_CODE]",
+                            "[OP_NAME]",
+                            "[ORG_CODE]",
+                            "[MENU_ID]",
+                            "[AJAX_CODE]",
+                            "[OPP_OBJ_TYPE]",
+                            "[OPP_OBJ_CODE]",
+                            "[CHECK_OP_CODE]",
+                            "[CHECK_STATUS]",
+                            "[CHECK_INFO]",
+                            "[CHECK_TIME]",
+                            "[CHECK_DATE]",
+                            "[REMARK]",
+                            "[CUST_CODE]",
+                            "[CUST_NAME]",
+                            "[CUST_ORG]",
+                            "[STKEX]",
+                            "[ACC_SERIAL_NO]",
+                            "[AJAX_CSDC_TYPE]",
+                            "[DECLARE_TYPE]",
+                            "[AJAX_CODE_NAME]",
+                            "[ACCTBIZ_STATUS]",
+                            "[EXTERNAL_SN]",
+                            "[RETURN_MSG]",
+                            "[B_SNO]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.OPP_CHECK_APP"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"serial_no\"",
+                            "\"occur_time\"",
+                            "\"occur_date\"",
+                            "\"op_code\"",
+                            "\"op_name\"",
+                            "\"org_code\"",
+                            "\"menu_id\"",
+                            "\"ajax_code\"",
+                            "\"opp_obj_type\"",
+                            "\"opp_obj_code\"",
+                            "\"check_op_code\"",
+                            "\"check_status\"",
+                            "\"check_info\"",
+                            "\"check_time\"",
+                            "\"check_date\"",
+                            "\"remark\"",
+                            "\"cust_code\"",
+                            "\"cust_name\"",
+                            "\"cust_org\"",
+                            "\"stkex\"",
+                            "\"acc_serial_no\"",
+                            "\"ajax_csdc_type\"",
+                            "\"declare_type\"",
+                            "\"ajax_code_name\"",
+                            "\"acctbiz_status\"",
+                            "\"external_sn\"",
+                            "\"return_msg\"",
+                            "\"b_sno\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.opp_check_app"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.opp_check_app"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

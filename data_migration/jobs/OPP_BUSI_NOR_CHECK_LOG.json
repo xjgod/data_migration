@@ -1,0 +1,96 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[SERIAL_NO]",
+                            "[GROUP_ID]",
+                            "[CUST_CODE]",
+                            "[CUST_FNAME]",
+                            "[ID_TYPE]",
+                            "[ID_CODE]",
+                            "[BUSI_CODE]",
+                            "[ACS_TYPE]",
+                            "[ACS_SEQU]",
+                            "[CON_ID]",
+                            "[RESTRICT_TYPE]",
+                            "[RETURN_CODE]",
+                            "[RETURN_TIP]",
+                            "[CHECK_COND]",
+                            "[OCCUR_VALUE]",
+                            "[YZT_CHANNEL]",
+                            "[OCCUR_TIME]",
+                            "[REMARK]",
+                            "[MENU_ID]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.OPP_BUSI_NOR_CHECK_LOG"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"serial_no\"",
+                            "\"group_id\"",
+                            "\"cust_code\"",
+                            "\"cust_fname\"",
+                            "\"id_type\"",
+                            "\"id_code\"",
+                            "\"busi_code\"",
+                            "\"acs_type\"",
+                            "\"acs_sequ\"",
+                            "\"con_id\"",
+                            "\"restrict_type\"",
+                            "\"return_code\"",
+                            "\"return_tip\"",
+                            "\"check_cond\"",
+                            "\"occur_value\"",
+                            "\"yzt_channel\"",
+                            "\"occur_time\"",
+                            "\"remark\"",
+                            "\"menu_id\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.opp_busi_nor_check_log"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.opp_busi_nor_check_log"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

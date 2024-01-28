@@ -1,0 +1,82 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[HI_ATTACHMENT_ID]",
+                            "[REV]",
+                            "[USER_ID]",
+                            "[ATNAME]",
+                            "[NAME]",
+                            "[DESCRIPTION]",
+                            "[ATTYPE]",
+                            "[TASK_ID]",
+                            "[PROC_INST_ID]",
+                            "[URL]",
+                            "[CONTENT_ID]",
+                            "[CREATE_TIME]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UWK_HI_ATTACHMENT"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"hi_attachment_id\"",
+                            "\"rev\"",
+                            "\"user_id\"",
+                            "\"atname\"",
+                            "\"name\"",
+                            "\"description\"",
+                            "\"attype\"",
+                            "\"task_id\"",
+                            "\"proc_inst_id\"",
+                            "\"url\"",
+                            "\"content_id\"",
+                            "\"create_time\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.uwk_hi_attachment"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.uwk_hi_attachment"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

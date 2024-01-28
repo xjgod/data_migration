@@ -1,0 +1,78 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[ID_TYPE]",
+                            "[ID_CODE]",
+                            "[USER_TYPE]",
+                            "[CUST_CODE]",
+                            "[OP_CODE]",
+                            "[CUST_INFO]",
+                            "[OPER_TIME]",
+                            "[SURVEY_FIELD_INFO]",
+                            "[CUST_FNAME]",
+                            "[SNO_FLAG]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.KSCS_BUSI_CUST_INFO"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"id_type\"",
+                            "\"id_code\"",
+                            "\"user_type\"",
+                            "\"cust_code\"",
+                            "\"op_code\"",
+                            "\"cust_info\"",
+                            "\"oper_time\"",
+                            "\"survey_field_info\"",
+                            "\"cust_fname\"",
+                            "\"sno_flag\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.kscs_busi_cust_info"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.kscs_busi_cust_info"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

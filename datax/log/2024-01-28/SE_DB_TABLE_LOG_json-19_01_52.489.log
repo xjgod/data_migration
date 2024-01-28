@@ -1,0 +1,145 @@
+2024-01-28 19:01:52.725 [main] INFO  MessageSource - JVM TimeZone: GMT+08:00, Locale: zh_CN
+2024-01-28 19:01:52.730 [main] INFO  MessageSource - use Locale: zh_CN timeZone: sun.util.calendar.ZoneInfo[id="GMT+08:00",offset=28800000,dstSavings=0,useDaylight=false,transitions=0,lastRule=null]
+2024-01-28 19:01:52.739 [main] INFO  VMInfo - VMInfo# operatingSystem class => sun.management.OperatingSystemImpl
+2024-01-28 19:01:52.746 [main] INFO  Engine - the machine info  => 
+
+	osInfo:	Oracle Corporation 1.8 25.192-b12
+	jvmInfo:	Windows 10 amd64 10.0
+	cpu num:	16
+
+	totalPhysicalMemory:	-0.00G
+	freePhysicalMemory:	-0.00G
+	maxFileDescriptorCount:	-1
+	currentOpenFileDescriptorCount:	-1
+
+	GC Names	[PS MarkSweep, PS Scavenge]
+
+	MEMORY_NAME                    | allocation_size                | init_size                      
+	PS Eden Space                  | 512.50MB                       | 512.50MB                       
+	Code Cache                     | 240.00MB                       | 2.44MB                         
+	Compressed Class Space         | 1,024.00MB                     | 0.00MB                         
+	PS Survivor Space              | 85.00MB                        | 85.00MB                        
+	PS Old Gen                     | 1,365.50MB                     | 1,365.50MB                     
+	Metaspace                      | -0.00MB                        | 0.00MB                         
+
+
+2024-01-28 19:01:52.772 [main] INFO  Engine - 
+{
+	"content":[
+		{
+			"reader":{
+				"name":"sqlserverreader",
+				"parameter":{
+					"column":[
+						"[TABLE_CODE]",
+						"[TABLE_NAME]",
+						"[RELEASE_INFO]",
+						"[RELEASE_INFO_TYPE]",
+						"[RELEASE_TYPE]",
+						"[RELEASE_VERSION]",
+						"[RELEASE_REMARK]",
+						"[UPDATE_TIME]"
+					],
+					"connection":[
+						{
+							"jdbcUrl":[
+								"jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+							],
+							"table":[
+								"YGT.dbo.PRO_RELEASE_DB_TABLE_LOG"
+							]
+						}
+					],
+					"password":"*********",
+					"splitPk":"",
+					"username":"sa"
+				}
+			},
+			"writer":{
+				"name":"postgresqlwriter",
+				"parameter":{
+					"column":[
+						"\"table_code\"",
+						"\"table_name\"",
+						"\"release_info\"",
+						"\"release_info_type\"",
+						"\"release_type\"",
+						"\"release_version\"",
+						"\"release_remark\"",
+						"\"update_time\""
+					],
+					"connection":[
+						{
+							"jdbcUrl":"jdbc:postgresql://10.201.65.24:30100/ygt",
+							"table":[
+								"ygt.ygt.pro_release_db_table_log"
+							]
+						}
+					],
+					"password":"*************",
+					"preSql":[
+						"TRUNCATE TABLE ygt.ygt.pro_release_db_table_log"
+					],
+					"username":"ygt"
+				}
+			}
+		}
+	],
+	"setting":{
+		"errorLimit":{
+			"record":0
+		},
+		"speed":{
+			"byte":-1,
+			"channel":10,
+			"record":-1
+		}
+	}
+}
+
+2024-01-28 19:01:52.789 [main] WARN  Engine - prioriy set to 0, because NumberFormatException, the value is: null
+2024-01-28 19:01:52.791 [main] INFO  PerfTrace - PerfTrace traceId=job_-1, isEnable=false, priority=0
+2024-01-28 19:01:52.791 [main] INFO  JobContainer - DataX jobContainer starts job.
+2024-01-28 19:01:52.793 [main] INFO  JobContainer - Set jobId = 0
+2024-01-28 19:02:00.768 [job-0] INFO  OriginalConfPretreatmentUtil - Available jdbcUrl:jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;.
+2024-01-28 19:02:01.030 [job-0] INFO  OriginalConfPretreatmentUtil - table:[YGT.dbo.PRO_RELEASE_DB_TABLE_LOG] has columns:[TABLE_CODE,TABLE_NAME,RELEASE_INFO,RELEASE_INFO_TYPE,RELEASE_TYPE,RELEASE_VERSION,RELEASE_REMARK,UPDATE_TIME].
+2024-01-28 19:02:01.637 [job-0] INFO  OriginalConfPretreatmentUtil - table:[ygt.ygt.pro_release_db_table_log] all columns:[
+table_code,release_info,release_info_type,release_type,release_version,table_name,release_remark,update_time
+].
+2024-01-28 19:02:02.176 [job-0] INFO  OriginalConfPretreatmentUtil - Write data [
+INSERT INTO %s ("table_code","table_name","release_info","release_info_type","release_type","release_version","release_remark","update_time") VALUES(?,?,?,?,?,?,?,?)
+], which jdbcUrl like:[jdbc:postgresql://10.201.65.24:30100/ygt]
+2024-01-28 19:02:02.177 [job-0] INFO  JobContainer - jobContainer starts to do prepare ...
+2024-01-28 19:02:02.177 [job-0] INFO  JobContainer - DataX Reader.Job [sqlserverreader] do prepare work .
+2024-01-28 19:02:02.177 [job-0] INFO  JobContainer - DataX Writer.Job [postgresqlwriter] do prepare work .
+2024-01-28 19:02:02.590 [job-0] INFO  CommonRdbmsWriter$Job - Begin to execute preSqls:[TRUNCATE TABLE ygt.ygt.pro_release_db_table_log]. context info:jdbc:postgresql://10.201.65.24:30100/ygt.
+2024-01-28 19:02:02.632 [job-0] ERROR JobContainer - Exception when job run
+com.alibaba.datax.common.exception.DataXException: Code:[DBUtilErrorCode-06], Description:[执行数据库 Sql 失败, 请检查您的配置的 column/table/where/querySql或者向 DBA 寻求帮助.].  - 执行的SQL为: TRUNCATE TABLE ygt.ygt.pro_release_db_table_log 具体错误信息为：org.postgresql.util.PSQLException: [10.10.10.58:61925/10.201.65.24:30100] ERROR: cannot execute TRUNCATE TABLE in a read-only transaction
+	at com.alibaba.datax.common.exception.DataXException.asDataXException(DataXException.java:30) ~[datax-common-0.0.1-SNAPSHOT.jar:na]
+	at com.alibaba.datax.plugin.rdbms.util.RdbmsException.asQueryException(RdbmsException.java:97) ~[plugin-rdbms-util-0.0.1-SNAPSHOT.jar:na]
+	at com.alibaba.datax.plugin.rdbms.writer.util.WriterUtil.executeSqls(WriterUtil.java:105) ~[plugin-rdbms-util-0.0.1-SNAPSHOT.jar:na]
+	at com.alibaba.datax.plugin.rdbms.writer.CommonRdbmsWriter$Job.prepare(CommonRdbmsWriter.java:121) ~[plugin-rdbms-util-0.0.1-SNAPSHOT.jar:na]
+	at com.alibaba.datax.plugin.writer.postgresqlwriter.PostgresqlWriter$Job.prepare(PostgresqlWriter.java:38) ~[postgresqlwriter-0.0.1-SNAPSHOT.jar:na]
+	at com.alibaba.datax.core.job.JobContainer.prepareJobWriter(JobContainer.java:724) ~[datax-core-0.0.1-SNAPSHOT.jar:na]
+	at com.alibaba.datax.core.job.JobContainer.prepare(JobContainer.java:309) ~[datax-core-0.0.1-SNAPSHOT.jar:na]
+	at com.alibaba.datax.core.job.JobContainer.start(JobContainer.java:115) ~[datax-core-0.0.1-SNAPSHOT.jar:na]
+	at com.alibaba.datax.core.Engine.start(Engine.java:93) [datax-core-0.0.1-SNAPSHOT.jar:na]
+	at com.alibaba.datax.core.Engine.entry(Engine.java:175) [datax-core-0.0.1-SNAPSHOT.jar:na]
+	at com.alibaba.datax.core.Engine.main(Engine.java:208) [datax-core-0.0.1-SNAPSHOT.jar:na]
+2024-01-28 19:02:02.637 [job-0] INFO  StandAloneJobContainerCommunicator - Total 0 records, 0 bytes | Speed 0B/s, 0 records/s | Error 0 records, 0 bytes |  All Task WaitWriterTime 0.000s |  All Task WaitReaderTime 0.000s | Percentage 0.00%
+2024-01-28 19:02:02.639 [job-0] ERROR Engine - 
+
+经DataX智能分析,该任务最可能的错误原因是:
+com.alibaba.datax.common.exception.DataXException: Code:[DBUtilErrorCode-06], Description:[执行数据库 Sql 失败, 请检查您的配置的 column/table/where/querySql或者向 DBA 寻求帮助.].  - 执行的SQL为: TRUNCATE TABLE ygt.ygt.pro_release_db_table_log 具体错误信息为：org.postgresql.util.PSQLException: [10.10.10.58:61925/10.201.65.24:30100] ERROR: cannot execute TRUNCATE TABLE in a read-only transaction
+	at com.alibaba.datax.common.exception.DataXException.asDataXException(DataXException.java:30)
+	at com.alibaba.datax.plugin.rdbms.util.RdbmsException.asQueryException(RdbmsException.java:97)
+	at com.alibaba.datax.plugin.rdbms.writer.util.WriterUtil.executeSqls(WriterUtil.java:105)
+	at com.alibaba.datax.plugin.rdbms.writer.CommonRdbmsWriter$Job.prepare(CommonRdbmsWriter.java:121)
+	at com.alibaba.datax.plugin.writer.postgresqlwriter.PostgresqlWriter$Job.prepare(PostgresqlWriter.java:38)
+	at com.alibaba.datax.core.job.JobContainer.prepareJobWriter(JobContainer.java:724)
+	at com.alibaba.datax.core.job.JobContainer.prepare(JobContainer.java:309)
+	at com.alibaba.datax.core.job.JobContainer.start(JobContainer.java:115)
+	at com.alibaba.datax.core.Engine.start(Engine.java:93)
+	at com.alibaba.datax.core.Engine.entry(Engine.java:175)
+	at com.alibaba.datax.core.Engine.main(Engine.java:208)
+

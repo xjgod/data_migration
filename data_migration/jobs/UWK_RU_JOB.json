@@ -1,0 +1,92 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[JOB_ID]",
+                            "[REV]",
+                            "[JOB_TYPE]",
+                            "[LOCK_EXP_TIME]",
+                            "[LOCK_OWNER]",
+                            "[JOB_EXCLUSIVE]",
+                            "[EXECUTION_ID]",
+                            "[PROCESS_INSTANCE_ID]",
+                            "[PROC_DEF_ID]",
+                            "[RETRIES]",
+                            "[EXCEPTION_MSG]",
+                            "[EXCEPTION_STACK_ID]",
+                            "[DUEDATE]",
+                            "[REPEAT]",
+                            "[HANDLER_TYPE]",
+                            "[HANDLER_CFG]",
+                            "[CREATE_TIME]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UWK_RU_JOB"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"job_id\"",
+                            "\"rev\"",
+                            "\"job_type\"",
+                            "\"lock_exp_time\"",
+                            "\"lock_owner\"",
+                            "\"job_exclusive\"",
+                            "\"execution_id\"",
+                            "\"process_instance_id\"",
+                            "\"proc_def_id\"",
+                            "\"retries\"",
+                            "\"exception_msg\"",
+                            "\"exception_stack_id\"",
+                            "\"duedate\"",
+                            "\"repeat\"",
+                            "\"handler_type\"",
+                            "\"handler_cfg\"",
+                            "\"create_time\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.uwk_ru_job"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.uwk_ru_job"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

@@ -1,0 +1,92 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[HI_PROCINST_ID]",
+                            "[PROC_INST_ID]",
+                            "[BUSINESS_KEY]",
+                            "[PROC_DEF_ID]",
+                            "[START_TIME]",
+                            "[END_TIME]",
+                            "[DURATION]",
+                            "[START_USER_ID]",
+                            "[START_ACT_ID]",
+                            "[END_ACT_ID]",
+                            "[SUPER_PROCESS_INSTANCE_ID]",
+                            "[DELETE_REASON]",
+                            "[CREATE_TIME]",
+                            "[LAST_TASK_ID]",
+                            "[LAST_TASK_ASSIGNEE]",
+                            "[LAST_TASK_TIME]",
+                            "[REMIND_STATE]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UWK_HI_PROCINST_BAK"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"hi_procinst_id\"",
+                            "\"proc_inst_id\"",
+                            "\"business_key\"",
+                            "\"proc_def_id\"",
+                            "\"start_time\"",
+                            "\"end_time\"",
+                            "\"duration\"",
+                            "\"start_user_id\"",
+                            "\"start_act_id\"",
+                            "\"end_act_id\"",
+                            "\"super_process_instance_id\"",
+                            "\"delete_reason\"",
+                            "\"create_time\"",
+                            "\"last_task_id\"",
+                            "\"last_task_assignee\"",
+                            "\"last_task_time\"",
+                            "\"remind_state\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.uwk_hi_procinst_bak"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.uwk_hi_procinst_bak"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

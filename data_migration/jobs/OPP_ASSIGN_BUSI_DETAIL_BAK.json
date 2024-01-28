@@ -1,0 +1,80 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[B_SNO]",
+                            "[OP_ORG]",
+                            "[NODE_KEY]",
+                            "[NODE_NAME]",
+                            "[ACCEPTED_TIME]",
+                            "[ASSIGN_HANDLER]",
+                            "[OVER_TIME]",
+                            "[DEAL_STATUS]",
+                            "[REMARK]",
+                            "[UPDATE_TIME]",
+                            "[RECOVER_ASSIGN_HANDLER]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.OPP_ASSIGN_BUSI_DETAIL_BAK"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"b_sno\"",
+                            "\"op_org\"",
+                            "\"node_key\"",
+                            "\"node_name\"",
+                            "\"accepted_time\"",
+                            "\"assign_handler\"",
+                            "\"over_time\"",
+                            "\"deal_status\"",
+                            "\"remark\"",
+                            "\"update_time\"",
+                            "\"recover_assign_handler\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.opp_assign_busi_detail_bak"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.opp_assign_busi_detail_bak"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

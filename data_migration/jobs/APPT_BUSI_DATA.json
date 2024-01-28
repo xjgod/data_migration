@@ -1,0 +1,114 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[SERIAL_NO]",
+                            "[APPT_CHNL]",
+                            "[APPT_TYPE]",
+                            "[APPT_STATUS]",
+                            "[WEB_PHASE]",
+                            "[BUSI_CODE]",
+                            "[SERVICE_CODE]",
+                            "[USER_TYPE]",
+                            "[ORG_CODE]",
+                            "[CUST_CODE]",
+                            "[CUACCT_CODE]",
+                            "[ID_TYPE]",
+                            "[ID_CODE]",
+                            "[CUST_NAME]",
+                            "[CUST_FNAME]",
+                            "[MOBILE_TEL]",
+                            "[ACCEPT_PARAM]",
+                            "[EXP_DATE]",
+                            "[OP_ORG]",
+                            "[OP_CODE]",
+                            "[OP_SITE]",
+                            "[CREATE_DATE]",
+                            "[CREATE_TIME]",
+                            "[LAST_UPD_TIME]",
+                            "[REMARK]",
+                            "[ACS_GROUP_ID]",
+                            "[KCOP_SNO]",
+                            "[KIDM_SNO]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.APPT_BUSI_DATA"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"serial_no\"",
+                            "\"appt_chnl\"",
+                            "\"appt_type\"",
+                            "\"appt_status\"",
+                            "\"web_phase\"",
+                            "\"busi_code\"",
+                            "\"service_code\"",
+                            "\"user_type\"",
+                            "\"org_code\"",
+                            "\"cust_code\"",
+                            "\"cuacct_code\"",
+                            "\"id_type\"",
+                            "\"id_code\"",
+                            "\"cust_name\"",
+                            "\"cust_fname\"",
+                            "\"mobile_tel\"",
+                            "\"accept_param\"",
+                            "\"exp_date\"",
+                            "\"op_org\"",
+                            "\"op_code\"",
+                            "\"op_site\"",
+                            "\"create_date\"",
+                            "\"create_time\"",
+                            "\"last_upd_time\"",
+                            "\"remark\"",
+                            "\"acs_group_id\"",
+                            "\"kcop_sno\"",
+                            "\"kidm_sno\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.appt_busi_data"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.appt_busi_data"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

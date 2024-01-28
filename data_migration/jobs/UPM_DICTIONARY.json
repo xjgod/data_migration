@@ -1,0 +1,74 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[DICT_CODE]",
+                            "[DICT_NAME]",
+                            "[DICT_TYPE]",
+                            "[MAINTAIN_FLAG]",
+                            "[MANA_TYPE]",
+                            "[BUS_TYPE]",
+                            "[DICT_LVL]",
+                            "[SYS_CODE]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UPM_DICTIONARY"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"dict_code\"",
+                            "\"dict_name\"",
+                            "\"dict_type\"",
+                            "\"maintain_flag\"",
+                            "\"mana_type\"",
+                            "\"bus_type\"",
+                            "\"dict_lvl\"",
+                            "\"sys_code\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.upm_dictionary"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.upm_dictionary"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

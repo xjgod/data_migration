@@ -1,0 +1,84 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[TASK_CODE]",
+                            "[LAST_TIME]",
+                            "[ENABLE_FLAG]",
+                            "[EXEC_DES]",
+                            "[EXEC_MODE]",
+                            "[EXEC_CLASS]",
+                            "[EXEC_TYPE]",
+                            "[EXEC_TIME]",
+                            "[EXEC_INTERVAL]",
+                            "[EXEC_INTERVAL_UNIT]",
+                            "[EXEC_BEGIN_TIME]",
+                            "[EXEC_END_TIME]",
+                            "[EXEC_STATUS]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UPM_AUTO_TASK_PLAN"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"task_code\"",
+                            "\"last_time\"",
+                            "\"enable_flag\"",
+                            "\"exec_des\"",
+                            "\"exec_mode\"",
+                            "\"exec_class\"",
+                            "\"exec_type\"",
+                            "\"exec_time\"",
+                            "\"exec_interval\"",
+                            "\"exec_interval_unit\"",
+                            "\"exec_begin_time\"",
+                            "\"exec_end_time\"",
+                            "\"exec_status\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.upm_auto_task_plan"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.upm_auto_task_plan"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

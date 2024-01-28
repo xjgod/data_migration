@@ -1,0 +1,80 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[OPP_OBJ_CODE]",
+                            "[OPP_OBJ_TYPE]",
+                            "[RTRES_ID]",
+                            "[RTRES_VALUE]",
+                            "[RIGHT_TYPE]",
+                            "[ORG_CODE]",
+                            "[RTRES_SCOPE]",
+                            "[GRANT_TYPE]",
+                            "[VALID_DATE]",
+                            "[GRANTOR]",
+                            "[GRANT_TIME]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UEM_OBJ_RTRES"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"opp_obj_code\"",
+                            "\"opp_obj_type\"",
+                            "\"rtres_id\"",
+                            "\"rtres_value\"",
+                            "\"right_type\"",
+                            "\"org_code\"",
+                            "\"rtres_scope\"",
+                            "\"grant_type\"",
+                            "\"valid_date\"",
+                            "\"grantor\"",
+                            "\"grant_time\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.uem_obj_rtres"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.uem_obj_rtres"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

@@ -1,0 +1,135 @@
+2024-01-28 18:28:41.086 [main] INFO  MessageSource - JVM TimeZone: GMT+08:00, Locale: zh_CN
+2024-01-28 18:28:41.088 [main] INFO  MessageSource - use Locale: zh_CN timeZone: sun.util.calendar.ZoneInfo[id="GMT+08:00",offset=28800000,dstSavings=0,useDaylight=false,transitions=0,lastRule=null]
+2024-01-28 18:28:41.099 [main] INFO  VMInfo - VMInfo# operatingSystem class => sun.management.OperatingSystemImpl
+2024-01-28 18:28:41.105 [main] INFO  Engine - the machine info  => 
+
+	osInfo:	Oracle Corporation 1.8 25.192-b12
+	jvmInfo:	Windows 10 amd64 10.0
+	cpu num:	16
+
+	totalPhysicalMemory:	-0.00G
+	freePhysicalMemory:	-0.00G
+	maxFileDescriptorCount:	-1
+	currentOpenFileDescriptorCount:	-1
+
+	GC Names	[PS MarkSweep, PS Scavenge]
+
+	MEMORY_NAME                    | allocation_size                | init_size                      
+	PS Eden Space                  | 512.50MB                       | 512.50MB                       
+	Code Cache                     | 240.00MB                       | 2.44MB                         
+	Compressed Class Space         | 1,024.00MB                     | 0.00MB                         
+	PS Survivor Space              | 85.00MB                        | 85.00MB                        
+	PS Old Gen                     | 1,365.50MB                     | 1,365.50MB                     
+	Metaspace                      | -0.00MB                        | 0.00MB                         
+
+
+2024-01-28 18:28:41.126 [main] INFO  Engine - 
+{
+	"content":[
+		{
+			"reader":{
+				"name":"sqlserverreader",
+				"parameter":{
+					"column":[
+						"[SERIAL_NO]",
+						"[CUST_CODE]",
+						"[ID_TYPE]",
+						"[ID_CODE]",
+						"[SURVEY_SN]",
+						"[SURVEY_CLS]",
+						"[VERSION]",
+						"[RATING_DATE]",
+						"[SURVEY_SCORE]",
+						"[RATING_LVL]",
+						"[RATING_LVL_NAME]",
+						"[RATING_EXP_DATE]",
+						"[NEXT_RATING_DATE]",
+						"[SURVEY_COLS]",
+						"[SURVEY_CELLS]",
+						"[CREATE_TIME]",
+						"[ORG_CODE]",
+						"[INVEST_PRO]",
+						"[INVEST_PRO_NAME]",
+						"[INVEST_LMT]",
+						"[INVEST_LMT_NAME]",
+						"[EXPECT_INCOME]",
+						"[EXPECT_INCOME_NAME]",
+						"[CUST_LASTRISK_FLAG]"
+					],
+					"connection":[
+						{
+							"jdbcUrl":[
+								"jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+							],
+							"table":[
+								"YGT.dbo.OPP_SURVEY_PRE_RATING"
+							]
+						}
+					],
+					"password":"*********",
+					"splitPk":"",
+					"username":"sa"
+				}
+			},
+			"writer":{
+				"name":"postgresqlwriter",
+				"parameter":{
+					"column":[
+						"\"serial_no\"",
+						"\"cust_code\"",
+						"\"id_type\"",
+						"\"id_code\"",
+						"\"survey_sn\"",
+						"\"survey_cls\"",
+						"\"version\"",
+						"\"rating_date\"",
+						"\"survey_score\"",
+						"\"rating_lvl\"",
+						"\"rating_lvl_name\"",
+						"\"rating_exp_date\"",
+						"\"next_rating_date\"",
+						"\"survey_cols\"",
+						"\"survey_cells\"",
+						"\"create_time\"",
+						"\"org_code\"",
+						"\"invest_pro\"",
+						"\"invest_pro_name\"",
+						"\"invest_lmt\"",
+						"\"invest_lmt_name\"",
+						"\"expect_income\"",
+						"\"expect_income_name\"",
+						"\"cust_lastrisk_flag\""
+					],
+					"connection":[
+						{
+							"jdbcUrl":"jdbc:postgresql://10.201.65.24:30100/ygt",
+							"table":[
+								"ygt.ygt.opp_survey_pre_rating"
+							]
+						}
+					],
+					"password":"*************",
+					"preSql":[
+						"TRUNCATE TABLE ygt.ygt.opp_survey_pre_rating"
+					],
+					"username":"ygt"
+				}
+			}
+		}
+	],
+	"setting":{
+		"errorLimit":{
+			"record":0
+		},
+		"speed":{
+			"byte":-1,
+			"channel":10,
+			"record":-1
+		}
+	}
+}
+
+2024-01-28 18:28:41.143 [main] WARN  Engine - prioriy set to 0, because NumberFormatException, the value is: null
+2024-01-28 18:28:41.145 [main] INFO  PerfTrace - PerfTrace traceId=job_-1, isEnable=false, priority=0
+2024-01-28 18:28:41.145 [main] INFO  JobContainer - DataX jobContainer starts job.
+2024-01-28 18:28:41.147 [main] INFO  JobContainer - Set jobId = 0

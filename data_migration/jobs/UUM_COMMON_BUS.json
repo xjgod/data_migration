@@ -1,0 +1,68 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[SER_NO]",
+                            "[MENU_ID]",
+                            "[ROLE_ID]",
+                            "[OP_CODE]",
+                            "[PLAT_CODE]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UUM_COMMON_BUS"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"ser_no\"",
+                            "\"menu_id\"",
+                            "\"role_id\"",
+                            "\"op_code\"",
+                            "\"plat_code\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.uum_common_bus"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.uum_common_bus"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

@@ -1,0 +1,72 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[TABLE_CODE]",
+                            "[TABLE_NAME]",
+                            "[PRIMARY_KEY]",
+                            "[TABLE_REMARK]",
+                            "[RELEASE_VERSION]",
+                            "[LAST_UPD_VERSION]",
+                            "[UPDATE_TIME]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.PRO_RELEASE_DB_TABLE"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"table_code\"",
+                            "\"table_name\"",
+                            "\"primary_key\"",
+                            "\"table_remark\"",
+                            "\"release_version\"",
+                            "\"last_upd_version\"",
+                            "\"update_time\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.pro_release_db_table"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.pro_release_db_table"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

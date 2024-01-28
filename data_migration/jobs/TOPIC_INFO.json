@@ -1,0 +1,80 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[TOPIC]",
+                            "[TOPIC_NAME]",
+                            "[TOPIC_GRP]",
+                            "[PUBLISHER]",
+                            "[PARTITIONS]",
+                            "[REPLICAS]",
+                            "[RETENTION_MS]",
+                            "[RETENTION_BYTES]",
+                            "[MSG_KEY]",
+                            "[REMARK]",
+                            "[UPD_TIME]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.TOPIC_INFO"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"topic\"",
+                            "\"topic_name\"",
+                            "\"topic_grp\"",
+                            "\"publisher\"",
+                            "\"partitions\"",
+                            "\"replicas\"",
+                            "\"retention_ms\"",
+                            "\"retention_bytes\"",
+                            "\"msg_key\"",
+                            "\"remark\"",
+                            "\"upd_time\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.topic_info"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.topic_info"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

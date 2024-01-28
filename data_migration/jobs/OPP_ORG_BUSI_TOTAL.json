@@ -1,0 +1,80 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[COMPLETE_DATE]",
+                            "[ORG_CODE]",
+                            "[BUSI_CODE]",
+                            "[YZT_CHANNEL]",
+                            "[EXAM_TYPE]",
+                            "[BUSI_NUM_TOTAL]",
+                            "[BUSI_TIME_TOTAL]",
+                            "[REJECT_NUM]",
+                            "[ERROR_NUM]",
+                            "[REPLACE_NUM]",
+                            "[REV_REPLACE_NUM]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.OPP_ORG_BUSI_TOTAL"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"complete_date\"",
+                            "\"org_code\"",
+                            "\"busi_code\"",
+                            "\"yzt_channel\"",
+                            "\"exam_type\"",
+                            "\"busi_num_total\"",
+                            "\"busi_time_total\"",
+                            "\"reject_num\"",
+                            "\"error_num\"",
+                            "\"replace_num\"",
+                            "\"rev_replace_num\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.opp_org_busi_total"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.opp_org_busi_total"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

@@ -1,0 +1,86 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[BUSI_CODE]",
+                            "[CLASS_NAME]",
+                            "[SEQU]",
+                            "[DESCRIPTION]",
+                            "[REDO]",
+                            "[STATUS]",
+                            "[REF_BUSI_TYPE]",
+                            "[HANDLE_NODE]",
+                            "[ALLOW_SKIP]",
+                            "[DEPENDENCY]",
+                            "[ATOM_PARAM]",
+                            "[TRANS_TYPE]",
+                            "[SYS_CODES]",
+                            "[LIMIT_DAYS]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.OPP_BUSI_TRANS_CONF"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"busi_code\"",
+                            "\"class_name\"",
+                            "\"sequ\"",
+                            "\"description\"",
+                            "\"redo\"",
+                            "\"status\"",
+                            "\"ref_busi_type\"",
+                            "\"handle_node\"",
+                            "\"allow_skip\"",
+                            "\"dependency\"",
+                            "\"atom_param\"",
+                            "\"trans_type\"",
+                            "\"sys_codes\"",
+                            "\"limit_days\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.opp_busi_trans_conf"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.opp_busi_trans_conf"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

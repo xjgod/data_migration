@@ -1,0 +1,74 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[SUBJECT_CODE]",
+                            "[SUBJECT_NAME]",
+                            "[SUBJECT_TYPE]",
+                            "[REF_META_TYPE]",
+                            "[REF_META_CODE]",
+                            "[DATA_TYPE]",
+                            "[REMARK]",
+                            "[OPER_TIME]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UPM_DATA_SUBJECT"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"subject_code\"",
+                            "\"subject_name\"",
+                            "\"subject_type\"",
+                            "\"ref_meta_type\"",
+                            "\"ref_meta_code\"",
+                            "\"data_type\"",
+                            "\"remark\"",
+                            "\"oper_time\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.upm_data_subject"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.upm_data_subject"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

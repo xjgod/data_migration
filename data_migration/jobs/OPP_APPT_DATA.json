@@ -1,0 +1,104 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[APPT_SN]",
+                            "[CUST_NAME]",
+                            "[CUST_FNAME]",
+                            "[ID_TYPE]",
+                            "[ID_CODE]",
+                            "[IS_REVIEW]",
+                            "[B_SNO]",
+                            "[CUST_CODE]",
+                            "[CUACCT_CODE]",
+                            "[CUST_ORG_CODE]",
+                            "[APPT_ORG_CODE]",
+                            "[APPT_BUSI_CODE]",
+                            "[APPT_DATE]",
+                            "[APPT_WAY]",
+                            "[APPT_STATUS]",
+                            "[APPT_MOBILE]",
+                            "[IS_DELETE]",
+                            "[APPT_REMARK]",
+                            "[APPT_VALIDE_CODE]",
+                            "[OPEN_VALIDE_CODE_DATE]",
+                            "[OP_CODE]",
+                            "[CREAT_APPT_TIME]",
+                            "[IS_PUBLIC_FUND_CUST]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.OPP_APPT_DATA"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"appt_sn\"",
+                            "\"cust_name\"",
+                            "\"cust_fname\"",
+                            "\"id_type\"",
+                            "\"id_code\"",
+                            "\"is_review\"",
+                            "\"b_sno\"",
+                            "\"cust_code\"",
+                            "\"cuacct_code\"",
+                            "\"cust_org_code\"",
+                            "\"appt_org_code\"",
+                            "\"appt_busi_code\"",
+                            "\"appt_date\"",
+                            "\"appt_way\"",
+                            "\"appt_status\"",
+                            "\"appt_mobile\"",
+                            "\"is_delete\"",
+                            "\"appt_remark\"",
+                            "\"appt_valide_code\"",
+                            "\"open_valide_code_date\"",
+                            "\"op_code\"",
+                            "\"creat_appt_time\"",
+                            "\"is_public_fund_cust\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.opp_appt_data"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.opp_appt_data"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

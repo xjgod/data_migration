@@ -1,0 +1,90 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[HI_DETAIL_ID]",
+                            "[DETAIL_TYPE]",
+                            "[PROC_INST_ID]",
+                            "[EXECUTION_ID]",
+                            "[TASK_ID]",
+                            "[ACT_INST_ID]",
+                            "[DETAIL_NAME]",
+                            "[VAR_TYPE]",
+                            "[REV]",
+                            "[DETAIL_TIME]",
+                            "[BYTEARRAY_ID]",
+                            "[DOUBLETYPE]",
+                            "[LONGTYPE]",
+                            "[TEXTTYPE]",
+                            "[TEXT2TYPE]",
+                            "[CREATE_TIME]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UWK_HI_DETAIL_BAK"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"hi_detail_id\"",
+                            "\"detail_type\"",
+                            "\"proc_inst_id\"",
+                            "\"execution_id\"",
+                            "\"task_id\"",
+                            "\"act_inst_id\"",
+                            "\"detail_name\"",
+                            "\"var_type\"",
+                            "\"rev\"",
+                            "\"detail_time\"",
+                            "\"bytearray_id\"",
+                            "\"doubletype\"",
+                            "\"longtype\"",
+                            "\"texttype\"",
+                            "\"text2type\"",
+                            "\"create_time\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.uwk_hi_detail_bak"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.uwk_hi_detail_bak"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

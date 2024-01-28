@@ -1,0 +1,88 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[HI_ACTINST_ID]",
+                            "[PROC_DEF_ID]",
+                            "[PROC_INST_ID]",
+                            "[EXECUTION_ID]",
+                            "[ACT_ID]",
+                            "[TASK_ID]",
+                            "[CALL_PROC_INST_ID]",
+                            "[ACT_NAME]",
+                            "[ACT_TYPE]",
+                            "[ASSIGNEE]",
+                            "[START_TIME]",
+                            "[END_TIME]",
+                            "[DURATION]",
+                            "[CREATE_TIME]",
+                            "[NEXT_ACT]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UWK_HI_ACTINST_BAK"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"hi_actinst_id\"",
+                            "\"proc_def_id\"",
+                            "\"proc_inst_id\"",
+                            "\"execution_id\"",
+                            "\"act_id\"",
+                            "\"task_id\"",
+                            "\"call_proc_inst_id\"",
+                            "\"act_name\"",
+                            "\"act_type\"",
+                            "\"assignee\"",
+                            "\"start_time\"",
+                            "\"end_time\"",
+                            "\"duration\"",
+                            "\"create_time\"",
+                            "\"next_act\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.uwk_hi_actinst_bak"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.uwk_hi_actinst_bak"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

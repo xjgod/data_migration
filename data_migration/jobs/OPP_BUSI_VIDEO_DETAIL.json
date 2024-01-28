@@ -1,0 +1,86 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[V_SNO]",
+                            "[B_SNO]",
+                            "[CUST_CODE]",
+                            "[CUST_NAME]",
+                            "[CUST_FNAME]",
+                            "[ID_TYPE]",
+                            "[ID_CODE]",
+                            "[BUSI_CODE]",
+                            "[OP_CODE]",
+                            "[START_TIME]",
+                            "[FINISH_TIME]",
+                            "[HANDLE_STATUS]",
+                            "[VIDOE_PATH]",
+                            "[IMG_SN]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.OPP_BUSI_VIDEO_DETAIL"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"v_sno\"",
+                            "\"b_sno\"",
+                            "\"cust_code\"",
+                            "\"cust_name\"",
+                            "\"cust_fname\"",
+                            "\"id_type\"",
+                            "\"id_code\"",
+                            "\"busi_code\"",
+                            "\"op_code\"",
+                            "\"start_time\"",
+                            "\"finish_time\"",
+                            "\"handle_status\"",
+                            "\"vidoe_path\"",
+                            "\"img_sn\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.opp_busi_video_detail"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.opp_busi_video_detail"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

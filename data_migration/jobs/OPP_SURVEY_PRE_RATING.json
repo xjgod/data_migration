@@ -1,0 +1,106 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[SERIAL_NO]",
+                            "[CUST_CODE]",
+                            "[ID_TYPE]",
+                            "[ID_CODE]",
+                            "[SURVEY_SN]",
+                            "[SURVEY_CLS]",
+                            "[VERSION]",
+                            "[RATING_DATE]",
+                            "[SURVEY_SCORE]",
+                            "[RATING_LVL]",
+                            "[RATING_LVL_NAME]",
+                            "[RATING_EXP_DATE]",
+                            "[NEXT_RATING_DATE]",
+                            "[SURVEY_COLS]",
+                            "[SURVEY_CELLS]",
+                            "[CREATE_TIME]",
+                            "[ORG_CODE]",
+                            "[INVEST_PRO]",
+                            "[INVEST_PRO_NAME]",
+                            "[INVEST_LMT]",
+                            "[INVEST_LMT_NAME]",
+                            "[EXPECT_INCOME]",
+                            "[EXPECT_INCOME_NAME]",
+                            "[CUST_LASTRISK_FLAG]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.OPP_SURVEY_PRE_RATING"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"serial_no\"",
+                            "\"cust_code\"",
+                            "\"id_type\"",
+                            "\"id_code\"",
+                            "\"survey_sn\"",
+                            "\"survey_cls\"",
+                            "\"version\"",
+                            "\"rating_date\"",
+                            "\"survey_score\"",
+                            "\"rating_lvl\"",
+                            "\"rating_lvl_name\"",
+                            "\"rating_exp_date\"",
+                            "\"next_rating_date\"",
+                            "\"survey_cols\"",
+                            "\"survey_cells\"",
+                            "\"create_time\"",
+                            "\"org_code\"",
+                            "\"invest_pro\"",
+                            "\"invest_pro_name\"",
+                            "\"invest_lmt\"",
+                            "\"invest_lmt_name\"",
+                            "\"expect_income\"",
+                            "\"expect_income_name\"",
+                            "\"cust_lastrisk_flag\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.opp_survey_pre_rating"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.opp_survey_pre_rating"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

@@ -1,0 +1,76 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[EXT_SYS_CODE]",
+                            "[EXT_API_CODE]",
+                            "[EXT_API_NAME]",
+                            "[EXT_API_STATUS]",
+                            "[CACHE_EXPIRES]",
+                            "[FALL_BACK_MODE]",
+                            "[CHARGE_MODE]",
+                            "[PRICE]",
+                            "[CHARGE_CONDITION]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UPM_EXT_SYS_API"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"ext_sys_code\"",
+                            "\"ext_api_code\"",
+                            "\"ext_api_name\"",
+                            "\"ext_api_status\"",
+                            "\"cache_expires\"",
+                            "\"fall_back_mode\"",
+                            "\"charge_mode\"",
+                            "\"price\"",
+                            "\"charge_condition\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.upm_ext_sys_api"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.upm_ext_sys_api"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

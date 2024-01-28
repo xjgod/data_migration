@@ -1,0 +1,20 @@
+//202312144
+config.py
+1、新增sourceschema和targetschema模式变量
+2、db_config字典相应数据库增加 schema
+3、获取源的schema
+
+magration_data.py
+1、函数get_all_tables、get_table_columns中：
+修改参数：database_type为database_url
+新增参数：types表示数据库类型
+2、对应get_all_tables、get_table_columns函数增加传参数据库类型
+
+3、修改get_all_tables，get_table_columns处理SQL server默认模式的问题
+
+
+
+
+//20231226
+1、修改迁移脚本的配置文件为ini格式
+2、增加数据比对功能

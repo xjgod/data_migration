@@ -1,0 +1,66 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[CUST_CODE]",
+                            "[BUSI_CODE]",
+                            "[EXEMP_TYPE]",
+                            "[EXP_DATE]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.CUST_BUSI_EXEMP"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"cust_code\"",
+                            "\"busi_code\"",
+                            "\"exemp_type\"",
+                            "\"exp_date\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.cust_busi_exemp"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.cust_busi_exemp"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

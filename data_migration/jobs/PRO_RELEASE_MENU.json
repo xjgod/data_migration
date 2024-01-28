@@ -1,0 +1,88 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[MENU_ID]",
+                            "[MENU_NAME]",
+                            "[MENU_PUR]",
+                            "[PAR_MENU]",
+                            "[PAR_MENU_FIRST]",
+                            "[PAR_MENU_SECOND]",
+                            "[MENU_PATH]",
+                            "[MENU_LINK]",
+                            "[REMARK]",
+                            "[MENU_VIEW_ID]",
+                            "[QSJGDM]",
+                            "[MENU_OEM]",
+                            "[RELEASE_TYPE]",
+                            "[RELEASE_VERSION]",
+                            "[LAST_UPD_VERSION]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.PRO_RELEASE_MENU"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"menu_id\"",
+                            "\"menu_name\"",
+                            "\"menu_pur\"",
+                            "\"par_menu\"",
+                            "\"par_menu_first\"",
+                            "\"par_menu_second\"",
+                            "\"menu_path\"",
+                            "\"menu_link\"",
+                            "\"remark\"",
+                            "\"menu_view_id\"",
+                            "\"qsjgdm\"",
+                            "\"menu_oem\"",
+                            "\"release_type\"",
+                            "\"release_version\"",
+                            "\"last_upd_version\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.pro_release_menu"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.pro_release_menu"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

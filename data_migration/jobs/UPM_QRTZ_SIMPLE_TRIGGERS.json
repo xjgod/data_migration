@@ -1,0 +1,70 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[SCHED_NAME]",
+                            "[TRIGGER_NAME]",
+                            "[TRIGGER_GROUP]",
+                            "[REPEAT_COUNT]",
+                            "[REPEAT_INTERVAL]",
+                            "[TIMES_TRIGGERED]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UPM_QRTZ_SIMPLE_TRIGGERS"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"sched_name\"",
+                            "\"trigger_name\"",
+                            "\"trigger_group\"",
+                            "\"repeat_count\"",
+                            "\"repeat_interval\"",
+                            "\"times_triggered\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.upm_qrtz_simple_triggers"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.upm_qrtz_simple_triggers"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

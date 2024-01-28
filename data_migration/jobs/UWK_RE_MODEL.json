@@ -1,0 +1,82 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[MODEL_ID]",
+                            "[EDITOR_SOURCE_VALUE_ID]",
+                            "[EDITOR_SOURCE_EXTRA_VALUE_ID]",
+                            "[DEPLOYMENT_ID]",
+                            "[REV]",
+                            "[MNAME]",
+                            "[MOD_CATE_KEY]",
+                            "[CATEGORY]",
+                            "[LAST_UPDATE_TIME]",
+                            "[MOD_VERSION]",
+                            "[META_INFO]",
+                            "[CREATE_TIME]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UWK_RE_MODEL"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"model_id\"",
+                            "\"editor_source_value_id\"",
+                            "\"editor_source_extra_value_id\"",
+                            "\"deployment_id\"",
+                            "\"rev\"",
+                            "\"mname\"",
+                            "\"mod_cate_key\"",
+                            "\"category\"",
+                            "\"last_update_time\"",
+                            "\"mod_version\"",
+                            "\"meta_info\"",
+                            "\"create_time\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.uwk_re_model"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.uwk_re_model"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

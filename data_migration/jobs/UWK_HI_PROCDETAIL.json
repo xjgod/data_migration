@@ -1,0 +1,80 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[PROC_INST_ID]",
+                            "[ATTR_1]",
+                            "[ATTR_2]",
+                            "[ATTR_3]",
+                            "[ATTR_4]",
+                            "[ATTR_5]",
+                            "[ATTR_6]",
+                            "[ATTR_7]",
+                            "[ATTR_8]",
+                            "[ATTR_9]",
+                            "[ATTR_10]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UWK_HI_PROCDETAIL"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"proc_inst_id\"",
+                            "\"attr_1\"",
+                            "\"attr_2\"",
+                            "\"attr_3\"",
+                            "\"attr_4\"",
+                            "\"attr_5\"",
+                            "\"attr_6\"",
+                            "\"attr_7\"",
+                            "\"attr_8\"",
+                            "\"attr_9\"",
+                            "\"attr_10\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.uwk_hi_procdetail"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.uwk_hi_procdetail"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

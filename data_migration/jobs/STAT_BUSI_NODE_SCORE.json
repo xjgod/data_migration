@@ -1,0 +1,80 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[ORG_CODE]",
+                            "[BUSI_CODE]",
+                            "[NODE_KEY]",
+                            "[NODE_SCORE]",
+                            "[REJECT_SUB_TYPE]",
+                            "[REJECT_SUB_NUM]",
+                            "[DELETE_IS_EFFECT]",
+                            "[UNCLAIM_IS_EFFECT]",
+                            "[ERROR_SUB_TYPE]",
+                            "[ERROR_SUB_NUM]",
+                            "[UPDATE_TIME]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.STAT_BUSI_NODE_SCORE"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"org_code\"",
+                            "\"busi_code\"",
+                            "\"node_key\"",
+                            "\"node_score\"",
+                            "\"reject_sub_type\"",
+                            "\"reject_sub_num\"",
+                            "\"delete_is_effect\"",
+                            "\"unclaim_is_effect\"",
+                            "\"error_sub_type\"",
+                            "\"error_sub_num\"",
+                            "\"update_time\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.stat_busi_node_score"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.stat_busi_node_score"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

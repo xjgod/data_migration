@@ -1,0 +1,80 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[GROUP_ID]",
+                            "[TABLE_CODE]",
+                            "[TABLE_NAME]",
+                            "[TABLE_P_KEY]",
+                            "[ARCH_TYPE]",
+                            "[ARCH_FLAG]",
+                            "[ARCH_SEQ]",
+                            "[ARCH_SQL]",
+                            "[ARCHED_DATE]",
+                            "[ARCH_STATUS]",
+                            "[REMARK]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.UPM_ARCH_TABLE"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"group_id\"",
+                            "\"table_code\"",
+                            "\"table_name\"",
+                            "\"table_p_key\"",
+                            "\"arch_type\"",
+                            "\"arch_flag\"",
+                            "\"arch_seq\"",
+                            "\"arch_sql\"",
+                            "\"arched_date\"",
+                            "\"arch_status\"",
+                            "\"remark\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.upm_arch_table"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.upm_arch_table"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

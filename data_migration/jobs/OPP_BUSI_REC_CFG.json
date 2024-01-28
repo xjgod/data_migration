@@ -1,0 +1,90 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 10,
+                "record": -1,
+                "byte": -1
+            },
+            "errorLimit": {
+                "record": 0
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "sa",
+                        "password": "abc123!@#",
+                        "column": [
+                            "[BUSI_CODE]",
+                            "[ORG_CODE]",
+                            "[REC_MODE]",
+                            "[UPLOAD_MODE]",
+                            "[IS_AUDIT]",
+                            "[REF_BUSI_CODE]",
+                            "[REF_VIDEO_CLS]",
+                            "[IS_PROPER_MATCH]",
+                            "[REMARK]",
+                            "[EXPIRY_DAYS]",
+                            "[CONDITION_VALUE]",
+                            "[CONDITION_DESCRIPTION]",
+                            "[REC_AT_ONCE]",
+                            "[CHECK_NODE]",
+                            "[IS_FOREVER]",
+                            "[EXP_CLS]"
+                        ],
+                        "splitPk": "",
+                        "connection": [
+                            {
+                                "table": [
+                                    "YGT.dbo.OPP_BUSI_REC_CFG"
+                                ],
+                                "jdbcUrl": [
+                                    "jdbc:sqlserver://10.81.2.110:1433;DatabaseName=YGT;"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "postgresqlwriter",
+                    "parameter": {
+                        "username": "ygt",
+                        "password": "Testygt123!@#",
+                        "column": [
+                            "\"busi_code\"",
+                            "\"org_code\"",
+                            "\"rec_mode\"",
+                            "\"upload_mode\"",
+                            "\"is_audit\"",
+                            "\"ref_busi_code\"",
+                            "\"ref_video_cls\"",
+                            "\"is_proper_match\"",
+                            "\"remark\"",
+                            "\"expiry_days\"",
+                            "\"condition_value\"",
+                            "\"condition_description\"",
+                            "\"rec_at_once\"",
+                            "\"check_node\"",
+                            "\"is_forever\"",
+                            "\"exp_cls\""
+                        ],
+                        "preSql": [
+                            "TRUNCATE TABLE ygt.ygt.opp_busi_rec_cfg"
+                        ],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:postgresql://10.201.65.24:30100/ygt",
+                                "table": [
+                                    "ygt.ygt.opp_busi_rec_cfg"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}
