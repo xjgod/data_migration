@@ -42,6 +42,7 @@ no_match_tables = os.path.join(error_path, config['file_path']['no_match_tables'
 no_match_columns = os.path.join(error_path, config['file_path']['no_match_columns'])
 matched_table_file = os.path.join(error_path, config['file_path']['matched_table_file'])
 error_tables_jobs = os.path.join(error_path, config['file_path']['error_tables_jobs'])
+exec_error_tables = os.path.join(error_path, config['file_path']['exec_error_tables'])
 migration_table_file = config['file_path']['migration_table_file']
 hash_compare_log = os.path.join(error_path, config['file_path']['data_compare_log'])
 
