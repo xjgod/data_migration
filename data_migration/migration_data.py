@@ -24,9 +24,9 @@ def get_db_config(types):
 
 
 # 获取reader和writer的名称
-def get_wr_name(source_db, target_db):
-    reader_name = f"{'postgresql' if source_db == 'gauss' else source_db}reader"
-    writer_name = f"{'postgresql' if target_db == 'gauss' else target_db}writer"
+def get_wr_name(source_db_name, target_db_name):
+    reader_name = f"{'postgresql' if source_db_name == 'gauss' else source_db_name}reader"
+    writer_name = f"{'postgresql' if target_db_name == 'gauss' else target_db_name}writer"
     return reader_name, writer_name
 
 
@@ -41,23 +41,11 @@ def check_db():
 
 
 # 创建日志文件
-def clear_error_log_path(error_files):
-    # 创建一个 job_path 目录，如果不存在的话则创建
-    if not os.path.exists(job_path):
-        os.makedirs(job_path)
-
-    # 创建一个 datax_logs 目录，如果不存在的话则创建
-    if not os.path.exists(datax_logs):
-        os.makedirs(datax_logs)
-
-    # 创建一个 error_path 目录，如果不存在的话则创建
-    if not os.path.exists(error_path):
-        os.makedirs(error_path)
-
-    # 初始化日志文件
-    # 定义 error_file 文件路径,如果不存在则创建一个空文件，如果存在则清空
-    with open(error_tables_jobs, "w", encoding="utf-8"):
-        pass
+def file_is_exist(file_path):
+    for path in file_path:
+        # 创建一个 job_path 目录，如果不存在的话则创建
+        if not os.path.exists(path):
+            os.makedirs(path)
 
 
 # 构造url
@@ -181,10 +169,11 @@ def get_all_columns(db_type, types, tables):
 # 将字段顺序按照源表排序
 def get_compare_columns(tables):
     try:
+        logging.info("请稍等，正在获取数据库表等相关信息...")
         source_columns_dict = get_all_columns(source_db, source, tables)
         target_columns_dict = get_all_columns(target_db, target, tables)
 
-        table_column_dict = {}
+        table_column_dict = {}  # 存储表名及字段相关
 
         with open(no_match_columns, 'a', encoding='utf-8') as f:
             for table in tables:
@@ -212,7 +201,7 @@ def get_compare_columns(tables):
                         f.write(f"目标库表：{table}中的字段：{missing_in_source}在源库中不存在，请检查！\n")
 
                     if s_columns and t_columns:
-                        del_mode = 'DELETE FROM' if table in [t.upper() for t in special_tables] else 'TRUNCATE TABLE'
+                        del_mode = 'DELETE FROM' if table in [tb.upper() for tb in special_tables] else 'TRUNCATE TABLE'
                         # 对目标表字段进行排序，以匹配源表字段的顺序
                         t_columns.sort(key=s_columns.index)
                         table_column_dict[table] = {
@@ -226,15 +215,13 @@ def get_compare_columns(tables):
                     else:
                         logging.warning(f"表：{table}中的字段与目标库表中的字段为空，请检查！")
                         f.write(f"表：{table}中的字段与目标库表中的字段为空，请检查！\n")
-
         return table_column_dict
-
     except Exception as e:
         logging.error(f"在比较字段时发生异常: {e}")
         return None
 
 
-# 读取migration_table_file.txt文件,获取所有的表名和分片字段，并与数据库进行比对分析，返回匹配后的表与分片信息
+# 读取 migration_tables.txt 获取表相关信息
 def get_tables_and_split():
     tables_dict = {}
     # 判断migration_table_file文件存不存在，不存在则创建
@@ -267,6 +254,7 @@ def get_tables_and_split():
     return match_tables_dict
 
 
+# 获取比较后的表
 def get_compare_tables():
     with open(no_match_tables, 'w', encoding='utf-8') as f:
         match_tables_dict = {}
@@ -300,6 +288,7 @@ def get_compare_tables():
     return match_tables_dict
 
 
+# 获取执行失败的表
 def get_error_tables():
     with open(exec_error_tables, 'r', encoding='utf-8') as f:
         error_tables = []
@@ -309,10 +298,10 @@ def get_error_tables():
     return error_tables
 
 
-# 读取 migration_table_file.txt 文件所有表名，与数据库进行比较，返回匹配后的表、分片字段，源表名，目标表名
+# 获取在后的表及字段相关信息
 def get_match_tables(tables_dict):
     tables = get_compare_tables()
-    to_delete = []  # 存储要删除的表名
+    to_delete = []  # 存储需删除的表名
     with open(no_match_tables, "a", encoding="utf-8") as f:
         if "*" in tables_dict:
             table_columns_dict = get_compare_columns(tables)
@@ -331,6 +320,7 @@ def get_match_tables(tables_dict):
     return table_columns_dict
 
 
+# 获取数据块模式
 def get_schema(db_type):
     _, _, database, schema, user, _ = get_db_config(db_type)
     if db_type == 'sqlserver':
@@ -347,9 +337,7 @@ def get_schema(db_type):
 
 # 生成json格式字典
 def generate_json_dict(source_table_name, target_table_name, source_columns, target_columns, reader_name, writer_name,
-                       sourceUrl, targetUrl, split_column, del_mode, source_schema, target_schema):
-    _, _, sourceDatabase, _, sourceUser, sourcePwd = get_db_config(source)
-    _, _, targetDatabase, _, targetUser, targetPwd = get_db_config(target)
+                       source_url, target_url, split_column, del_mode, source_schema, target_schema, source_config, target_config):
     json_dict = {
         "job": {
             "setting": {
@@ -367,15 +355,15 @@ def generate_json_dict(source_table_name, target_table_name, source_columns, tar
                     "reader": {
                         "name": reader_name,
                         "parameter": {
-                            "username": sourceUser,
-                            "password": sourcePwd,
+                            "username": source_config[4],
+                            "password": source_config[5],
                             "column": source_columns,
                             "splitPk": split_column,
                             "connection": [
                                 {
                                     "table": [f"{source_schema}{source_table_name}"],
                                     "jdbcUrl": [
-                                        sourceUrl
+                                        source_url
                                     ]
                                 }
                             ]
@@ -384,15 +372,15 @@ def generate_json_dict(source_table_name, target_table_name, source_columns, tar
                     "writer": {
                         "name": writer_name,
                         "parameter": {
-                            "username": targetUser,
-                            "password": targetPwd,
+                            "username": target_config[4],
+                            "password": target_config[5],
                             "column": target_columns,
                             "preSql": [
                                 f"{del_mode} {target_schema}{target_table_name}"
                             ],
                             "connection": [
                                 {
-                                    "jdbcUrl": targetUrl,
+                                    "jdbcUrl": target_url,
                                     "table": [f"{target_schema}{target_table_name}"]
                                 }
                             ]
@@ -406,20 +394,18 @@ def generate_json_dict(source_table_name, target_table_name, source_columns, tar
     return json_dict
 
 
-# 保存已生成的 json 文件
+# 保存生成的 json 文件
 def save_json_file(json_data, source_table_name):
-    json_data = json.dumps(json_data, indent=4)
+    job_data = json.dumps(json_data, indent=4)
     file_name = os.path.join(job_path, f"{source_table_name}.json")
     with open(file_name, "w", encoding="utf-8") as f:
-        f.write(json_data)
+        f.write(job_data)
 
 
 # 根据数据库类型转义字段名
 def escape_column(table_columns, db_type):
-    # Oracle或者gauss，就用双引号（"）
     if db_type == 'oracle' or db_type == 'gauss':
         return '"' + table_columns + '"'
-    # SQL Server，就用方括号（[ ]）
     elif db_type == 'sqlserver':
         return '[' + table_columns + ']'
     else:
@@ -427,7 +413,7 @@ def escape_column(table_columns, db_type):
 
 
 # 生成单个表的json文件
-def generate_table_json(table, table_info, reader_name, writer_name, sourceUrl, targetUrl, source_schema,
+def generate_table_json(table, table_info, reader_name, writer_name, source_url, target_url, source_schema,
                         target_schema):
     source_table_name = table.lower() if table_info['source_table_case'] == 'lower' else table.upper()
     source_columns = [col.lower() if table_info['source_table_case'] == 'lower' else col.upper() for col in
@@ -445,8 +431,11 @@ def generate_table_json(table, table_info, reader_name, writer_name, sourceUrl, 
     s_escape_columns = [escape_column(col, source_db) for col in source_columns]
     t_escape_columns = [escape_column(col, target_db) for col in target_columns]
 
+    source_config = get_db_config(source)
+    target_config = get_db_config(target)
     data = generate_json_dict(source_table_name, target_table_name, s_escape_columns, t_escape_columns, reader_name,
-                              writer_name, sourceUrl, targetUrl, split_column, del_mode, source_schema, target_schema)
+                              writer_name, source_url, target_url, split_column, del_mode, source_schema, target_schema,
+                              source_config, target_config)
 
     save_json_file(data, source_table_name)
     return 1, table
@@ -454,15 +443,15 @@ def generate_table_json(table, table_info, reader_name, writer_name, sourceUrl, 
 
 # 生成json
 def generate_all_table_json(match_tables_dict):
-    logging.info("请稍等，正在开始生成json脚本...")
+    logging.info("正在开始生成json脚本...")
     # 获取reader和writer名称
     reader_name, writer_name = get_wr_name(source_db, target_db)
 
     # 获取源库和目标库的配置信息
     source_host, source_port, source_database, _, _, _ = get_db_config(source)
     target_host, target_port, target_database, _, _, _ = get_db_config(target)
-    sourceUrl = get_build_url(source_db, source_host, source_port, source_database)
-    targetUrl = get_build_url(target_db, target_host, target_port, target_database)
+    source_url = get_build_url(source_db, source_host, source_port, source_database)
+    target_url = get_build_url(target_db, target_host, target_port, target_database)
 
     # 获取源库和目标库的schema
     source_schema = get_schema(source)
@@ -473,7 +462,7 @@ def generate_all_table_json(match_tables_dict):
 
     with ThreadPoolExecutor(max_workers=max_threads) as executor:
         future_to_table = {executor.submit(generate_table_json, table, match_tables_dict[table], reader_name,
-                                           writer_name, sourceUrl, targetUrl, source_schema,
+                                           writer_name, source_url, target_url, source_schema,
                                            target_schema): table for table in match_tables_dict}
 
         for future in as_completed(future_to_table):
@@ -489,7 +478,7 @@ def generate_all_table_json(match_tables_dict):
                     logging.error(f"表：{table}处理时出错：{e}")
                     filed_tables.append(table)
 
-    logging.info(f"总共生成了{successful_table}张表的JSON脚本文件")
+    logging.info(f"总共生成了{successful_table}张表的JSON迁移文件")
 
 
 # 定义一个数据迁移类
@@ -498,11 +487,11 @@ class MigrationData:
         self.task_finished = None
         self.exec_time = 0
         # 创建一个Manager对象
-        manager = multiprocessing.Manager()
+        manages = multiprocessing.Manager()
         # 创建一个共享的命名空间
-        self.namespace = manager.Namespace()
+        self.namespace = manages.Namespace()
         # 定义self.lock变量
-        self.lock = manager.Lock()
+        self.lock = manages.Lock()
         # 把这四个变量放在命名空间里
         self.namespace.waiting = 0
         self.namespace.running = 0
@@ -512,18 +501,16 @@ class MigrationData:
     # 根据表名找到所有jobs对应的json执行脚本
     def find_job_files(self, matched_tables):
         result = {}
-        # 循环遍历表名，构造json文件的路径，并存入结果字典中
-        for table in matched_tables:
-            # 使用os.path.join来拼接路径，并转换为字符串
-            json_file = str(os.path.join(job_path, f"{table}.json"))
-            # 检查json文件是否存在
-            if not os.path.isfile(json_file):
-                # 如果不存在，则输出提示信息并记录 errorjob 日志
-                logging.error(f"{table.ljust(50)}#表json不存在，请检查jobs目录下是否有该文件！")
-                with open(error_tables_jobs, 'a', encoding='utf-8') as f:
+        with open(error_tables_jobs, 'w', encoding='utf-8') as f:
+            for table in matched_tables:
+                json_file = str(os.path.join(job_path, f"{table}.json"))
+                # 检查json文件是否存在
+                if not os.path.isfile(json_file):
+                    # 如果不存在，则输出提示信息并记录在 error_tables_jobs 日志中
+                    logging.error(f"{table.ljust(50)}#表json不存在，请检查jobs目录下是否有该文件！")
                     f.write(f"{table.ljust(50)}#表json不存在，请检查jobs目录下是否有该文件！\n")
-                continue
-            result[table] = json_file
+                    continue
+                result[table] = json_file
         self.namespace.waiting = len(result)  # 设置待执行任务数
         return result
 
@@ -549,7 +536,7 @@ class MigrationData:
             return True
 
     # 定义一个异步执行任务的函数
-    def async_exec_job(self, task_queue, error_jobs):
+    def async_exec_job(self, task_queue):
         #  创建一个最大线程数为 max_threads 的线程池，调用run_datax执行任务
         with concurrent.futures.ThreadPoolExecutor(max_workers=max_threads) as t_executor:
             li_futures = []  # 创建一个空的 li_futures 列表
@@ -563,16 +550,16 @@ class MigrationData:
             for table, f_threads in li_futures:
                 try:
                     if not f_threads.result():
-                        # 迁移失败，则输出提示信息并记录 errorjob 日志
+                        # 迁移失败，则输出提示信息并记录 error_job 日志
                         logging.error(f"{table.ljust(50)}#任务迁移失败，请检查{datax_logs}目录中对应的日志文件！")
-                        with open(error_jobs, 'a', encoding='utf-8') as f:
+                        with open(error_tables_jobs, 'a', encoding='utf-8') as f:
                             f.write(f"{table.ljust(50)}#任务迁移失败，请检查{datax_logs}目录中对应的日志文件！\n")
                 # 使用BaseException来捕获所有类型的异常
                 except BaseException as e:
                     with open(exec_error_tables, 'a', encoding='utf-8') as f:
                         f.write(f"{table}\n")
                     logging.error(f"{table.ljust(50)}#任务异常，错误信息：{e}！请检查{datax_logs}目录中对应的日志文件！")
-                    with open(error_jobs, 'a', encoding='utf-8') as f:
+                    with open(error_tables_jobs, 'a', encoding='utf-8') as f:
                         f.write(f"{table.ljust(50)}#任务异常，错误信息：{e}！ 请检查{datax_logs}目录中对应的日志文件！\n")
 
     # 创建进程池，调用async_exec_job执行任务
@@ -605,7 +592,7 @@ class MigrationData:
             # 使用 ProcessPoolExecutor 创建进程池，指定 max_workers 参数为 num_processes
             with concurrent.futures.ProcessPoolExecutor(max_workers=num_processes) as p_executor:
                 f_processes = [
-                    p_executor.submit(self.async_exec_job, sub_queue, error_tables_jobs) for sub_queue in
+                    p_executor.submit(self.async_exec_job, sub_queue) for sub_queue in
                     sub_task_queues]  # 提交任务
                 # 循环遍历 f_processes 列表，等待每个任务完成，并处理输出和异常
                 for future in as_completed(f_processes):
@@ -622,7 +609,7 @@ class MigrationData:
             f.write(f"迁移结束,迁移总耗时{round(time.time() - start_time, 2)}秒 \n")
 
     # 打印任务执行情况
-    def taskDetails(self):
+    def task_details(self):
         if (self.namespace.waiting == 0 and self.namespace.running == 0
                 and self.namespace.succeed == 0 and self.namespace.failed == 0):
             logging.info("正在获取任务...")
@@ -630,17 +617,15 @@ class MigrationData:
             logging.info(f"等待执行任务：{self.namespace.waiting}，正在执行任务：{self.namespace.running}，"
                          f"执行成功任务：{self.namespace.succeed}，执行失败任务：{self.namespace.failed}")
 
-    def monitorTask(self):
+    def monitor_task(self):
         self.task_finished = False  # 初始化任务状态
         while True:
             with self.lock:
-                self.taskDetails()
+                self.task_details()
             time.sleep(5)  # 每5秒监测一次
             if self.namespace.waiting == 0 and self.namespace.running == 0:
                 self.task_finished = True
                 break
-        if not self.task_finished:
-            pass
 
 
 if __name__ == '__main__':
@@ -658,10 +643,10 @@ if __name__ == '__main__':
     input_number = 0
     while True:
         input_num = input("请输入你的选择：")
-        if input_num == "1" or input_num == "":
+        if input_num == "1" or input_num == "":  # 生成json文件并执行数据迁移
             check_db()
-            # 日志文件与目录初始化
-            clear_error_log_path(error_tables_jobs)
+            # 目录初始化
+            file_is_exist([job_path, datax_logs, error_path])
             # 获取所有表相关信息
             matched_tables_dict = get_tables_and_split()
             # 生成json
@@ -670,39 +655,39 @@ if __name__ == '__main__':
             multiprocessing.freeze_support()
             manager = multiprocessing.Manager()
             migrate = MigrationData()  # 创建迁移实例
-            t = threading.Thread(target=migrate.monitorTask)  # 监控任务执行情况
+            t = threading.Thread(target=migrate.monitor_task)  # 监控任务执行情况
             t.daemon = False
             t.start()
             migrate.exec_jobs(matched_tables_dict)
             exit()
-        elif input_num == "2":
+        elif input_num == "2":  # 只生成json文件，不迁移数据
             check_db()
-            # 日志文件与目录初始化
-            clear_error_log_path(error_tables_jobs)
+            # 目录初始化
+            file_is_exist([job_path, datax_logs, error_path])
             matched_tables_dict = get_tables_and_split()
             # 生成json
             generate_all_table_json(matched_tables_dict)
             exit()
-        elif input_num == "3":
-            # 表示只迁移数据，不生成json文件
-            # 日志文件与目录初始化
-            clear_error_log_path(error_tables_jobs)
+        elif input_num == "3":  # 只迁移数据，不生成json文件
+            # 目录初始化
+            file_is_exist([job_path, datax_logs, error_path])
             matched_tables_dict = get_tables_and_split()
             # 执行迁移
             multiprocessing.freeze_support()
             manager = multiprocessing.Manager()
             migrate = MigrationData()  # 创建迁移实例
-            t = threading.Thread(target=migrate.monitorTask)  # 监控任务执行情况
+            t = threading.Thread(target=migrate.monitor_task)  # 监控任务执行情况
             t.daemon = False
             t.start()
             migrate.exec_jobs(matched_tables_dict)
             exit()
-        elif input_num == "4":
+        elif input_num == "4":  # 执行迁移失败的表
+            # 获取失败的表
             error_jobs = get_error_tables()
             multiprocessing.freeze_support()
             manager = multiprocessing.Manager()
             migrate = MigrationData()  # 创建迁移实例
-            t = threading.Thread(target=migrate.monitorTask)  # 监控任务执行情况
+            t = threading.Thread(target=migrate.monitor_task)  # 监控任务执行情况
             t.daemon = False
             t.start()
             migrate.exec_jobs(error_jobs)
@@ -715,7 +700,6 @@ if __name__ == '__main__':
             dc.get_hash_result()
             exit()
         elif input_num == "9" or input_num == "":
-            # 表示退出程序
             exit()
         else:
             print("输入错误，请重新输入:")
