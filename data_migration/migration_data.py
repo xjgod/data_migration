@@ -8,8 +8,7 @@ import multiprocessing
 import subprocess
 import threading
 import time
-from concurrent.futures import as_completed
-from tqdm import tqdm
+from concurrent.futures import as_completed, ThreadPoolExecutor
 import jaydebeapi
 
 
@@ -29,6 +28,16 @@ def get_wr_name(source_db, target_db):
     reader_name = f"{'postgresql' if source_db == 'gauss' else source_db}reader"
     writer_name = f"{'postgresql' if target_db == 'gauss' else target_db}writer"
     return reader_name, writer_name
+
+
+def check_db():
+    # 判断源库和目标库、源表和目标表是否相同
+    if source_db == target_db:
+        source_schema = get_schema(source_db)
+        target_schema = get_schema(target_db)
+        if source_schema == target_schema:
+            logging.warning("不能将数据从同一个库的同一张表迁移到自己，请选择不同的库或表作为源和目标，请检查后再试！")
+            exit()
 
 
 # 创建日志文件
@@ -91,6 +100,7 @@ def close_connection_and_cursor(conn, cursor):
 
 # 获取数据库的所有表名
 def get_all_tables(db_type, types):
+    conn, cursor = None, None
     _, _, database, schema, user, _ = get_db_config(types)  # 获取数据库配置信息
     db_schema = 'dbo' if db_type == 'sqlserver' and schema == '' else (user if schema == '' else schema)
     try:
@@ -100,19 +110,18 @@ def get_all_tables(db_type, types):
             cursor.execute(
                 f"SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '{db_schema}' "
                 f"AND TABLE_CATALOG='{database}'")
-            all_tables = [table[0] for table in cursor.fetchall()]
+            all_tables = [table[0].upper() for table in cursor.fetchall()]
 
         elif db_type == 'oracle':
             cursor.execute(
                 f"SELECT table_name FROM all_tables WHERE owner = '{user}'")
-            all_tables = [table[0] for table in cursor.fetchall()]
+            all_tables = [table[0].upper() for table in cursor.fetchall()]
 
         elif db_type == 'gauss':
             cursor.execute(
                 f"SELECT table_name FROM information_schema.tables WHERE table_type = 'BASE TABLE' "
                 f"AND table_catalog = '{database}' AND table_schema = '{db_schema}'")
-            all_tables = [table[0] for table in cursor.fetchall()]
-
+            all_tables = [table[0].upper() for table in cursor.fetchall()]
         else:
             raise ValueError("不支持的数据库类型。")
     except Exception as e:
@@ -125,46 +134,109 @@ def get_all_tables(db_type, types):
 
 
 # 获取表的所有字段
-def get_table_columns(db_type, types, table):
-    _, _, database, schema, user, _ = get_db_config(types)
-    db_schema = 'dbo' if db_type == 'sqlserver' and schema == '' else (user if schema == '' else schema)
+def get_all_columns(db_type, types, tables):
+    conn, cursor = None, None
+    table_columns = {}
     try:
-        # 获取数据库连接和游标对象
+        _, _, database, schema, user, _ = get_db_config(types)
+        db_schema = 'dbo' if db_type == 'sqlserver' and schema == '' else (user if schema == '' else schema)
         conn, cursor = connect_db(db_type, types)
-        # 根据数据库类型，组装查询语句
-        if db_type == 'sqlserver':
-            cursor.execute(
-                f"SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{table}'"
-                f"AND TABLE_CATALOG = '{database}' AND TABLE_SCHEMA = '{db_schema}'")
-            table_columns = [column[0] for column in cursor.fetchall()]
-
-        elif db_type == 'oracle':
-            cursor.execute(
-                f"SELECT column_name FROM all_tab_columns WHERE owner = '{user}' "
-                f"AND table_name = '{table}'")
-            table_columns = [column[0] for column in cursor.fetchall()]
-
-        elif db_type == 'gauss':
-            cursor.execute(
-                f"SELECT column_name FROM information_schema.columns WHERE table_catalog = '{database}'"
-                f" AND table_schema = '{db_schema}' AND table_name = '{table}'")
-            table_columns = [column[0] for column in cursor.fetchall()]
-            if not table_columns:
-                logging.warning(f"{table}表字段为空")
+        for table, split_column in tables.items():
+            table = table.lower() if db_type == 'gauss' else table.upper()
+            if db_type == 'oracle':
+                query = (f"SELECT COLUMN_NAME, DATA_TYPE FROM ALL_TAB_COLUMNS WHERE  OWNER = '{user}' "
+                         f" AND TABLE_NAME = '{table}'")
+            else:
+                query = (
+                    f"SELECT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_CATALOG = '{database}' "
+                    f" AND TABLE_SCHEMA = '{db_schema}' AND TABLE_NAME = '{table}'")
+            cursor.execute(query)
+            # 获取字段及类型
+            columns = [(column[0], column[1]) for column in cursor.fetchall()]
+            # 根据columns的第一个字段的大小写决定 table_case 的大小写
+            table_case = 'upper' if columns[0][0].isupper() else 'lower'
+            columns = [(col[0].upper(), col[1]) for col in columns]
+            # 判断分片字段是否存在于columns
+            if split_column:
+                with open(no_match_columns, 'w', encoding='utf-8') as f:
+                    if split_column.upper() not in [col[0].upper() for col in columns]:
+                        logging.warning(f"表：{table}中的分片字段：{split_column}不存在，请检查！")
+                        f.write(f"表：{table}中的分片字段：{split_column}不存在，请检查！\n")
+                        split_column = ''
+            # 移除指定数据类型的字段
+            if exclude_column_type:
+                excluded_data_types = [e.upper() for e in exclude_column_type]
+                columns = [col[0] for col in columns if col[1].upper() not in excluded_data_types]
+            table_columns[table.upper()] = {'columns': columns, 'table_case': table_case, 'split_column': split_column}
     except Exception as e:
-        logging.error(f"获取源数据库表字段失败：{e}")  # 使用logging.error()方法记录错误信息
-        raise e
-    finally:  # 关闭数据库连接和游标对象
-        close_connection_and_cursor(conn, cursor)
+        logging.error(f"获取表字段时发生异常: {e}")
+        return {}
+    finally:
+        if conn and cursor:
+            close_connection_and_cursor(conn, cursor)
 
-    # 返回所有字段列表
     return table_columns
+
+
+# 将字段顺序按照源表排序
+def get_compare_columns(tables):
+    try:
+        source_columns_dict = get_all_columns(source_db, source, tables)
+        target_columns_dict = get_all_columns(target_db, target, tables)
+
+        table_column_dict = {}
+
+        with open(no_match_columns, 'a', encoding='utf-8') as f:
+            for table in tables:
+                source_table_info = source_columns_dict.get(table, {})
+                target_table_info = target_columns_dict.get(table, {})
+
+                # 获取字段信息
+                if source_table_info and target_table_info:
+                    s_columns = [col for col in source_table_info['columns']]
+                    t_columns = [col for col in target_table_info['columns']]
+                    # 获取缺失的字段
+                    missing_in_source = [col for col in t_columns if col not in s_columns]
+                    missing_in_target = [col for col in s_columns if col not in t_columns]
+
+                    # 当目标库缺少源库的字段时，从源库字段列表中删除这些字段
+                    if missing_in_target:
+                        s_columns = [col for col in s_columns if col not in missing_in_target]
+                        logging.warning(f"源库表：{table}中的字段：{missing_in_target}在目标库中不存在，请检查！")
+                        f.write(f"源库表：{table}中的字段：{missing_in_target}在目标库中不存在，请检查！\n")
+
+                    # 当源库缺少目标库的字段时，从目标库字段列表中删除这些字段
+                    if missing_in_source:
+                        t_columns = [col for col in t_columns if col not in missing_in_source]
+                        logging.warning(f"目标库表：{table}中的字段：{missing_in_source}在源库中不存在，请检查！")
+                        f.write(f"目标库表：{table}中的字段：{missing_in_source}在源库中不存在，请检查！\n")
+
+                    if s_columns and t_columns:
+                        del_mode = 'DELETE FROM' if table in [t.upper() for t in special_tables] else 'TRUNCATE TABLE'
+                        # 对目标表字段进行排序，以匹配源表字段的顺序
+                        t_columns.sort(key=s_columns.index)
+                        table_column_dict[table] = {
+                            'source_columns': s_columns,
+                            'target_columns': t_columns,
+                            'source_table_case': source_table_info['table_case'],
+                            'target_table_case': target_table_info['table_case'],
+                            'split_column': source_table_info['split_column'],
+                            'del_mode': del_mode
+                        }
+                    else:
+                        logging.warning(f"表：{table}中的字段与目标库表中的字段为空，请检查！")
+                        f.write(f"表：{table}中的字段与目标库表中的字段为空，请检查！\n")
+
+        return table_column_dict
+
+    except Exception as e:
+        logging.error(f"在比较字段时发生异常: {e}")
+        return None
 
 
 # 读取migration_table_file.txt文件,获取所有的表名和分片字段，并与数据库进行比对分析，返回匹配后的表与分片信息
 def get_tables_and_split():
-    tables = []
-    split_columns = []
+    tables_dict = {}
     # 判断migration_table_file文件存不存在，不存在则创建
     if not os.path.isfile(migration_table_file):
         with open(migration_table_file, "w", encoding="utf-8") as f:
@@ -177,80 +249,86 @@ def get_tables_and_split():
                 continue
             # 如果为 * 则表示全部，结束循环，表示全部
             if line == "*":
-                tables = ["*"]
-                split_columns = [""]
+                tables_dict["*"] = ""
                 break
             else:
                 if ":" in line:
                     table, split_column = line.split(":", 1)
+                    tables_dict[table.upper()] = split_column.upper()
                 else:
                     table = line
-                    split_column = ""
-                tables.append(table)
-                split_columns.append(split_column)
-    # 获取所有表名并同数据库源与目标进行匹配，返回匹配后的表与分片字段
-    match_tables, split_columns, source_tables, target_tables = get_match_tables(tables, split_columns)
+                    tables_dict[table] = ""
+    # 获取所有匹配后的表信息
+    match_tables_dict = get_match_tables(tables_dict)
     # 将所有匹配成功的表matched_tables写入文件
-    with open(f'{matched_table_file}', "w", encoding="utf-8") as f:
-        for matched_table in match_tables:
-            # 分析源库与目标库将不存在的表输出到日志文件
-            f.write(f"{matched_table} \n")
-    # 返回匹配表，分片信息，源表名，目标表名
-    return match_tables, split_columns, source_tables, target_tables
+    with open(matched_table_file, "w", encoding="utf-8") as f:
+        f.write(json.dumps(match_tables_dict, indent=4))
+
+    return match_tables_dict
+
+
+def get_compare_tables():
+    with open(no_match_tables, 'w', encoding='utf-8') as f:
+        match_tables_dict = {}
+        # 获取数据库的所有表名
+        source_tables = get_all_tables(source_db, source)
+        target_tables = get_all_tables(target_db, target)
+
+        # 判断source_tables和target_tables是否为空，如果为空直接返回
+        if not source_tables or not target_tables:
+            logging.warning("请检查源库或目标库是否为空!")
+            return
+        # 获取两边都存在的表
+        match_tables = set(source_tables).intersection(set(target_tables))
+        # 获取只存在于源表中的表
+        just_source_tables = set(source_tables).difference(set(target_tables))
+        # 获取只存在于目标表中的表
+        just_target_tables = set(target_tables).difference(set(source_tables))
+
+        if just_source_tables:
+            logging.warning(
+                f"表：{just_source_tables}在目标库中不存在，请检查{migration_table_file}文件中的表填写是否正确！")
+            f.write(f"表：{just_source_tables}在目标库中不存在，请检查{migration_table_file}文件中的表填写是否正确！\n")
+        if just_target_tables:
+            logging.warning(
+                f"表：{just_target_tables}在源库中不存在，请检查{migration_table_file}文件中的表填写是否正确！")
+            f.write(f"表：{just_target_tables}在源库中不存在，请检查{migration_table_file}文件中的表填写是否正确！\n")
+        # 将所有分片字段置为空
+        for table in match_tables:
+            match_tables_dict[table] = ''
+
+    return match_tables_dict
+
+
+def get_error_tables():
+    with open(exec_error_tables, 'r', encoding='utf-8') as f:
+        error_tables = []
+        for line in f:
+            line = line.strip()
+            error_tables.append(line)
+    return error_tables
 
 
 # 读取 migration_table_file.txt 文件所有表名，与数据库进行比较，返回匹配后的表、分片字段，源表名，目标表名
-def get_match_tables(tables, split_columns):
-    # 获取源数据库的所有表名
-    source_tables = get_all_tables(source_db, source)
-    # 获取目标数据库的所有表名
-    target_tables = get_all_tables(target_db, target)
+def get_match_tables(tables_dict):
+    tables = get_compare_tables()
+    to_delete = []  # 存储要删除的表名
+    with open(no_match_tables, "a", encoding="utf-8") as f:
+        if "*" in tables_dict:
+            table_columns_dict = get_compare_columns(tables)
+        else:
+            for table in tables_dict:
+                # 判断表名是否在数据库中存在
+                if table.upper() not in tables:
+                    logging.warning(f"表：{table}在源库或目标库中不存在，请检查{migration_table_file}！中的表填写是否正确")
+                    f.write(f"表：{table}在源库或目标库中不存在，请检查{migration_table_file}！中的表填写是否正确\n")
+                    to_delete.append(table)
+            # 从字典中删除不存在的表
+            for table in to_delete:
+                del tables_dict[table]
+            table_columns_dict = get_compare_columns(tables_dict)
 
-    # 判断source_tables和target_tables是否为空，如果为空直接返回
-    if not source_tables or not target_tables:
-        logging.warning("请检查源库或目标库是否为空!")
-        return
-
-    # 如果配置为* 则取源库与目标库所有表的并集转换为大写后进行分析
-    if "*" in tables:
-        matched_tables = list(set([i.upper() for i in source_tables]) | set([i.upper() for i in target_tables]))
-        matched_split_columns = [""] * len(matched_tables)
-    else:
-        matched_tables = tables
-        matched_split_columns = split_columns
-
-    # 将源库与目标库不存的表名分别保存到列表中
-    source_missing_table = [tab for tab in matched_tables if tab.upper() not in [t.upper() for t in source_tables]]
-    target_missing_table = [tab for tab in matched_tables if tab.upper() not in [t.upper() for t in target_tables]]
-
-    # 如果列表不为空则分析将不存在表输出日志文件，并在mached列表中删除
-    if source_missing_table or target_missing_table:
-        # 分析源库与目标库将不存在的表输出到日志文件
-        with open(no_match_tables, "w", encoding="utf-8") as f:
-            logging.warning(f"源库中的未匹配的表：{','.join(source_missing_table)} 请检查与核对！")
-            f.write(f"源库中的未匹配的表：{','.join(source_missing_table)} 请检查与核对！\n")
-            logging.warning(f"目标库中的未匹配的表：{','.join(target_missing_table)} 请检查与核对！")
-            f.write(f"目标库中的未匹配的表：{','.join(target_missing_table)} 请检查与核对！\n")
-        # 在mached列表中删除不存在的表信息
-        for smt_name in source_missing_table:
-            index = matched_tables.index(smt_name)
-            del matched_tables[index]
-            del matched_split_columns[index]
-        for tmt_name in list(set(target_missing_table) - set(source_missing_table)):
-            index = matched_tables.index(tmt_name)
-            del matched_tables[index]
-            del matched_split_columns[index]
-
-    # 按matched_tables列表顺序，对源库与目标库的表进行重新筛选与重排
-    matched_source_tables = []
-    matched_target_tables = []
-    for table_name in matched_tables:
-        s_table_name = [tab for tab in source_tables if tab.upper() == table_name.upper()]
-        matched_source_tables = matched_source_tables + s_table_name
-        t_table_name = [tab for tab in target_tables if tab.upper() == table_name.upper()]
-        matched_target_tables = matched_target_tables + t_table_name
-
-    return matched_tables, matched_split_columns, matched_source_tables, matched_target_tables
+    return table_columns_dict
 
 
 def get_schema(db_type):
@@ -330,13 +408,13 @@ def generate_json_dict(source_table_name, target_table_name, source_columns, tar
 
 # 保存已生成的 json 文件
 def save_json_file(json_data, source_table_name):
-    json_data = json.dumps(json_data, indent=4)  # 格式化json
+    json_data = json.dumps(json_data, indent=4)
     file_name = os.path.join(job_path, f"{source_table_name}.json")
     with open(file_name, "w", encoding="utf-8") as f:
         f.write(json_data)
 
 
-# 定义一个函数，用于根据数据库类型转义字段名
+# 根据数据库类型转义字段名
 def escape_column(table_columns, db_type):
     # Oracle或者gauss，就用双引号（"）
     if db_type == 'oracle' or db_type == 'gauss':
@@ -349,106 +427,69 @@ def escape_column(table_columns, db_type):
 
 
 # 生成单个表的json文件
-def generate_table_json(source_table_name, target_table_name, split_column, ):
-    # 获取所有字段
-    source_columns = get_table_columns(source_db, source, source_table_name)
-    target_columns = get_table_columns(target_db, target, target_table_name)
+def generate_table_json(table, table_info, reader_name, writer_name, sourceUrl, targetUrl, source_schema,
+                        target_schema):
+    source_table_name = table.lower() if table_info['source_table_case'] == 'lower' else table.upper()
+    source_columns = [col.lower() if table_info['source_table_case'] == 'lower' else col.upper() for col in
+                      table_info['source_columns']]
+    target_table_name = table.lower() if table_info['target_table_case'] == 'lower' else table.upper()
+    target_columns = [col.lower() if table_info['target_table_case'] == 'lower' else col.upper() for col in
+                      table_info['target_columns']]
+    split_column = table_info['split_column']
+    del_mode = table_info['del_mode']
 
-    # 判断 source_table_name 中的表是否存在于 special_table 中，如果存在 'DELETE FROM'，否则为 'TRUNCATE TABLE'
-    if source_table_name.upper() in (table.upper() for table in special_tables):
-        del_mode = 'DELETE FROM'
-    else:
-        del_mode = 'TRUNCATE TABLE'
+    if not source_columns or not target_columns:
+        logging.warning(f"表：{table}中的字段与目标库表中的字段或为空，请检查！")
+        return 0, table
 
-    # 判断 split_column 是否在表字段中
-    if split_column and split_column.upper() not in (col.upper() for col in source_columns):
-        raise ValueError(f"源库表： {source_table_name} 中不存在分片字段:{split_column} 请检查！")
-        # 将 split_column 置空
-        split_column = ""
+    s_escape_columns = [escape_column(col, source_db) for col in source_columns]
+    t_escape_columns = [escape_column(col, target_db) for col in target_columns]
 
-    # 判断源库和目标库、源表和目标表是否相同
-    if source_db == target_db:
-        if source_table_name == target_table_name:
-            raise ValueError("不能将数据从同一个库的同一张表迁移到自己，请选择不同的库或表作为源和目标，请检查后再试！")
-
-    # 比较源库和目标库的字段信息是否一致，并统计不一致的字段信息
-    source_miss_col = [col for col in source_columns if col.lower() not in [c.lower() for c in target_columns]]
-    target_miss_col = [col for col in target_columns if col.lower() not in [c.lower() for c in source_columns]]
-    source_miss_col_len = len(source_miss_col)
-    target_miss_col_len = len(target_miss_col)
-
-    # 如果列表不为空则分析将不存在列输出日志文件
-    if source_miss_col or target_miss_col:
-        # 分析源库与目标库将不存在的表字段输出到日志文件
-        with open(no_match_columns, "w", encoding="utf-8") as f:
-            if source_miss_col:
-                logging.warning(f"源库：{source_table_name}表有{source_miss_col_len}个字段:{','.join(source_miss_col)}"
-                                f"在目标库中未存在，请检查核对！")
-                f.write(f"<数据迁移> 源库：{source_table_name}表中有{source_miss_col_len}个字段:{','.join(source_miss_col)}"
-                        f"在目标库中未存在，请检查核对！\n")
-                # 按照字段少的表的字段进行截取
-                source_columns = [col for col in source_columns if col not in source_miss_col]
-
-            if target_miss_col:
-                logging.warning(f"目标库：{target_table_name}表有{target_miss_col_len}个字段:{','.join(target_miss_col)}"
-                                f"在源库中未存在，请检查核对！")
-                f.write(f"<数据迁移> 目标库：{target_table_name}表有{target_miss_col_len}个字段:{','.join(target_miss_col)}"
-                        f"在源库中未存在，请检查核对！\n")
-                # 按照字段少的表的字段进行截取
-                target_columns = [col for col in target_columns if col not in target_miss_col]
-
-    # 创建一个字典，以目标表的字段为键，以原始大小写为值
-    target_dict = {col.lower(): col for col in target_columns}
-    # 把目标表的字段按照源表的字段顺序进行排序,并且考虑大小写问题
-    target_columns = [target_dict.get(col.lower()) for col in source_columns if col.lower() in target_dict]
-
-    # 把sql字段进行转义
-    source_columns = [escape_column(col, source_db) for col in source_columns]
-    target_columns = [escape_column(col, target_db) for col in target_columns]
-    # 获取reader和writer名称
-    reader_name, writer_name = get_wr_name(source_db, target_db)
-    # 获取配置文件
-    source_host, source_port, source_database, _, _, _ = get_db_config(source)
-    target_host, target_port, target_database, _, _, _ = get_db_config(target)
-    # 生成源库和目标库的url
-    sourceUrl = get_build_url(source_db, source_host, source_port, source_database)
-    targetUrl = get_build_url(target_db, target_host, target_port, target_database)
-
-    source_schema = get_schema(source)
-    target_schema = get_schema(target)
-    # 生成json格式字典
-    data = generate_json_dict(source_table_name, target_table_name, source_columns, target_columns, reader_name,
+    data = generate_json_dict(source_table_name, target_table_name, s_escape_columns, t_escape_columns, reader_name,
                               writer_name, sourceUrl, targetUrl, split_column, del_mode, source_schema, target_schema)
-    # 生成json文件并保存到指定路径
+
     save_json_file(data, source_table_name)
-    return 1, []
+    return 1, table
 
 
 # 生成json
-def generate_all_table_json(matched_tables, matched_split_columns, matched_source_tables, matched_target_tables):
+def generate_all_table_json(match_tables_dict):
     logging.info("请稍等，正在开始生成json脚本...")
-    successful_table = 0  # 记录成功生成json文件的表名
-    filed_tables = []  # 记录字段不匹配的表名
+    # 获取reader和writer名称
+    reader_name, writer_name = get_wr_name(source_db, target_db)
 
-    # 统计进度信息
-    total_pbar = tqdm(total=len(matched_tables), desc="总进度", leave=False,
-                      bar_format='{desc}: {percentage:.0f}%|{bar}| {n_fmt}/{total_fmt}' + '-预计在<{remaining}>后完成  ')
+    # 获取源库和目标库的配置信息
+    source_host, source_port, source_database, _, _, _ = get_db_config(source)
+    target_host, target_port, target_database, _, _, _ = get_db_config(target)
+    sourceUrl = get_build_url(source_db, source_host, source_port, source_database)
+    targetUrl = get_build_url(target_db, target_host, target_port, target_database)
 
-    for source_table_name, target_table_name, split_column in zip(matched_source_tables, matched_target_tables,
-                                                                  matched_split_columns):
+    # 获取源库和目标库的schema
+    source_schema = get_schema(source)
+    target_schema = get_schema(target)
 
-        # 生成单个表的json迁移文件
-        successful_tables = generate_table_json(source_table_name, target_table_name, split_column)
-        if successful_tables[0] == 1:  # 如果返回1则表示生成json文件成功
-            successful_table += 1  # 记录成功生成json文件的表名
-        else:
-            successful_table += 0
-            filed_tables.append(successful_tables[1])  # 记录字段不匹配的表名
-        total_pbar.update(1)  # 更新总进度条
+    successful_table = 0
+    filed_tables = []
 
-    total_pbar.close()  # 关闭总进度条
-    logging.info(f"总共生成了{successful_table}张表的JSON脚本文件，耗时{total_pbar.format_dict['elapsed']}s")
-    return matched_tables
+    with ThreadPoolExecutor(max_workers=max_threads) as executor:
+        future_to_table = {executor.submit(generate_table_json, table, match_tables_dict[table], reader_name,
+                                           writer_name, sourceUrl, targetUrl, source_schema,
+                                           target_schema): table for table in match_tables_dict}
+
+        for future in as_completed(future_to_table):
+            table = future_to_table[future]
+            try:
+                result, error_table = future.result()
+                if result == 1:
+                    successful_table += 1
+                else:
+                    filed_tables.append(error_table)
+            except Exception as e:
+                if table not in filed_tables:
+                    logging.error(f"表：{table}处理时出错：{e}")
+                    filed_tables.append(table)
+
+    logging.info(f"总共生成了{successful_table}张表的JSON脚本文件")
 
 
 # 定义一个数据迁移类
@@ -469,9 +510,8 @@ class MigrationData:
         self.namespace.failed = 0
 
     # 根据表名找到所有jobs对应的json执行脚本
-    def find_job_files(self, job_path, matched_tables, error_jobs):
+    def find_job_files(self, matched_tables):
         result = {}
-
         # 循环遍历表名，构造json文件的路径，并存入结果字典中
         for table in matched_tables:
             # 使用os.path.join来拼接路径，并转换为字符串
@@ -480,7 +520,7 @@ class MigrationData:
             if not os.path.isfile(json_file):
                 # 如果不存在，则输出提示信息并记录 errorjob 日志
                 logging.error(f"{table.ljust(50)}#表json不存在，请检查jobs目录下是否有该文件！")
-                with open(error_jobs, 'a', encoding='utf-8') as f:
+                with open(error_tables_jobs, 'a', encoding='utf-8') as f:
                     f.write(f"{table.ljust(50)}#表json不存在，请检查jobs目录下是否有该文件！\n")
                 continue
             result[table] = json_file
@@ -490,12 +530,12 @@ class MigrationData:
     def run_datax(self, job, log_file):  # 定义一个执行datax的函数
         command = rf'python  {datax_path}  {job} --jvm  "{jvm_config}"'
         with open(log_file, "w") as f:  # 将日志输出到指定的日志文件
-            execjob = subprocess.Popen(command, shell=True, stdout=f, stderr=f)
+            exec_job = subprocess.Popen(command, shell=True, stdout=f, stderr=f)
         with self.lock:  # 控制任务数
             self.namespace.waiting -= 1
             self.namespace.running += 1
-        returncode = execjob.wait()  # 等待任务执行完
-        if returncode != 0:
+        return_code = exec_job.wait()  # 等待任务执行完
+        if return_code != 0:
             logging.error(f"迁移任务：{job}执行失败")
             with self.lock:  # 控制任务数
                 self.namespace.failed += 1
@@ -509,8 +549,7 @@ class MigrationData:
             return True
 
     # 定义一个异步执行任务的函数
-    def asyncexecjob(self, task_queue, error_jobs):
-        failed_tables = set()  # 存放执行失败的表名
+    def async_exec_job(self, task_queue, error_jobs):
         #  创建一个最大线程数为 max_threads 的线程池，调用run_datax执行任务
         with concurrent.futures.ThreadPoolExecutor(max_workers=max_threads) as t_executor:
             li_futures = []  # 创建一个空的 li_futures 列表
@@ -530,18 +569,19 @@ class MigrationData:
                             f.write(f"{table.ljust(50)}#任务迁移失败，请检查{datax_logs}目录中对应的日志文件！\n")
                 # 使用BaseException来捕获所有类型的异常
                 except BaseException as e:
-                    failed_tables.add(table)
+                    with open(exec_error_tables, 'a', encoding='utf-8') as f:
+                        f.write(f"{table}\n")
                     logging.error(f"{table.ljust(50)}#任务异常，错误信息：{e}！请检查{datax_logs}目录中对应的日志文件！")
                     with open(error_jobs, 'a', encoding='utf-8') as f:
                         f.write(f"{table.ljust(50)}#任务异常，错误信息：{e}！ 请检查{datax_logs}目录中对应的日志文件！\n")
 
-    # 创建进程池，调用asyncexecjob执行任务
-    def execJobs(self, jobpath, matched_tables):
+    # 创建进程池，调用async_exec_job执行任务
+    def exec_jobs(self, matched_tables):
         logging.info('迁移开始')
         start_time = time.time()  # 记录开始执行的时间
 
         # 获取所有待执行的作业文件
-        jobs = self.find_job_files(jobpath, matched_tables, error_tables_jobs)
+        jobs = self.find_job_files(matched_tables)
 
         # 创建一个空的任务队列，将表名和作业文件添加到任务队列中
         task_queue = []
@@ -565,7 +605,7 @@ class MigrationData:
             # 使用 ProcessPoolExecutor 创建进程池，指定 max_workers 参数为 num_processes
             with concurrent.futures.ProcessPoolExecutor(max_workers=num_processes) as p_executor:
                 f_processes = [
-                    p_executor.submit(self.asyncexecjob, sub_queue, error_tables_jobs) for sub_queue in
+                    p_executor.submit(self.async_exec_job, sub_queue, error_tables_jobs) for sub_queue in
                     sub_task_queues]  # 提交任务
                 # 循环遍历 f_processes 列表，等待每个任务完成，并处理输出和异常
                 for future in as_completed(f_processes):
@@ -609,61 +649,70 @@ if __name__ == '__main__':
     print("║                                               版本：V1.2.0   ")
     print("╠═════════════════════════════════════════════════════════════")
     print("║  1.生成json文件并执行数据迁移（*回车默认*）                        ")
-    print("║  2.生成json文件                                               ")
-    print("║  3.执行数据迁移                                               ")
-    print("║  4.执行数据比对                                                ")
-    print("║  9.退      出                                                ")
+    print("║  2.生 成 json 文 件                                           ")
+    print("║  3.执 行 数 据 迁 移                                           ")
+    print("║  4.执行迁移 失败 的表                                          ")
+    print("║  5.执 行 数 据 比 对                                           ")
+    print("║  9.退           出                                           ")
     print("╚═════════════════════════════════════════════════════════════")
     input_number = 0
     while True:
         input_num = input("请输入你的选择：")
         if input_num == "1" or input_num == "":
-            multiprocessing.freeze_support()
-            manager = multiprocessing.Manager()
+            check_db()
             # 日志文件与目录初始化
             clear_error_log_path(error_tables_jobs)
-            # 读取migration_table_file.txt文件,获取所有的表名和分片字段，并分析数据库是否存在对应表，并返回匹配的表与分版本字段
-            matched_tables, matched_split_columns, matched_source_tables, matched_target_tables = get_tables_and_split()
+            # 获取所有表相关信息
+            matched_tables_dict = get_tables_and_split()
             # 生成json
-            generate_all_table_json(matched_tables, matched_split_columns, matched_source_tables, matched_target_tables)
+            generate_all_table_json(matched_tables_dict)
             # 执行迁移
+            multiprocessing.freeze_support()
+            manager = multiprocessing.Manager()
             migrate = MigrationData()  # 创建迁移实例
             t = threading.Thread(target=migrate.monitorTask)  # 监控任务执行情况
             t.daemon = False
             t.start()
-            migrate.execJobs(job_path, matched_tables)
+            migrate.exec_jobs(matched_tables_dict)
             exit()
         elif input_num == "2":
+            check_db()
             # 日志文件与目录初始化
             clear_error_log_path(error_tables_jobs)
-            # 读取migration_table_file.txt文件,获取所有的表名和分片字段，并分析数据库是否存在对应表，并返回匹配的表与分版本字段
-            matched_tables, matched_split_columns, matched_source_tables, matched_target_tables = get_tables_and_split()
+            matched_tables_dict = get_tables_and_split()
             # 生成json
-            generate_all_table_json(matched_tables, matched_split_columns, matched_source_tables, matched_target_tables)
+            generate_all_table_json(matched_tables_dict)
             exit()
         elif input_num == "3":
             # 表示只迁移数据，不生成json文件
-            multiprocessing.freeze_support()  # 防止windows下运行报错
-            manager = multiprocessing.Manager()
-            # lock = manager.Lock()
             # 日志文件与目录初始化
             clear_error_log_path(error_tables_jobs)
-            # 读取migration_table_file.txt文件,获取所有的表名和分片字段，并分析数据库是否存在对应表，并返回匹配的表与分版本字段
-            matched_tables, matched_split_columns, matched_source_tables, matched_target_tables = get_tables_and_split()
+            matched_tables_dict = get_tables_and_split()
             # 执行迁移
+            multiprocessing.freeze_support()
+            manager = multiprocessing.Manager()
             migrate = MigrationData()  # 创建迁移实例
             t = threading.Thread(target=migrate.monitorTask)  # 监控任务执行情况
             t.daemon = False
             t.start()
-            migrate.execJobs(job_path, matched_tables)
+            migrate.exec_jobs(matched_tables_dict)
             exit()
         elif input_num == "4":
+            error_jobs = get_error_tables()
+            multiprocessing.freeze_support()
+            manager = multiprocessing.Manager()
+            migrate = MigrationData()  # 创建迁移实例
+            t = threading.Thread(target=migrate.monitorTask)  # 监控任务执行情况
+            t.daemon = False
+            t.start()
+            migrate.exec_jobs(error_jobs)
+            exit()
+        elif input_num == "5":
             from dataCompare import DataCompare
 
             multiprocessing.set_start_method('spawn')  # 防止linux启动异常
             dc = DataCompare()
             dc.get_hash_result()
-
             exit()
         elif input_num == "9" or input_num == "":
             # 表示退出程序
